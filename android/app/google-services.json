@@ -1,43 +1,26 @@
 {
   "project_info": {
-    "project_number": "657206705345",
-    "project_id": "cropfit-d26b8",
-    "storage_bucket": "cropfit-d26b8.appspot.com"
+    "project_number": "24381328168",
+    "project_id": "farmfit-d68d9",
+    "storage_bucket": "farmfit-d68d9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:657206705345:android:e610378d35c3b693546840",
+        "mobilesdk_app_id": "1:24381328168:android:7ab56bb8aacc6972481e1d",
         "android_client_info": {
-          "package_name": "com.mahathiinfotech.cropfit"
+          "package_name": "com.farmer.farmfit"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "657206705345-cr3hdoq8tqeid8lvfbna9rrmkpuvucun.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyARwrHc_ZfVmtvmulB_e26pZdsTiv6GH6M"
+          "current_key": "AIzaSyA2MB5xdnf6LPgK1PDlUOZ5wHu50EJOebg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "657206705345-cr3hdoq8tqeid8lvfbna9rrmkpuvucun.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "657206705345-qmu6t33n8g058ruaa03chp9ld1g7lfkk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mahathiinfotech.cropfit"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

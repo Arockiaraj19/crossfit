@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mahathiinfotech.cropfit.app-mergeDebugResources-42:/values-zu/values-zu.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-42:/values-zu/values-zu.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\2baccecde7ee42cfd6fc8ff2c7edaa52\\transformed\\jetified-play-services-base-18.0.1\\res\\values-zu\\values.xml",

@@ -30,6 +30,9 @@ const SelectStateScreen = ({ navigation, route }) => {
     const [key, setKey] = React.useState(0);
     const reload = React.useCallback(() => setKey((prevKey) => prevKey + 1), []);
     useEffect(() => {
+        console.log("what is the params");
+console.log(route.params);
+
         setLoadingIndicator(true);
         setboxWidth((deviceWidth - 100) / 3);
     }, [])
@@ -63,8 +66,22 @@ const SelectStateScreen = ({ navigation, route }) => {
         templist.map((typeInfo, i) => {
             var tempInfo = typeInfo;
             tempInfo.isSelected = false;
+            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
+    if(typeInfo.Name==route.params.data.AddressType){
+        console.log("what is the item");
+       
+        tempInfo.isSelected = true;
+        setAddressTypeId(typeInfo.Id);
+        setAddressType(typeInfo.Name);
+    }
+               
+              
+            
+            }
             tyepTemp.push(tempInfo)
-        })
+        });
+
+      
         setArrayOfType(tyepTemp);
     }
     const updateStateDate = (list) => {
@@ -75,6 +92,18 @@ const SelectStateScreen = ({ navigation, route }) => {
         templist.map((stateInfo, i) => {
             var tempInfo = stateInfo;
             tempInfo.isSelected = false;
+            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
+                if(tempInfo.Name==route.params.data.State){
+                    console.log("what is the item");
+                   
+                    tempInfo.isSelected = true;
+                    setAddressStateId(tempInfo.Id);
+                    setAddressState(tempInfo.Name);
+                }
+                           
+                          
+                        
+                        }
             stateTemp.push(tempInfo)
         })
         setArrayOfState(stateTemp);
@@ -125,7 +154,9 @@ const SelectStateScreen = ({ navigation, route }) => {
                 addressTypeId: addressTypeId,
                 addressType: addressType,
                 addressState: addressState,
-                addressStateId: addressStateId
+                addressStateId: addressStateId,
+                isEdit:route.params.isEdit,
+                data:route.params.data
             }
             navigation.navigate('SelectDistrictScreen', params)
         }
@@ -157,7 +188,7 @@ const SelectStateScreen = ({ navigation, route }) => {
             )}
             <View style={{ marginTop: 25, width: '100%', height: 24, }}>
                 <View style={styles.view_pageCount}>
-                    <Text style={styles.text_pageCount}>{'1/4'}</Text>
+                    <Text style={styles.text_pageCount}>{'1/3'}</Text>
                 </View>
             </View>
             <View style={{ width: '100%', height: '75%' }}>

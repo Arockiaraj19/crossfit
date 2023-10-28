@@ -7,6 +7,7 @@ import Loading from '../components/Loading';
 import DataFetchComponents from '../components/DataFetchComponents';
 import SellerInfoCompnents from '../components/SellerInfoCompnents';
 import moment from 'moment';
+import { useMutation } from '@apollo/react-hooks';
 import { handlePhoneCall } from '../helpers/AppManager';
 import { fetchDataFromServer, sendDataToServer } from '../helpers/QueryFetching';
 import { ALLOWMOBILENUMVIEW_QUERY, MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
@@ -27,7 +28,7 @@ const SellerInfoListScreen = ({ navigation, route }) => {
     const [isEmpty, setIsEmpty] = React.useState(false);
     const flatList = createRef();
     const [lotDetails, setLotDetails] = React.useState([]);
-    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = fetchDataFromServer(ALLOWMOBILENUMVIEW_QUERY)
+    const [audit, { loading:auditLoding, error:auditError, data:auditData }] =useMutation(MOBILENUMBERAUDIT_QUERY);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -40,13 +41,13 @@ const SellerInfoListScreen = ({ navigation, route }) => {
         }, [])
     );
 
-    useEffect(() => {
-        if (mobileViewData != undefined) {
-            (async () => {
-                await handlePhoneCall(lotDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
-            })()
-        }
-    }, [mobileViewData])
+    // useEffect(() => {
+    //     if (mobileViewData != undefined) {
+    //         (async () => {
+                
+    //         })()
+    //     }
+    // }, [mobileViewData])
 
     const onPressBack = () => {
         navigation.goBack();
@@ -87,7 +88,17 @@ const SellerInfoListScreen = ({ navigation, route }) => {
         return momentObj
     }
     const onPressMakeCall = async () => {
-       return await getMobileView({ variables: { transactiontype: "Lot", transactionid: lotDetails.Id }})
+        try {
+            console.log("onPressMakeCall");
+            console.log( { transactionType: "Lot", transactionId: lotDetails.Id });
+            await handlePhoneCall(lotDetails.MobileNo, navigation);
+            console.log(auditData);
+       await audit({ variables: { transactionType: "Lot", transactionId: lotDetails.Id }})
+        } catch (error) {
+            console.log("onPressMakeCall Error");
+            console.log(error);
+        }
+  
     }
     const onPressSelectBid = (item) => {
         setLotDetails(item)

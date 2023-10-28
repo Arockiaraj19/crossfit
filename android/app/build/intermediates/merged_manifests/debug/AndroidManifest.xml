@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mahathiinfotech.cropfit"
+    package="com.farmer.farmfit"
     android:versionCode="24"
     android:versionName="2.0.2" >
 
@@ -39,7 +39,7 @@
     <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
 
     <application
-        android:name="com.mahathiinfotech.cropfit.MainApplication"
+        android:name="com.farmer.farmfit.MainApplication"
         android:allowBackup="false"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
@@ -50,7 +50,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.mahathiinfotech.cropfit.MainActivity"
+            android:name="com.farmer.farmfit.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
             android:exported="true"
             android:label="@string/app_name"
@@ -131,10 +131,22 @@
                 android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
@@ -146,7 +158,7 @@
 
         <provider
             android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
-            android:authorities="com.mahathiinfotech.cropfit.reactnativefirebaseappinitprovider"
+            android:authorities="com.farmer.farmfit.reactnativefirebaseappinitprovider"
             android:exported="false"
             android:initOrder="99" />
 
@@ -173,7 +185,7 @@
 
         <provider
             android:name="com.imagepicker.ImagePickerProvider"
-            android:authorities="com.mahathiinfotech.cropfit.imagepickerprovider"
+            android:authorities="com.farmer.farmfit.imagepickerprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -182,7 +194,7 @@
         </provider>
         <provider
             android:name="cl.json.RNShareFileProvider"
-            android:authorities="com.mahathiinfotech.cropfit.rnshare.fileprovider"
+            android:authorities="com.farmer.farmfit.rnshare.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -191,7 +203,7 @@
         </provider>
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.mahathiinfotech.cropfit.androidx-startup"
+            android:authorities="com.farmer.farmfit.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.work.WorkManagerInitializer"
@@ -315,7 +327,7 @@
 
         <provider
             android:name="com.google.firebase.provider.FirebaseInitProvider"
-            android:authorities="com.mahathiinfotech.cropfit.firebaseinitprovider"
+            android:authorities="com.farmer.farmfit.firebaseinitprovider"
             android:directBootAware="true"
             android:exported="false"
             android:initOrder="100" />

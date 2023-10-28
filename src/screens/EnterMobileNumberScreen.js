@@ -17,6 +17,8 @@ import S3 from "aws-sdk/clients/s3";
 import { Credentials } from "aws-sdk";
 import { getPushToken } from '../helpers/AppManager';
 import { useFocusEffect } from '@react-navigation/native';
+import uploadImageToStorage from '../helpers/uploadImage';
+
 
 const CONTINENT_QUERY = gql`
 mutation ($mobileNo: String!, $language: ID!, $roleId: ID!, $profilePicPath: String!, $userName: String!, $referalCode: String!, $deviceToken: String!){ 
@@ -1030,20 +1032,22 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
     }
     const uploadImage = async (imageUrl) => {
         setLoadingIndicator(true)
-        var urlaws = await request();
-        let image_file = await fetch(imageUrl)
-            .then((r) => r.blob())
-            .then(
-                (blobFile) =>
-                    new File([blobFile], uuid, {
-                        type: 'image/jpg',
-                    }),
-            );
-        console.log('url -----------', image_file)
+        // var urlaws = await request();
+        // let image_file = await fetch(imageUrl)
+        //     .then((r) => r.blob())
+        //     .then(
+        //         (blobFile) =>
+        //             new File([blobFile], uuid, {
+        //                 type: 'image/jpg',
+        //             }),
+        //     );
+        // console.log('url -----------', image_file)
+
+        const profileImage=await uploadImageToStorage(imageUrl);
         setTimeout(async () => {
-            const res = await fetchUploadUrl(urlaws, image_file);
-            setUserProfileImage(res.url.split('?')[0])
-            console.log('resresresresres -----------', res.url.split('?')[0])
+            // const res = await fetchUploadUrl(urlaws, image_file);
+            setUserProfileImage(profileImage)
+           
             setLoadingIndicator(false)
         }, 100);
     }

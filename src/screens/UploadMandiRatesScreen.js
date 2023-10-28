@@ -11,6 +11,7 @@ import gql from 'graphql-tag';
 import Loading from '../components/Loading';
 import DocumentPicker from 'react-native-document-picker';
 import { useState } from 'react';
+import uploadImageToStorage from '../helpers/uploadImage';
 
 const UPDATEMANDIRATE_QUERY = gql`
 mutation ($fileName: String!, $filePath: String!,$title: String!){ 
@@ -60,33 +61,33 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         navigation.goBack();
     }
     const handleChoosePhoto = async () => {
-        // ImagePicker.launchImageLibrary(
-        //     {
-        //         mediaType: 'photo',//'video'
-        //         includeBase64: false,
-        //         quality: 0.3,
-        //     },
-        //     (response) => {
-        //         if (response.didCancel) {
-        //             console.log('User cancelled image picker');
-        //         } else {
-        //             setMandiImage(response.assets[0].uri)
-        //             // uploadImage(Platform.OS === "android" ? ('file://' + response.assets[0].uri) : response.assets[0].uri);
-        //         }
-        //     },
-        // )
+        ImagePicker.launchImageLibrary(
+            {
+                mediaType: 'photo',//'video'
+                includeBase64: false,
+                quality: 0.3,
+            },
+            (response) => {
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else {
+                    setMandiImage(response.assets[0].uri)
+                    // uploadImage(Platform.OS === "android" ? ('file://' + response.assets[0].uri) : response.assets[0].uri);
+                }
+            },
+        )
 
-        try {
-            const res = await DocumentPicker.pick({
-                type: [DocumentPicker.types.allFiles],
-            });
-            if (res) {
-                console.log('res', res);
-                uploadFile(res[0]);
-            }
-        } catch (error) {
-            console.log('error attaching file', error);
-        }
+        // try {
+        //     const res = await DocumentPicker.pick({
+        //         type: [DocumentPicker.types.allFiles],
+        //     });
+        //     if (res) {
+        //         console.log('res', res);
+        //         uploadFile(res[0]);
+        //     }
+        // } catch (error) {
+        //     console.log('error attaching file', error);
+        // }
     };
     const uploadFile = async (attachement) => {
         let formUpload = new FormData();
@@ -94,8 +95,10 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         formUpload.append('fileName', attachement.name);
         setFileType(attachement.type);
         setFileExtension(attachement.name);
-        setIsPhoto(false)
-        setMandiImage(attachement.uri)
+        setIsPhoto(false);
+        setMandiImage(attachement.uri);
+        console.log("what is the attachment");
+        console.log(attachement.uri);
     };
     const requestCameraPermission = async () => {
         if (Platform.OS === 'android') {
@@ -217,21 +220,23 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
             ]); 
         }
         else {
-            setLoadingIndicator(true)
-            var urlaws = await request();
-            let image_file = await fetch(mandiImage)
-                .then((r) => r.blob())
-                .then(
-                    (blobFile) =>
-                        new File([blobFile], uuid, {
-                            type: fileType,
-                        }),
-                );
-            console.log('url -----------', image_file)
+            setLoadingIndicator(true);
+            
+            // var urlaws = await request();
+            // let image_file = await fetch(mandiImage)
+            //     .then((r) => r.blob())
+            //     .then(
+            //         (blobFile) =>
+            //             new File([blobFile], uuid, {
+            //                 type: fileType,
+            //             }),
+            //     );
+           // console.log('url -----------', image_file)
+            const profileImage=await uploadImageToStorage(mandiImage);
             setTimeout(async () => {
-                const res = await fetchUploadUrl(urlaws, image_file);
-                let profileImage = res.url.split('?')[0];
-                console.log('resresresresres -----------', res.url.split('?')[0])
+                // const res = await fetchUploadUrl(urlaws, image_file);
+                // let profileImage = res.url.split('?')[0];
+                // console.log('resresresresres -----------', res.url.split('?')[0])
                 setMandiImageUrl(profileImage)
                 onPressUploadMandi(profileImage)
             }, 100);

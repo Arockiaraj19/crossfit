@@ -1,4 +1,4 @@
-package com.mahathiinfotech.cropfit.newarchitecture.modules;
+package com.farmer.farmfit.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

@@ -18,6 +18,8 @@ import ActionSheet from 'react-native-actionsheet';
 import S3 from "aws-sdk/clients/s3";
 import { Credentials } from "aws-sdk";
 import UUIDv4 from '../helpers/uuid';
+import uploadImageToStorage from '../helpers/uploadImage';
+
 
 const GETUSERDETAIL_QUERY = gql`
 query {
@@ -248,18 +250,19 @@ const [updateloading,setUpdateLoading]=React.useState(false);
      
      const uploadImage = async (imageUrl) => {
         setLoadingIndicator(true)
-        var urlaws = await request();
-        let image_file = await fetch(imageUrl)
-            .then((r) => r.blob())
-            .then(
-                (blobFile) =>
-                    new File([blobFile], uuid, {
-                        type: 'image/jpg',
-                    }),
-            );
+        const profileImage=await uploadImageToStorage(imageUrl);
+        // var urlaws = await request();
+        // let image_file = await fetch(imageUrl)
+        //     .then((r) => r.blob())
+        //     .then(
+        //         (blobFile) =>
+        //             new File([blobFile], uuid, {
+        //                 type: 'image/jpg',
+        //             }),
+        //     );
         setTimeout(async () => {
-            const res = await fetchUploadUrl(urlaws, image_file);
-            let profileImage = res.url.split('?')[0];
+            // const res = await fetchUploadUrl(urlaws, image_file);
+            // let profileImage = res.url.split('?')[0];
             updateUserProfileImage({
                 variables: { Id: userId, ProfilePicPath: profileImage }
             })
@@ -366,14 +369,17 @@ if(updateloading){return;}
             updateUserProfile({
                 variables: { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) }
             })
-                .then(res => {
+                .then(async(res) => {
                     console.log('res ------------------', res);
                     setIsFetch(true);
                     setUpdateLoading(false);
+                    await   EncryptedStorage.setItem('userName', userName);
+     
+                    await  EncryptedStorage.setItem("languageId", userLanguageId);
                     Alert.alert('Success', "Profile updated successfully", [{
                         text: 'OK', onPress: () => {
-                           
                             navigation.goBack();
+                           
                             return;
                         },
                     },
@@ -434,15 +440,7 @@ if(updateloading){return;}
         setDobformat((UserProfile.DOB != null) ? UserProfile.DOB : '')
         setLoginToken(res.data.updateUserProfile?.token);
 
-     try{
-     await   EncryptedStorage.setItem('userName', UserProfile.UserName);
-     
-      await  EncryptedStorage.setItem("languageId",(UserProfile.PreferredLanguage != null) ? UserProfile.PreferredLanguage : 0);
-      console.log("name setted");
-     }catch(e){
-        console.log("Error in store the name");
-        console.log(e);
-     }
+    
               
  
        

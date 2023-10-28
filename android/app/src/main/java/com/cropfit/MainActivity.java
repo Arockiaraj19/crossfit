@@ -1,4 +1,4 @@
-package com.mahathiinfotech.cropfit;
+package com.farmer.farmfit;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

@@ -54,6 +54,20 @@ const SelectCityScreen = ({ navigation, route }) => {
         templist.map((typeInfo, i) => {
             var tempInfo = typeInfo;
             tempInfo.isSelected = false;
+            console.log("what is the item");
+                   console.log(tempInfo);
+            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
+                if(tempInfo.Name==route.params.data.Town){
+                    console.log("what is the item");
+                   console.log(tempInfo);
+                    tempInfo.isSelected = true;
+                    setUserTownId(tempInfo.Id);
+                    setUserTown(tempInfo.Name);
+                }
+                           
+                          
+                        
+                        }
             tyepTemp.push(tempInfo);
             tempArray.push(tempInfo.Taluks);
         })

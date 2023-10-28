@@ -1,4 +1,4 @@
-package com.mahathiinfotech.cropfit.newarchitecture.components;
+package com.farmer.farmfit.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

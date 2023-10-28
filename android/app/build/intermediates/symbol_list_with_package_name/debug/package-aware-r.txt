@@ -1,4 +1,4 @@
-com.mahathiinfotech.cropfit
+com.farmer.farmfit
 anim abc_fade_in
 anim abc_fade_out
 anim abc_grow_fade_in_from_bottom
@@ -4055,7 +4055,6 @@ string common_signin_button_text
 string common_signin_button_text_long
 string date_description
 string day_description
-string default_web_client_id
 string error_a11y_label
 string error_icon_content_description
 string exposed_dropdown_menu_content_description

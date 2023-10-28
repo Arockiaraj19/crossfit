@@ -1,4 +1,4 @@
-package com.mahathiinfotech.cropfit;
+package com.farmer.farmfit;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -8,7 +8,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import com.mahathiinfotech.cropfit.newarchitecture.MainApplicationReactNativeHost;
+import com.farmer.farmfit.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
@@ -78,7 +78,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.mahathiinfotech.cropfit.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.farmer.farmfit.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

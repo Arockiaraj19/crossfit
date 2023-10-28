@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mahathiinfotech.cropfit.app-mergeDebugResources-42:/values-es/values-es.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-42:/values-es/values-es.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\705b3107c1b7090ee6a21b3c568efba7\\transformed\\material-1.9.0\\res\\values-es\\values-es.xml",

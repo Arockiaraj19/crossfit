@@ -2094,7 +2094,6 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="date_description">Select Date</string>
     <string name="day_description">Select Day</string>
-    <string name="default_web_client_id" translatable="false">657206705345-cr3hdoq8tqeid8lvfbna9rrmkpuvucun.apps.googleusercontent.com</string>
     <string description="Screen reader announcement for when a checkbox is on error. [CHAR LIMIT=NONE]" name="error_a11y_label">
     Error: invalid
   </string>
@@ -2103,11 +2102,11 @@
     <string name="fab_transformation_scrim_behavior" translatable="false">com.google.android.material.transformation.FabTransformationScrimBehavior</string>
     <string name="fab_transformation_sheet_behavior" translatable="false">com.google.android.material.transformation.FabTransformationSheetBehavior</string>
     <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
-    <string name="gcm_defaultSenderId" translatable="false">657206705345</string>
-    <string name="google_api_key" translatable="false">AIzaSyARwrHc_ZfVmtvmulB_e26pZdsTiv6GH6M</string>
-    <string name="google_app_id" translatable="false">1:657206705345:android:e610378d35c3b693546840</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyARwrHc_ZfVmtvmulB_e26pZdsTiv6GH6M</string>
-    <string name="google_storage_bucket" translatable="false">cropfit-d26b8.appspot.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">24381328168</string>
+    <string name="google_api_key" translatable="false">AIzaSyA2MB5xdnf6LPgK1PDlUOZ5wHu50EJOebg</string>
+    <string name="google_app_id" translatable="false">1:24381328168:android:7ab56bb8aacc6972481e1d</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA2MB5xdnf6LPgK1PDlUOZ5wHu50EJOebg</string>
+    <string name="google_storage_bucket" translatable="false">farmfit-d68d9.appspot.com</string>
     <string name="header_description" translatable="false">Heading</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string name="hour_description">Select Hour</string>
@@ -2235,7 +2234,7 @@
     <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
     <string name="progressbar_description" translatable="false">Progress Bar</string>
-    <string name="project_id" translatable="false">cropfit-d26b8</string>
+    <string name="project_id" translatable="false">farmfit-d68d9</string>
     <string name="radiogroup_description" translatable="false">Radio Group</string>
     <string name="rn_tab_description" translatable="false">Tab</string>
     <string name="scrollbar_description" translatable="false">Scroll Bar</string>

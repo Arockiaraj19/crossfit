@@ -1,4 +1,4 @@
-package com.mahathiinfotech.cropfit;
+package com.farmer.farmfit;
 import com.facebook.react.modules.network.OkHttpClientFactory;
 import com.facebook.react.modules.network.OkHttpClientFactory;
 import com.facebook.react.modules.network.OkHttpClientProvider;

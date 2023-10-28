@@ -46,6 +46,18 @@ const SelectDistrictScreen = ({ navigation, route }) => {
         templist.map((typeInfo, i) => {
             var tempInfo = typeInfo;
             tempInfo.isSelected = false;
+            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
+                if(tempInfo.Name==route.params.data.District){
+                    console.log("what is the item");
+                   
+                    tempInfo.isSelected = true;
+                    setAddressDistrictId(tempInfo.Id);
+                    setAddressDistrict(tempInfo.Name);
+                }
+                           
+                          
+                        
+                        }
             tyepTemp.push(tempInfo)
         })
         setArrayOfDistrict(tyepTemp);
@@ -75,7 +87,7 @@ const SelectDistrictScreen = ({ navigation, route }) => {
             var params = route.params;
             params.addressDistrict = addressDistrict;
             params.addressDistrictId = addressDistrictId;
-            navigation.navigate('SelectCityScreen', params);
+            navigation.navigate('SelectAddressScreen', params);
         }
     }
     return (
@@ -113,7 +125,7 @@ const SelectDistrictScreen = ({ navigation, route }) => {
             )}
             <View style={{ marginTop: 15, width: '100%', height: 24, }}>
                 <View style={styles.view_pageCount}>
-                    <Text style={styles.text_pageCount}>{'2/4'}</Text>
+                    <Text style={styles.text_pageCount}>{'2/3'}</Text>
                 </View>
             </View>
             <View style={{ width: '100%', height: '70%', }}>

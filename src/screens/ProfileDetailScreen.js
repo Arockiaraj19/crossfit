@@ -13,6 +13,8 @@ import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Loading from '../components/Loading';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import uploadImageToStorage from '../helpers/uploadImage';
+
 //  import { ScrollView } from 'react-native-gesture-handler';
 
 const UPDATEPROFILEIMAGE_QUERY = gql`
@@ -67,7 +69,6 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                 let userInfoId = await getUserId();
                 let helpLineNumber = await getHelpLineNumber();
                 let profileImage = await getUserProfileImage();
-                console.log('profileImageprofileImageprofileImageprofileImage', profileImage)
                 setProfileImageUrl(profileImage)
                 setUserId(userInfoId)
                 setUserName(name);
@@ -244,58 +245,17 @@ const ProfileDetailScreen = ({ navigation, route }) => {
             });
         }
     };
-    const access = new Credentials({
-        accessKeyId: "AKIASVAYFY3SML3QPD5N",
-        secretAccessKey: "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",
-        // accessKeyId: "AKIASVAYFY3SJI2MOFUY",
-        // secretAccessKey: "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",
-    });
-
-    const s3 = new S3({
-        credentials: access,
-        region: "ap-south-1", //"us-west-2"
-        signatureVersion: "v4",
-    });
-    const request = async () => {
-        const fileId = 'gt_image_' + UUIDv4() + '.jpg';
-        setUUID(fileId)
-        const signedUrlExpireSeconds = 60 * 15;
-
-        const url = await s3.getSignedUrlPromise("putObject", {
-            Bucket: "userprofileimagescropfit",
-            Key: `${fileId}`,
-            ContentType: "image/jpeg",
-            Expires: signedUrlExpireSeconds,
-        });
-        return url;
-    }
-    const fetchUploadUrl = async (data, fileSelected) => {
-        try {
-            let res = await fetch(data, {
-                method: 'PUT',
-                body: fileSelected,
-            })
-            return res;
-        } catch (error) {
-            return error;
-        }
-    }
+   
+   
     const uploadImage = async (imageUrl) => {
-        setLoadingIndicator(true)
-        var urlaws = await request();
-        let image_file = await fetch(imageUrl)
-            .then((r) => r.blob())
-            .then(
-                (blobFile) =>
-                    new File([blobFile], uuid, {
-                        type: 'image/jpg',
-                    }),
-            );
-        console.log('url -----------', image_file)
+        setLoadingIndicator(true);
+       
+const profileImage=await uploadImageToStorage(imageUrl);
+      
         setTimeout(async () => {
-            const res = await fetchUploadUrl(urlaws, image_file);
-            let profileImage = res.url.split('?')[0];
-            console.log('resresresresres -----------', res.url.split('?')[0])
+            // const res = await fetchUploadUrl(urlaws, image_file);
+            // let profileImage = res.url.split('?')[0];
+            // console.log('resresresresres -----------', res.url.split('?')[0])
             updateUserProfilePic({
                 variables: { Id: userId, ProfilePicPath: profileImage }
             })

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { StyleSheet, View, Image, Text, Pressable, TouchableOpacity, Platform, FlatList, Alert, ScrollView,BackHandler } from 'react-native';
+import { StyleSheet, View, Image, Text, Pressable, TouchableOpacity, Platform, FlatList, Alert, ScrollView, BackHandler } from 'react-native';
 import { colors, fonts, images } from '../core';
 import { useFocusEffect } from '@react-navigation/native';
 import HeaderComponents from '../components/HeaderComponents';
@@ -34,6 +34,8 @@ query {
         AddressLine1
         ImageURL
         Village
+        PostalCode
+        
     },
     getAddressTypes{ 
         Id 
@@ -81,18 +83,18 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
     );
 
     useEffect(() => {
-        if(BackHandler){
+        if (BackHandler) {
             BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
             return () => {
                 BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
             };
         }
     }, [])
-    const handleBackButtonClick= () => {
+    const handleBackButtonClick = () => {
         navigation.goBack();
         return true;
-      }
-    const onPressBack = async() => {
+    }
+    const onPressBack = async () => {
         await EncryptedStorage.setItem('currentPage', 'subCategory');
         navigation.goBack();
 
@@ -105,6 +107,12 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
     }
     const onPressAddNewAddress = () => {
         navigation.navigate('SelectStateScreen', { isType: '' });
+    }
+
+    const editAddress = (data) => {
+        console.log('what is the data');
+        console.log(data);
+  navigation.navigate('SelectStateScreen', { isType: '', isEdit: true, data: data });
     }
     const updateValue = () => {
         setIsFetching(false);
@@ -133,6 +141,7 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
                 "AddressLine1": addressInfo.AddressLine1,
                 "ImageURL": addressInfo.ImageURL,
                 "Village": addressInfo.Village,
+                "PostalCode":addressInfo.PostalCode,
                 isSelected: false
             }
             addresses.push(tempInfo)
@@ -143,11 +152,12 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
     }
 
 
-    
+
     const GetUserAddress = graphql(GETADDRESS_QUERY)(props => {
         const { error, data, loading } = props.data;
         { console.log('getUserAddress', props.data) }
         if (props.data && props.data.getUserAddress) {
+            setLoadingIndicator(false);
             setTimeout(async () => {
                 updateDate(props.data.getUserAddress, props.data.getAddressTypes)
             }, 1000);
@@ -157,6 +167,7 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
             );
         }
         if (error) {
+            setLoadingIndicator(false);
             setIsFetching(false);
             console.log('errorerrorerrorerror', error);
             return (
@@ -194,9 +205,10 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
         {
             text: 'Yes',
             onPress: () => {
-                if (loading) {
-                    setLoadingIndicator(true)
-                }
+
+
+                setIsFetching(true);
+                setLoadingIndicator(true);
                 console.log('item ----', item)
                 deleteUserAddress({
                     variables: { Id: item.AddressInfoId }
@@ -206,9 +218,10 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
                         Alert.alert('', res.data.deleteUserAddress, [{
                             text: 'Ok',
                             onPress: () => {
-                                setAddressList([]);
-                                setLoadingIndicator(true);
-                                setIsFetching(true);
+                              setAddressList([]);
+                              setLoadingIndicator(true);
+                              setIsFetching(true);
+
                                 return;
                             },
                         },
@@ -246,7 +259,7 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
     }
     const onPressSelectCategory = (typeInfo) => {
         setSelectedCategory(typeInfo.Name);
-        const filtered = fullAddressList.filter(entry => entry.AddressType== typeInfo.Name);
+        const filtered = fullAddressList.filter(entry => entry.AddressType == typeInfo.Name);
         setAddressList(filtered);
 
     }
@@ -328,7 +341,9 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
                                     onPressSelectAddress={onPressSelectAddress}
                                     onPressDeleteAddress={() =>
                                         onPressDeleteAddress(item)
-                                    } />
+                                    }
+                                    edit={()=>editAddress(item)}
+                                    />
                             )
                         }}
                     />
@@ -345,7 +360,7 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
             {(isFetching) && (
                 <GetUserAddress />
             )}
-            {/* {loadingIndicator && <Loading />} */}
+            {loadingIndicator && <Loading />}
         </View>
     );
 };

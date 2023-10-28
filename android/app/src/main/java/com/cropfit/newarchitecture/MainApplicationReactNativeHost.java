@@ -1,4 +1,4 @@
-package com.mahathiinfotech.cropfit.newarchitecture;
+package com.farmer.farmfit.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.mahathiinfotech.cropfit.BuildConfig;
-import com.mahathiinfotech.cropfit.newarchitecture.components.MainComponentsRegistry;
-import com.mahathiinfotech.cropfit.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.farmer.farmfit.BuildConfig;
+import com.farmer.farmfit.newarchitecture.components.MainComponentsRegistry;
+import com.farmer.farmfit.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

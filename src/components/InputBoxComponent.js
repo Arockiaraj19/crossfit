@@ -30,7 +30,7 @@ const InputBoxComponent = ({
                 </Text>
                 <View style={ (isBorder) ? styles.view_enterBorder : styles.view_enter}>
                     <TextInput style={ (isBorder) ?  styles.search_InputBorder : styles.search_Input }
-                            value={updateText}
+                            value={value}
                             onChangeText={(text) => textUpdate(text)}
                             autoCapitalize='none'
                             autoCorrect={false}
