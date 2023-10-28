@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback, useState } from 'react';
-import { StyleSheet, Alert, View, Image, PermissionsAndroid, KeyboardAvoidingView, Linking, Dimensions, ImageBackground, TouchableOpacity, Text, ScrollView, TextInput, Modal, Pressable, FlatList, Switch } from 'react-native';
+import { StyleSheet, Alert, View, Image, PermissionsAndroid, KeyboardAvoidingView, Linking, Dimensions, ImageBackground, TouchableOpacity, Text, ScrollView, TextInput, Modal, Pressable, FlatList, Switch , ActivityIndicator} from 'react-native';
 import { colors, fonts, images } from '../core';
 import LanguageSelectionComponent from '../components/LanguageSelectionComponent';
 import { AuthContext } from '../components/AuthContext';
@@ -72,6 +72,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
     const [userName, setUserName] = React.useState('');
     const [referalCode, setReferalCode] = React.useState('');
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
+    const [registerLoading, setregisterLoading] = React.useState(false);
     const [isGetLables, setIsGetLables] = React.useState(false);
     const [profileImageUrl, setProfileImageUrl] = React.useState('');
     const [userRole, setUserRole] = React.useState('');
@@ -530,6 +531,9 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         setIsShowLanguageList(false);
     }
     const onPressContinue = () => {
+        if(registerLoading){
+            return;
+        }
         console.log('mobileNumber.lengthmobileNumber.lengthmobileNumber.length', userMobileNumber.length)
         if (userMobileNumber == '') {
             Alert.alert('', errorNumer, [{
@@ -581,14 +585,25 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         }
         else if (userMobileNumber != '' && userName != '' && state.languageId != '' && userRoleId != '' && checkBoxSelected) {
             console.log("sinup",{ mobileNo: userMobileNumber, language: state.languageId, roleId: userRoleId, profilePicPath: userProfileImage, userName: userName, referalCode: referalCode, deviceToken: pushDeviceToken })
+ 
+           setregisterLoading(true);
             generateOTP({
                 variables: { mobileNo: userMobileNumber, language: state.languageId, roleId: userRoleId, profilePicPath: userProfileImage, userName: userName, referalCode: referalCode, deviceToken: pushDeviceToken}
             })
                 .then(res => {
+                    setregisterLoading(false);
                     console.log(res.data.generateOTP);
                     navigation.navigate('OTPVerficationScreen', { mobileNo: userMobileNumber, userName: userName, userId: res.data.generateOTP.userId, profileImage: userProfileImage, referalCode: referalCode })
                 })
                 .catch(e => {
+                    setregisterLoading(false);
+
+                    Alert.alert('Error', e.message, [{
+                        text: 'OK', onPress: () => {
+                            return;
+                        },
+                    },
+                    ]);
                     console.log('errer ------------------', e.message);
                 });
         }
@@ -979,13 +994,14 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         }
     };
     const access = new Credentials({
-        accessKeyId: "AKIASVAYFY3SML3QPD5N",
-        secretAccessKey: "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",
+        accessKeyId: "366C9B5CDA3A8A07C6AE",
+        secretAccessKey: "gL9Gy80fmJie38u8MsdalXWzOAasVwjxqXKKkZYm",
     });
 
     const s3 = new S3({
         credentials: access,
-        region: "ap-south-1", //"us-west-2"
+		endpoint: 'https://s3.filebase.com', 
+        region: "us-east-1",
         signatureVersion: "v4",
     });
     const request = async () => {
@@ -1219,7 +1235,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
             <View style={{ marginTop: 20, width: '100%', height: 45, alignItems: 'center' }}>
                 <TouchableOpacity style={styles.continue_touch}
                     onPress={onPressContinue}>
-                    <Text style={styles.continue_text}>{continueText}</Text>
+              {registerLoading?   <ActivityIndicator size="small" color={colors.white_color} />:<Text style={styles.continue_text}>{continueText}</Text>}      
                 </TouchableOpacity>
             </View>
             <View style={{ width: '100%', height: 25, }} />

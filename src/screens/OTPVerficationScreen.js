@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, View, Image, Text, } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Image, Text, ActivityIndicator,Alert } from 'react-native';
 import { colors, fonts, images } from '../core';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { AuthContext } from '../components/AuthContext';
@@ -30,6 +30,7 @@ const OTPVerficationScreen = ({ navigation, route }) => {
 
     const [isOTPVerify, setIsOTPVerify] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [continueLoading, setContinueLoading] = React.useState(false);
     const [state, setState] = React.useState({
         otpValue: 0,
     });
@@ -59,13 +60,17 @@ const OTPVerficationScreen = ({ navigation, route }) => {
 
     }
     const onPressContinue = () => {
+        if(continueLoading){
+            return;
+        }
         setIsOTPVerify(true);
     }
     const updateValues = (isLoading) => {
-        setIsOTPVerify(false);
+        setIsOTPVerify(isLoading);
         setLoading(isLoading);
     }
     const loginSuccessfully = async (data) => {
+        setContinueLoading(false);
         setIsOTPVerify(false);
         setEnableLogin((pre)=> false)
         setLoading(false);
@@ -125,23 +130,34 @@ const OTPVerficationScreen = ({ navigation, route }) => {
             <View style={{ marginTop: 40, width: '100%', height: 45, alignItems: 'center' }}>
                 <TouchableOpacity style={styles.continue_touch}
                     onPress={onPressContinue}>
-                    <Text style={styles.continue_text}>{continueText}</Text>
+                 {continueLoading?   <ActivityIndicator size="small" color={colors.white_color} />:<Text style={styles.continue_text}>{continueText}</Text>}      
                 </TouchableOpacity>
             </View>
             {(isOTPVerify) && (
                 <Query query={CONTINENT_QUERY} variables={{ userId: route?.params?.userId, OTP: state.otpValue }}>
                     {({ loading, error, data }) => {
+                        console.log(loading,error,data);
                         if (loading) {
-                            () =>
-                                // setIsOTPVerify(false);
-                                updateValues(true);
+                            setContinueLoading(true);
+                            updateValues(true);
+                               
                             return null
                         };
                         if (error) {
+                            console.log("error");
+                            console.log(error);
+                            setContinueLoading(false);
                             updateValues(false);
+                            Alert.alert('Error', error.message, [{
+                                text: 'OK', onPress: () => {
+                                    return;
+                                },
+                            },
+                            ]);
                             return null;
                         }
                         if (!data) {
+                            setContinueLoading(false);
                             updateValues(false);
                             return null;
                         }
@@ -150,7 +166,7 @@ const OTPVerficationScreen = ({ navigation, route }) => {
                     }}
                 </Query>
             )}
-            {loading && <Loading />}
+         
         </View>
     );
 };

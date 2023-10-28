@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, Platform, Pressable, KeyboardAvoidingView, ScrollView, TextInput, Modal, Alert, FlatList, PermissionsAndroid } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, Platform, Pressable, KeyboardAvoidingView, ScrollView, TextInput, Modal, Alert, FlatList, PermissionsAndroid, ActivityIndicator } from 'react-native';
 import { colors, fonts, images } from '../core';
 import { AuthContext } from '../components/AuthContext';
 import DatePicker from 'react-native-date-picker'
@@ -38,18 +38,8 @@ query {
 `;
 
 const UPDATEUSERPROFILE_QUERY = gql`
-mutation ($Id: ID!, $name: String! $gender: ID!, $dob: String!, $emailId: String!, $preferredLanguageId: ID!, $primaryRoleId: ID!){
-    updateUserProfile(Id: $Id , name: $name, gender: $gender, dob: $dob, emailId: $emailId, preferredLanguageId: $preferredLanguageId, primaryRoleId: $primaryRoleId) {
-        UserId 
-    
-        MobileNo 
-    
-        UserName 
-    
-        token 
-        
-        ProfilePicPath
-    }
+mutation ($Id: ID!, $name: String!, $gender: ID!, $dob: String!, $emailId: String!, $preferredLanguageId: ID!, $primaryRoleId: ID!){
+    updateUserProfile(Id: $Id , name: $name, gender: $gender, dob: $dob, emailId: $emailId, preferredLanguageId: $preferredLanguageId, primaryRoleId: $primaryRoleId) 
    
   }
 `;
@@ -98,7 +88,7 @@ const PersonalInfoScreen = ({ navigation, route }) => {
         setLoginToken,
         setHomeFetch,
     } = useContext(AuthContext);
-
+const [updateloading,setUpdateLoading]=React.useState(false);
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
     const [isFetch, setIsFetch] = React.useState(true);
     const [isFetchRole, setIsFetchRole] = React.useState(true);
@@ -176,11 +166,11 @@ const PersonalInfoScreen = ({ navigation, route }) => {
         if (isCameraPermitted && isStoragePermitted) {
             ImagePicker.launchCamera(option, (res) => {
                 if (res.didCancel) {
-                    console.log('User cancelled image picker');
+                
                 } else if (res.error) {
-                    console.log('ImagePicker Error: ', res.error);
+                  
                 } else if (res.customButton) {
-                    console.log('User tapped custom button: ', res.customButton);
+                  
                     alert(res.customButton);
                 } else {
                     setProfileImageUrl(res.assets[0].uri)
@@ -228,7 +218,7 @@ const PersonalInfoScreen = ({ navigation, route }) => {
     };
 
     const handleChoosePhoto = async() => {
-        console.log("choose");
+       
         ImagePicker.launchImageLibrary(
            { 
             mediaType : 'photo',
@@ -274,14 +264,14 @@ const PersonalInfoScreen = ({ navigation, route }) => {
                 variables: { Id: userId, ProfilePicPath: profileImage }
             })
                 .then(res => {
-                    console.log("loggggress",res)
+                   
                     setLoadingIndicator(false)
                     setProfileImageUrl(profileImage);
                     setTimeout(async () => {
                         try {
                             await EncryptedStorage.setItem('ProfileImage', profileImage);
                         } catch (e) {
-                            console.log(e)
+                           
                         }
                     }, 100);
                 })
@@ -294,6 +284,7 @@ const PersonalInfoScreen = ({ navigation, route }) => {
 
     useFocusEffect(
         React.useCallback(() => {
+            setIsFetch(true);
             let isActive = true;
             setTimeout(async () => {
                 let profileImage = await getUserProfileImage();
@@ -365,8 +356,9 @@ const PersonalInfoScreen = ({ navigation, route }) => {
             ]);
         }
         else {
-//             var token = await getAccessToken();
-// console.log('tokentokentoken',token)
+if(updateloading){return;}
+            setUpdateLoading(true);
+
             if (loading) {
                 setLoadingIndicator(true)
             }
@@ -376,31 +368,25 @@ const PersonalInfoScreen = ({ navigation, route }) => {
             })
                 .then(res => {
                     console.log('res ------------------', res);
-                    if(res.data?.updateUserProfile){
-                    (async () => {
-                        setLoginToken(res.data.updateUserProfile?.token)
-                        await EncryptedStorage.setItem('access_token', res.data.updateUserProfile?.token)
-                        setLanguageInfoId(userLanguageId)
-                        await EncryptedStorage.setItem("languageId",userLanguageId)
-                            try {
-                                await EncryptedStorage.setItem('userName', userName);
-                                if(languageInfoId !=userLanguageId){
-                                    setHomeFetch(true)
-                                    navigation.navigate('HomeScreen');
-                                   } else {
-                                    navigation.goBack();
-                                   }
-                            } catch (e) {
-                                console.log('error ---------------', e)
-                            }
-                            setLoadingIndicator(false)
-                        })()
-                    }
-                    else {
-                        setLoadingIndicator(false);
-                    }
+                    setIsFetch(true);
+                    setUpdateLoading(false);
+                    Alert.alert('Success', "Profile updated successfully", [{
+                        text: 'OK', onPress: () => {
+                           
+                            navigation.goBack();
+                            return;
+                        },
+                    },
+                    ]);
+                    // if(languageInfoId !=userLanguageId){
+                    //     setHomeFetch(true)
+                    //     navigation.navigate('HomeScreen');
+                    //    } else {
+                    //     navigation.goBack();
+                    //    }
                 })
                 .catch(e => {
+                    setUpdateLoading(false);
                     setLoadingIndicator(false)
                     console.log('error ------------------', e.message);
                 });
@@ -410,12 +396,14 @@ const PersonalInfoScreen = ({ navigation, route }) => {
         const { error, data, loading } = props.data;
         if (error) {
             setIsFetch(false);
-            { console.log('errorerrorerror 1111', error) }
+          
             return <View />;
         }
+        
         if (!loading) {
-            // console.log('propspropspropspropspropsprops', props)
+            // 
             if (props.data?.getUserProfile != undefined) {
+                console.log('propspropspropspropspropsprops',props.data.getUserProfile)
                 setTimeout(async () => {
                     updateValue(props.data.getUserProfile);
                 }, 500);
@@ -426,18 +414,17 @@ const PersonalInfoScreen = ({ navigation, route }) => {
         }
         return <View />;
     });
-    const updateValue = (UserProfile) => {
-        console.log("user")
+    const updateValue = async(UserProfile) => {
+        setIsFetchRole(false)
         let genderInfo = (UserProfile.GenderId != null) ? ((UserProfile.GenderId == 1) ? 'male' : (UserProfile.GenderId == 2) ? 'female' : 'others') : '';
-        console.log('UserProfile -----', UserProfile)
-
+       
         setLoadingIndicator(false)
         setIsFetch(false);
         setUserId(UserProfile.UserId);
         setUserName(UserProfile.UserName);
         setUserMobile(UserProfile.MobileNo);
         setUserEmail((UserProfile.Email != null) ? UserProfile.Email : '');
-        setUserBirthDate((UserProfile.DOB != null) ? UserProfile.DOB : dateOfBirth);
+        setUserBirthDate((UserProfile.DOB != null) ?moment(Date.parse(UserProfile.DOB)).format("DD - MMMM - YYYY")  : dateOfBirth);
         setUserRole((UserProfile.PrimaryRoleName != null) ? UserProfile.PrimaryRoleName : '');
         setUserRoleId((UserProfile.PrimaryRole != null) ? UserProfile.PrimaryRole : '');
         setUserLanguage((UserProfile.PreferredLanguageName != null) ? UserProfile.PreferredLanguageName : '');
@@ -445,14 +432,23 @@ const PersonalInfoScreen = ({ navigation, route }) => {
         setUserGender((UserProfile.GenderId != null) ? UserProfile.GenderId : 0);
         setIsGenderType(genderInfo);
         setDobformat((UserProfile.DOB != null) ? UserProfile.DOB : '')
+        setLoginToken(res.data.updateUserProfile?.token);
 
-        setTimeout(async () => {
-            console.log('userLanguageIduserLanguageIduserLanguageIduserLanguageId -------------------', userLanguage);
-            setIsFetchRole(false)
-        }, 500);
+     try{
+     await   EncryptedStorage.setItem('userName', UserProfile.UserName);
+     
+      await  EncryptedStorage.setItem("languageId",(UserProfile.PreferredLanguage != null) ? UserProfile.PreferredLanguage : 0);
+      console.log("name setted");
+     }catch(e){
+        console.log("Error in store the name");
+        console.log(e);
+     }
+              
+ 
+       
     }
     const onPressSelectGender = (type) => {
-        console.log('type -------------------', type);
+      
 
         setIsGenderType(type);
         setUserGender((type == 'male') ? 1 : ((type == 'female') ? 2 : 3))
@@ -472,19 +468,20 @@ const PersonalInfoScreen = ({ navigation, route }) => {
     const onPressSelectLanguage = () => {
         navigation.navigate('LanguageListScreen', {
             onReturn: (item) => {
-                console.log('itemitemitem ---------', item);
+               
                 setUserLanguage(item.language);
                 setUserLanguageId(item.languageId);
             },
         })
     }
     const onPressSelectRole = () => {
+      
         setModalVisible(true);
         setIsPopupType('Role')
     }
     const GetRolesComponent = graphql(GETROLES_QUERY)(props => {
         const { error, getRoles, loading } = props.data;
-        { console.log('propspropsprops 121212121 ---- ', props) }
+      
         if (getRoles) {
             setTimeout(async () => {
                 updateLoading(false);
@@ -496,7 +493,7 @@ const PersonalInfoScreen = ({ navigation, route }) => {
             );
         }
         if (error) {
-            console.log('errorerrorerrorerror', error);
+        
             setTimeout(async () => {
                 updateLoading(false);
             }, 500);
@@ -563,7 +560,7 @@ const PersonalInfoScreen = ({ navigation, route }) => {
                         updateLoading(false);
                         return null;
                     }
-                    console.log('getRolesgetRolesgetRolesgetRolesgetRoles', data)
+                   
                     updateDate(data.getRoles)
                     return null;
                 }}
@@ -766,7 +763,7 @@ const PersonalInfoScreen = ({ navigation, route }) => {
             <View style={styles.view_headerBottom}>
                 <TouchableOpacity style={styles.button_edit}
                     onPress={onPressSaveProfile}>
-                    <Text style={styles.text_edit}>{saveAddress}</Text>
+                   {updateloading?   <ActivityIndicator size="small" color={colors.white_color} />:<Text style={styles.text_edit}>{saveAddress}</Text>}         
                 </TouchableOpacity>
             </View>
             {loadingIndicator && <Loading />}

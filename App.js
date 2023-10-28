@@ -78,9 +78,10 @@ import NotificationScreen from './src/screens/NotificationScreen';
 import messaging from '@react-native-firebase/messaging';
 import  {firebase}  from '@react-native-firebase/app';
 
-// import { useDispatch } from 'react-redux';
+ import { useDispatch } from 'react-redux';
 import { getDashboardData } from './src/features/homeview/controller/home_view_controller';
-
+import { storee } from './src/redux/store'
+import { Provider } from 'react-redux'
 
 const lableQuery = gql`
 query getAppLabels($languageId: ID!) {
@@ -704,8 +705,6 @@ const App = () => {
   // const dispatchRedux = useDispatch();
   // useEffect(() => {
   //   dispatchRedux(getDashboardData());
-  
-  
   // }, [])
   const initialLoginState = {
     isLoading: true,
@@ -1128,6 +1127,7 @@ useEffect(()=>{
     )
   };
   return (
+    <Provider store={storee}>
     <ApolloProvider client={client}>
       <AuthContext.Provider value={store}>
    
@@ -1446,7 +1446,7 @@ useEffect(()=>{
         }
       </AuthContext.Provider>
     </ApolloProvider>
-
+</Provider>
 
   );
 };

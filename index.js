@@ -16,8 +16,7 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
 
  
 LogBox.ignoreAllLogs();
-
-// AppRegistry.registerComponent(appName, () =>  <Provider store={store}>
-// <App />
-// </Provider>);
-AppRegistry.registerComponent(appName, () => <App/>);
+const MainComponent=()=><Provider store={store}>
+<App /> </Provider>
+// AppRegistry.registerComponent(appName, () =>  );
+AppRegistry.registerComponent(appName, () => App);

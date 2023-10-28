@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View, Platform, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, View, Platform, TextInput, TouchableOpacity, Alert,ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { colors, fonts } from "../core"
 import { useNavigation } from '@react-navigation/native';
@@ -25,12 +25,16 @@ const LoginScreen = () => {
     const [mobileNumber, setUserMobileNumber] = useState('')
     const [error, setErr] = useState({ mobileNumErr: '' })
     const [token, setToken] = useState('')
+    const [loading, setLoading] = React.useState(false);
     const { enterPhoneNumebr, pushDeviceToken,continueText,welcomeText,loginandSignup,errorNumer,dontHaveAccountText,singUpText,setIsShowLanguage,userNotExist } = useContext(AuthContext)
     const [userLogin, { }] = useMutation(LOGIN_QUERY)
 
 
 
     function handleLogin() {
+        if(loading){
+            return;
+        }
         if (mobileNumber === '') {
             setErr((pre) => ({
                 ...pre,
@@ -47,10 +51,11 @@ const LoginScreen = () => {
         setErr({ mobileNumErr: '' })
         return (async () => {
             try {
+                setLoading(true);
                 console.log("what is the login parameter");
                 console.log({ mobileNo: mobileNumber,deviceToken: pushDeviceToken} );
                 const otp = await userLogin({ variables: { mobileNo: mobileNumber,deviceToken: pushDeviceToken} })
-                
+                setLoading(false);
                 if(!otp.data.signInUser.error){
                     navigation.navigate('OTPVerficationScreen', { mobileNo: mobileNumber,userId: otp.data.signInUser.userId })
                 } else { 
@@ -64,6 +69,13 @@ const LoginScreen = () => {
                    }
                 } 
             } catch (err) {
+                setLoading(false);
+                Alert.alert('Error', err.toString(), [{
+                    text: 'OK', onPress: () => {
+                        return;
+                    },
+                },
+                ]);
                 console.log("error", err);
             }
         })()
@@ -110,7 +122,7 @@ const LoginScreen = () => {
             <View style={{ marginTop: 20, width: '100%', height: 45, alignItems: 'center' }}>
                 <TouchableOpacity style={styles.continue_touch}
                     onPress={() => handleLogin()}  >
-                    <Text style={styles.continue_text}>{continueText}</Text>
+                     {loading?   <ActivityIndicator size="small" color={colors.white_color} />:<Text style={styles.continue_text}>{continueText}</Text>}      
                 </TouchableOpacity>
             </View>
 

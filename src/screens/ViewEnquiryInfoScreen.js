@@ -12,7 +12,7 @@ import gql from 'graphql-tag';
 import { handlePhoneCall } from '../helpers/AppManager';
 import { fetchDataFromServer, sendDataToServer } from '../helpers/QueryFetching';
 import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
-import { ConfigurationServicePlaceholders } from 'aws-sdk/lib/config_service_placeholders';
+
 
 const SHOWINTERESTENQUIRY_QUERY = gql`
 mutation ($enquiryId: ID!){
