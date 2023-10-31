@@ -34,6 +34,7 @@ const MandiListDetailScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         setTimeout(async () => {
+            setLoadingIndicator(true);
             setIsFetch(false);
         }, 100);
     }, [])
@@ -52,13 +53,18 @@ const MandiListDetailScreen = ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const updateLoading = (isloading) => {
-        setIsFetch(true);
-        setLoadingIndicator(isloading);
+        // if(isloading==false){
+        //     setIsFetch(true);
+        // }
+        if(isloading==false){
+            setLoadingIndicator(false);
+        }
+   
     }
     const updateDate = (list) => {
         setLoadingIndicator(false);
         console.log('listlistlistlist ----- ', list);
-        setIsFetch(true);
+     setIsFetch(true);
         setLoadingIndicator(false);
         if(list.length == 0){
             setIsEmpty(true)

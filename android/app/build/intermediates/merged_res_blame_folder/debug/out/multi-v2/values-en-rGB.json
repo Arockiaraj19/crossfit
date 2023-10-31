@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-42:/values-en-rGB/values-en-rGB.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-en-rGB/values-en-rGB.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\261e4e11b3c36f71e2c94a827a0f82ef\\transformed\\appcompat-1.5.0\\res\\values-en-rGB\\values-en-rGB.xml",

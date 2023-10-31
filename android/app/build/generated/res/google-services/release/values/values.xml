@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">24381328168</string>
+    <string name="google_api_key" translatable="false">AIzaSyA2MB5xdnf6LPgK1PDlUOZ5wHu50EJOebg</string>
+    <string name="google_app_id" translatable="false">1:24381328168:android:7ab56bb8aacc6972481e1d</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA2MB5xdnf6LPgK1PDlUOZ5wHu50EJOebg</string>
+    <string name="google_storage_bucket" translatable="false">farmfit-d68d9.appspot.com</string>
+    <string name="project_id" translatable="false">farmfit-d68d9</string>
+</resources>

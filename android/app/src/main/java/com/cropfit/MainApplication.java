@@ -13,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.facebook.react.modules.network.OkHttpClientProvider;
+import com.reactnativerestart.RestartPackage; 
 //import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 
 public class MainApplication extends Application implements ReactApplication {

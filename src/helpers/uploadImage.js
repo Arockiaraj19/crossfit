@@ -1,15 +1,20 @@
 import storage from '@react-native-firebase/storage';
 import uuid from 'react-native-uuid';
-
+import { Image } from 'react-native-compressor';
 export default uploadImageToStorage=async(path)=>{
 try{
+    const result = await Image.compress(path);
+    console.log("what is the compress image path");
+    console.log(result);
+   
+
     console.log("what is the path");
-    console.log(path);
+   
     const ref=`images/${uuid.v4()}.png`;
-    console.log("ref",ref);
+   
     
     const reference = storage().ref(ref);
-    const task= reference.putFile(path);
+    const task= reference.putFile(result);
     await task;
     
     const url = await reference.getDownloadURL();

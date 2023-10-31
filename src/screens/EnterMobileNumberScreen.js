@@ -990,7 +990,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
                     // setIsDefaultPic(false)
                     // setImage_url(res.assets[0].uri)
                     setProfileImageUrl(res.assets[0].uri)
-                    uploadImage(Platform.OS === "android" ? ('file://' + res.assets[0].uri) : res.assets[0].uri);
+                    uploadImage(res.assets[0].uri);
                 }
             });
         }

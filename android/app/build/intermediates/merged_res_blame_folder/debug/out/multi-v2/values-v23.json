@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-42:/values-v23/values-v23.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-v23/values-v23.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\de8da0419d5ceb598d918af771a752fc\\transformed\\work-runtime-2.7.1\\res\\values-v23\\values-v23.xml",

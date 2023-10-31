@@ -234,9 +234,7 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
            // console.log('url -----------', image_file)
             const profileImage=await uploadImageToStorage(mandiImage);
             setTimeout(async () => {
-                // const res = await fetchUploadUrl(urlaws, image_file);
-                // let profileImage = res.url.split('?')[0];
-                // console.log('resresresresres -----------', res.url.split('?')[0])
+               
                 setMandiImageUrl(profileImage)
                 onPressUploadMandi(profileImage)
             }, 100);

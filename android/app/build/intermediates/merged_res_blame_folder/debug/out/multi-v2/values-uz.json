@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-42:/values-uz/values-uz.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-uz/values-uz.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\705b3107c1b7090ee6a21b3c568efba7\\transformed\\material-1.9.0\\res\\values-uz\\values-uz.xml",

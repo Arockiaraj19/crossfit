@@ -138,9 +138,9 @@ const SelectAddressScreen = ({ navigation, route }) => {
             console.log("what is the params i am getting");
           
             if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
-                console.log({Id:route.params.data.Id, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town:"", taluk:"", village: userVillage, postal: parseInt(userPincode) });
+                console.log({Id:route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town:"", taluk:"", village: userVillage, postal: parseInt(userPincode) });
                 updateUserAddress({
-                    variables: {Id:route.params.data.Id, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town:1, taluk:1, village: userVillage, postal: parseInt(userPincode) }
+                    variables: {Id:route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town:1, taluk:1, village: userVillage, postal: parseInt(userPincode) }
                 })
                     .then(res => {
                         setLoadingIndicator(false)

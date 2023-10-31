@@ -19,7 +19,7 @@ const AddressInfoComponent = ({
                         source={images.LOCATIONICON} />
                     <View style={{ marginTop: 10, width: '66%', height: '90%', }}>
                         <Text style={styles.text_type}>{props.AddressType}</Text>
-                        <Text style={styles.text_address}>{props.AddressLine1 + ', ' + props.Village + ', '  + props.District + ', ' + props.State}</Text>
+                        <Text style={styles.text_address}>{props.AddressLine1 + ', ' + props.Village + ', '  + props.District + ', ' + props.State +" - "+props.PostalCode}</Text>
                     </View>
                     <TouchableOpacity style={styles.select_address}
                         onPress={() =>

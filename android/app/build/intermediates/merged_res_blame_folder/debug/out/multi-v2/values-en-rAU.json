@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-42:/values-en-rAU/values-en-rAU.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-en-rAU/values-en-rAU.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\261e4e11b3c36f71e2c94a827a0f82ef\\transformed\\appcompat-1.5.0\\res\\values-en-rAU\\values-en-rAU.xml",

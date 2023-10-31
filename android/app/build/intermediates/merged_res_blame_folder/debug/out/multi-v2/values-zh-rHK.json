@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-42:/values-zh-rHK/values-zh-rHK.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-zh-rHK/values-zh-rHK.xml",
             "map": [
                 {
                     "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\d8184e5508366d4247e29d249ada3896\\transformed\\jetified-play-services-basement-18.2.0\\res\\values-zh-rHK\\values.xml",

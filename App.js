@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, createContext } from 'react';
 import {
   Image,
   StyleSheet,
@@ -76,9 +76,9 @@ import Modal from "react-native-modal";
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 import NotificationScreen from './src/screens/NotificationScreen';
 import messaging from '@react-native-firebase/messaging';
-import  {firebase}  from '@react-native-firebase/app';
+import { firebase } from '@react-native-firebase/app';
 
- import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getDashboardData } from './src/features/homeview/controller/home_view_controller';
 import { storee } from './src/redux/store'
 import { Provider } from 'react-redux'
@@ -91,12 +91,12 @@ query getAppLabels($languageId: ID!) {
 
 const Stack = createNativeStackNavigator();
 
-
+export const TasksDispatchContext = createContext(null);
 const App = () => {
 
 
- 
-  
+
+
 
   const [isLoading, setIsLoading] = useState(true);
   const [loginToken, setLoginToken] = useState('');
@@ -311,18 +311,18 @@ const App = () => {
   const [alreadyRegister, setAlreadyRegister] = useState('Already have an account');
   const [singinText, setSignInText] = useState('Sign In')
   const [isShowLanguage, setIsShowLanguage] = useState(false)
-  const [quantityLabel,setQuantityLabel] = useState('Quantity')
-  const [notificationTitle,setNotificationTitle] = useState('Notification')
-  const [emptyNotification,setEmptyNotification] = useState('No Notification is Available')
+  const [quantityLabel, setQuantityLabel] = useState('Quantity')
+  const [notificationTitle, setNotificationTitle] = useState('Notification')
+  const [emptyNotification, setEmptyNotification] = useState('No Notification is Available')
   const [notificationLength, setNotificationLength] = useState()
   const [activeNotification, setActiveNotification] = useState(false)
-  const [myActivity,setActivity] = useState('My Activity')
-  const [bidText,setBidText] = useState('Bid')
-  const [enquiryText,setEnquiryText] = useState('Enquiry')
-  const [loginLabel,setLoginLabel] = useState('Log In')
-  const [lotText,setLotText] = useState('Lot') 
+  const [myActivity, setActivity] = useState('My Activity')
+  const [bidText, setBidText] = useState('Bid')
+  const [enquiryText, setEnquiryText] = useState('Enquiry')
+  const [loginLabel, setLoginLabel] = useState('Log In')
+  const [lotText, setLotText] = useState('Lot')
   const [userNotExist, setuserNotExist] = useState('User not registered')
-  const [homeReload,setHomeFetch] = useState(false)
+  const [homeReload, setHomeFetch] = useState(false)
   const [referralCode, setReferralCode] = useState('Have Referral Code')
 
   const store = {
@@ -631,18 +631,18 @@ const App = () => {
     enquiryMessage, setEnquiryMessage,
     updateSuccess, setUpdateSuccess,
     termsAndConditions, setTermsAndConditions,
-    minAmountPerGvtAlert,setMinAmountPerGvtAlert,
+    minAmountPerGvtAlert, setMinAmountPerGvtAlert,
     helpLine, setHelpLine,
     approveErrorMsg, setApproveErrorMsg,
     pickupAddress, setPickupAddress,
-    comingSoon,setComingSoon,
+    comingSoon, setComingSoon,
     areYouSureAccept, setAreYouSureAccept,
     areYouSureDecline, setAreYouSureDecline,
     deleteAccount, setDeleteAccount,
     deleteMessage1, setDeleteMessage1,
     deleteMessage2, setDeleteMessage2,
     deleteMessage3, setDeleteMessage3,
-    deleteMessage4, setDeleteMessage4,    
+    deleteMessage4, setDeleteMessage4,
     share, setShare,
     deleteMessage4, setDeleteMessage4,
     welcome, setWelcome,
@@ -654,18 +654,18 @@ const App = () => {
     alreadyRegister, setAlreadyRegister,
     singinText, setSignInText,
     isShowLanguage, setIsShowLanguage,
-    quantityLabel,setQuantityLabel,
-    emptyNotification,setEmptyNotification,
-    notificationTitle,setNotificationTitle,
+    quantityLabel, setQuantityLabel,
+    emptyNotification, setEmptyNotification,
+    notificationTitle, setNotificationTitle,
     notificationLength, setNotificationLength,
     activeNotification, setActiveNotification,
-    myActivity,setActivity,
-    bidText,setBidText,
-    enquiryText,setEnquiryText,
-    loginLabel,setLoginLabel,
-    lotText,setLotText,
+    myActivity, setActivity,
+    bidText, setBidText,
+    enquiryText, setEnquiryText,
+    loginLabel, setLoginLabel,
+    lotText, setLotText,
     userNotExist, setuserNotExist,
-    homeReload,setHomeFetch,
+    homeReload, setHomeFetch,
     referralCode, setReferralCode,
   };
 
@@ -689,7 +689,7 @@ const App = () => {
     }
   }
 
-  
+
   const handleForceUpdate = async () => {
     if (forceUpdateDetail?.isNeeded) {
       const isSupported = await Linking.canOpenURL(forceUpdateDetail?.storeUrl)
@@ -711,13 +711,13 @@ const App = () => {
     userToken: null,
   };
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
-console.log("what is the login token");
-console.log(loginToken);
+  console.log("what is the login token");
+  console.log(loginToken);
   const client = new ApolloClient({
     link: new HttpLink({
-      uri:  'http://cropfitindia.org/',
+      uri: 'http://cropfitindia.org/',
       headers: {
-        authorization: loginToken, 
+        authorization: loginToken,
       },
     }),
     cache: new InMemoryCache(),
@@ -732,9 +732,13 @@ console.log(loginToken);
       },
     },
   })
- 
+
 
   const loginReducer = (prevState, action) => {
+    // if (action.type == "REFRESH") {
+    //   setLanguage();
+    // }
+
     switch (action.type) {
       case 'RETRIEVE_TOKEN':
         return {
@@ -769,72 +773,76 @@ console.log(loginToken);
   };
 
 
-  const requestUserPermission = async () =>{
+  const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
-      const enabled =
+    const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-      if (enabled) {
-        console.log('Authorization status:', authStatus);
-        getFcmToken();
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+      getFcmToken();
     }
   }
 
- 
-  const  getFcmToken = async () => {
-    try{
+
+  const getFcmToken = async () => {
+    try {
       const fcmToken = await messaging().getToken()
       if (fcmToken) {
         setPushDeviceToken(fcmToken)
         await EncryptedStorage.setItem('pushToken', fcmToken);
-         console.log('tokentokentokentokentoken',fcmToken)
+        console.log('tokentokentokentokentoken', fcmToken)
       } else {
         console.log("[FCMService] User does not have a devices token")
       }
-    } catch(error){
+    } catch (error) {
       console.log("[FCMService] getToken Rejected", error)
     }
-}
+  }
 
-useEffect(()=>{
-  requestUserPermission()
-},[])
+  useEffect(() => {
+    requestUserPermission()
+  }, [])
 
   useEffect(() => {
     setTimeout(async () => {
-      if (Text.defaultProps == null) Text.defaultProps = {};
-       Text.defaultProps.allowFontScaling = false;
-
-      let userToken = '';
-      let selectedLanguage = '';
-      let LoginTrue;
-      try {
-        userToken = await EncryptedStorage.getItem("access_token");
-      } catch (e) {
-        console.log(e);
-      }
-      try {
-        selectedLanguage = await EncryptedStorage.getItem("languageId");
-      } catch (e) {
-        console.log(e);
-      }
-      console.log('userTokenuserTokenuserToken', userToken);
-      console.log('selectedLanguageselectedLanguageselectedLanguageselectedLanguage', selectedLanguage);
-      setLoginToken(userToken);
-      // if ((userToken !== null) && (userToken !== undefined)) {
-      // }
-      if (selectedLanguage === (Platform.OS === 'ios' ? undefined : null)) {
-        setLanguageInfoId('1');
-        setIsGetLanguageLabel(true);
-      }
-      else {
-        setLanguageInfoId(selectedLanguage);
-        setIsGetLanguageLabel(true);
-      }
-      setIsLoading(false);
+      setLanguage();
     }, 2000);
 
   }, [])
+  const setLanguage = async () => {
+    if (Text.defaultProps == null) Text.defaultProps = {};
+    Text.defaultProps.allowFontScaling = false;
+
+    let userToken = '';
+    let selectedLanguage = '';
+    let LoginTrue;
+    try {
+      userToken = await EncryptedStorage.getItem("access_token");
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      selectedLanguage = await EncryptedStorage.getItem("languageId");
+    } catch (e) {
+      console.log(e);
+    }
+    console.log('userTokenuserTokenuserToken', userToken);
+    console.log('selectedLanguageselectedLanguageselectedLanguageselectedLanguage', selectedLanguage);
+    setLoginToken(userToken);
+    // if ((userToken !== null) && (userToken !== undefined)) {
+    // }
+    if (selectedLanguage === (Platform.OS === 'ios' ? undefined : null)) {
+      setLanguageInfoId('1');
+      setIsGetLanguageLabel(true);
+    }
+    else {
+      setLanguageInfoId(selectedLanguage);
+      setIsGetLanguageLabel(true);
+    }
+    setIsLoading(false);
+  }
+
   const updateValues = () => {
     setIsGetLanguageLabel(false);
   }
@@ -1034,7 +1042,7 @@ useEffect(()=>{
     setDeleteLotAlert(sellScreenLabels.DeleteLotConfirmation)
     setMinAmountPerGvtAlert(sellScreenLabels.MSPValidationMessage)
     setPickupAddress(sellScreenLabels.PickupLocation)
-    
+
     setBitsText(buyScreenLabels.BidProduct)
     setSuccessBid(buyScreenLabels.BidSuccess)
     setRequiredQuantity(buyScreenLabels.RequiredQuantity)
@@ -1108,15 +1116,15 @@ useEffect(()=>{
       />
     ),
     toastPopup: ({ text1, text2, onPress }) => (
-      
+
       <View style={[styles.toastBox, { borderLeftColor: '#008000', width: '90%', backgroundColor: colors.white_color, borderRadius: 7 }]}>
-        <TouchableOpacity onPress={onPress} style={{flex:1,flexDirection:"row", alignItems:"center",padding:10}}>
+        <TouchableOpacity onPress={onPress} style={{ flex: 1, flexDirection: "row", alignItems: "center", padding: 10 }}>
           <View>
-            <Image style={{width: 37, height: 50, }}
+            <Image style={{ width: 37, height: 50, }}
               source={images.CROPFITBLACKLOGO}>
             </Image>
           </View>
-          <View style={{paddingHorizontal:10, width:'90%'}}>
+          <View style={{ paddingHorizontal: 10, width: '90%' }}>
             <Text style={{ fontSize: 17 }}>{text1}</Text>
             <View >
               <Text style={{ fontSize: 15 }}>{text2}</Text>
@@ -1128,325 +1136,326 @@ useEffect(()=>{
   };
   return (
     <Provider store={storee}>
-    <ApolloProvider client={client}>
-      <AuthContext.Provider value={store}>
-   
-        {!isModalVisible ? <NavigationContainer
-          onStateChange={(state) => {
-            if (!state) return;
-        
-          }}>
-          {(loginToken !== (Platform.OS === 'ios' ? undefined : null) && loginToken !== '') ?
-            <Stack.Navigator>
-              <Stack.Screen
-                name="TabNavigator"
-                component={TabNavigator}
-                options={{ headerShown: false, gestureEnabled: false }}
-              />
-              <Stack.Screen
-                name="LanguageListScreen"
-                component={LanguageListScreen}
-                options={{
-                  headerShown: false,
-                  presentation: 'transparentModal',
-                }}
-              />
-              <Stack.Screen
-                name="DeliveryAddressScreen"
-                component={DeliveryAddressScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="AddNewAddressScreen"
-                component={AddNewAddressScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="AddProductLotScreen"
-                component={AddProductLotScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="LotAddSuccessScreen"
-                component={LotAddSuccessScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ViewLotListScreen"
-                component={ViewLotListScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="BidsDetailListScreen"
-                component={BidsDetailListScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="PlaceBitInfoScreen"
-                component={PlaceBitInfoScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="BidPlacedDetailScreen"
-                component={BidPlacedDetailScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="SelectStateScreen"
-                component={SelectStateScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="SelectDistrictScreen"
-                component={SelectDistrictScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="SelectCityScreen"
-                component={SelectCityScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="SelectAddressScreen"
-                component={SelectAddressScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="EditBidsInfoScreen"
-                component={EditBidsInfoScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="UpdateBidsInfoScreen"
-                component={UpdateBidsInfoScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="AddNewEnquiryScreen"
-                component={AddNewEnquiryScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ProfileDetailScreen"
-                component={ProfileDetailScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="PersonalInfoScreen"
-                component={PersonalInfoScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="FarmDetailsScreen"
-                component={FarmDetailsScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="EnquirySuccessScreen"
-                component={EnquirySuccessScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="EnquiryListScreen"
-                component={EnquiryListScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="BidsProductsScreen"
-                component={BidsProductsScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ViewLotDetailsScreen"
-                component={ViewLotDetailsScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="UploadMandiRatesScreen"
-                component={UploadMandiRatesScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="MandiListDetailScreen"
-                component={MandiListDetailScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ViewBidDetailsScreen"
-                component={ViewBidDetailsScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="UpdateLotInfoScreen"
-                component={UpdateLotInfoScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ViewMoreEnquiryListScreen"
-                component={ViewMoreEnquiryListScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ViewMoreLotsListScreen"
-                component={ViewMoreLotsListScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="SellerInfoListScreen"
-                component={SellerInfoListScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ViewEnquiryInfoScreen"
-                component={ViewEnquiryInfoScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="ViewResponseEnquiryScreen"
-                component={ViewResponseEnquiryScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="UpdateEnquiryScreen"
-                component={UpdateEnquiryScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="DeleteAccountScreen"
-                component={DeleteAccountScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-               name='NotificationScreen'
-               component={NotificationScreen}
-               options={{
-                headerShown : false
-               }}
-              />
-            </Stack.Navigator>
-            : <Root />
-          }
-          {(isGetLanguageLabel) && (
-            <Query query={lableQuery} variables={{ languageId: languageInfoId }}>
-              {({ loading, error, data }) => {
-                if (loading) {
-                  () =>
-                    updateValues();
-                  return null
-                };
-                if (error) {
-                  updateValues();
-                  return null;
-                }
-                if (!data) {
-                  updateValues();
-                  return null;
-                }
-                updateLableText(data);
-                return null;
-              }}
-            </Query>
-          )}
-          <Toast config={toastConfig} />
-        </NavigationContainer> :
-          // Show Force Updating Modal for Update new App Version is available!
-          <View style={styles.containerModal}>
-            <Modal
-              isVisible={isModalVisible}
-              slideInUp
-              // propagateSwipe
-              style={styles.modalContainer}
-              backdropColor="#000"
-              backdropOpacity={0.5}
-            >
-              <View style={styles.modalContent}>
-                <View>
-                  <Text style={{ fontFamily: fonts.MONTSERRAT_REGULAR, fontSize: 16 }}>
-                    {`New App Version ${forceUpdateDetail?.latestVersion} Available`}</Text>
-                </View>
-                <View style={{ paddingVertical: 10 }}>
-                  <TouchableOpacity
-                    onPress={() => handleForceUpdate()}
-                    style={{ backgroundColor: '#339933', padding: 13, borderRadius: 5, alignItems: "center" }}
-                  >
-                    <Text
-                      style={{ fontFamily: fonts.MONTSERRAT_REGULAR, fontSize: 16, color: "#fff" }}
-                    >{`Update Now`}</Text>
-                  </TouchableOpacity>
-                </View>
+      <ApolloProvider client={client}>
+        <AuthContext.Provider value={store} >
+          <TasksDispatchContext.Provider value={dispatch}>
+            {!isModalVisible ? <NavigationContainer
+              onStateChange={(state) => {
+                if (!state) return;
+
+              }}>
+              {(loginToken !== (Platform.OS === 'ios' ? undefined : null) && loginToken !== '') ?
+                <Stack.Navigator>
+                  <Stack.Screen
+                    name="TabNavigator"
+                    component={TabNavigator}
+                    options={{ headerShown: false, gestureEnabled: false }}
+                  />
+                  <Stack.Screen
+                    name="LanguageListScreen"
+                    component={LanguageListScreen}
+                    options={{
+                      headerShown: false,
+                      presentation: 'transparentModal',
+                    }}
+                  />
+                  <Stack.Screen
+                    name="DeliveryAddressScreen"
+                    component={DeliveryAddressScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AddNewAddressScreen"
+                    component={AddNewAddressScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AddProductLotScreen"
+                    component={AddProductLotScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="LotAddSuccessScreen"
+                    component={LotAddSuccessScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ViewLotListScreen"
+                    component={ViewLotListScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="BidsDetailListScreen"
+                    component={BidsDetailListScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="PlaceBitInfoScreen"
+                    component={PlaceBitInfoScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="BidPlacedDetailScreen"
+                    component={BidPlacedDetailScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SelectStateScreen"
+                    component={SelectStateScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SelectDistrictScreen"
+                    component={SelectDistrictScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SelectCityScreen"
+                    component={SelectCityScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SelectAddressScreen"
+                    component={SelectAddressScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="EditBidsInfoScreen"
+                    component={EditBidsInfoScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="UpdateBidsInfoScreen"
+                    component={UpdateBidsInfoScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="AddNewEnquiryScreen"
+                    component={AddNewEnquiryScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ProfileDetailScreen"
+                    component={ProfileDetailScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="PersonalInfoScreen"
+                    component={PersonalInfoScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="FarmDetailsScreen"
+                    component={FarmDetailsScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="EnquirySuccessScreen"
+                    component={EnquirySuccessScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="EnquiryListScreen"
+                    component={EnquiryListScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="BidsProductsScreen"
+                    component={BidsProductsScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ViewLotDetailsScreen"
+                    component={ViewLotDetailsScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="UploadMandiRatesScreen"
+                    component={UploadMandiRatesScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="MandiListDetailScreen"
+                    component={MandiListDetailScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ViewBidDetailsScreen"
+                    component={ViewBidDetailsScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="UpdateLotInfoScreen"
+                    component={UpdateLotInfoScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ViewMoreEnquiryListScreen"
+                    component={ViewMoreEnquiryListScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ViewMoreLotsListScreen"
+                    component={ViewMoreLotsListScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SellerInfoListScreen"
+                    component={SellerInfoListScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ViewEnquiryInfoScreen"
+                    component={ViewEnquiryInfoScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="ViewResponseEnquiryScreen"
+                    component={ViewResponseEnquiryScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="UpdateEnquiryScreen"
+                    component={UpdateEnquiryScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="DeleteAccountScreen"
+                    component={DeleteAccountScreen}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name='NotificationScreen'
+                    component={NotificationScreen}
+                    options={{
+                      headerShown: false
+                    }}
+                  />
+                </Stack.Navigator>
+                : <Root />
+              }
+              {(isGetLanguageLabel) && (
+                <Query query={lableQuery} variables={{ languageId: languageInfoId }}>
+                  {({ loading, error, data }) => {
+                    if (loading) {
+                      () =>
+                        updateValues();
+                      return null
+                    };
+                    if (error) {
+                      updateValues();
+                      return null;
+                    }
+                    if (!data) {
+                      updateValues();
+                      return null;
+                    }
+                    updateLableText(data);
+                    return null;
+                  }}
+                </Query>
+              )}
+              <Toast config={toastConfig} />
+            </NavigationContainer> :
+              // Show Force Updating Modal for Update new App Version is available!
+              <View style={styles.containerModal}>
+                <Modal
+                  isVisible={isModalVisible}
+                  slideInUp
+                  // propagateSwipe
+                  style={styles.modalContainer}
+                  backdropColor="#000"
+                  backdropOpacity={0.5}
+                >
+                  <View style={styles.modalContent}>
+                    <View>
+                      <Text style={{ fontFamily: fonts.MONTSERRAT_REGULAR, fontSize: 16 }}>
+                        {`New App Version ${forceUpdateDetail?.latestVersion} Available`}</Text>
+                    </View>
+                    <View style={{ paddingVertical: 10 }}>
+                      <TouchableOpacity
+                        onPress={() => handleForceUpdate()}
+                        style={{ backgroundColor: '#339933', padding: 13, borderRadius: 5, alignItems: "center" }}
+                      >
+                        <Text
+                          style={{ fontFamily: fonts.MONTSERRAT_REGULAR, fontSize: 16, color: "#fff" }}
+                        >{`Update Now`}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </Modal>
               </View>
-            </Modal>
-          </View>
-        }
-      </AuthContext.Provider>
-    </ApolloProvider>
-</Provider>
+            }
+          </TasksDispatchContext.Provider>
+        </AuthContext.Provider>
+      </ApolloProvider>
+    </Provider>
 
   );
 };

@@ -19,7 +19,7 @@ import S3 from "aws-sdk/clients/s3";
 import { Credentials } from "aws-sdk";
 import UUIDv4 from '../helpers/uuid';
 import uploadImageToStorage from '../helpers/uploadImage';
-
+import RNRestart from 'react-native-restart'; 
 
 const GETUSERDETAIL_QUERY = gql`
 query {
@@ -433,12 +433,12 @@ if(updateloading){return;}
         setUserBirthDate((UserProfile.DOB != null) ?moment(Date.parse(UserProfile.DOB)).format("DD - MMMM - YYYY")  : dateOfBirth);
         setUserRole((UserProfile.PrimaryRoleName != null) ? UserProfile.PrimaryRoleName : '');
         setUserRoleId((UserProfile.PrimaryRole != null) ? UserProfile.PrimaryRole : '');
-        setUserLanguage((UserProfile.PreferredLanguageName != null) ? UserProfile.PreferredLanguageName : '');
+        setUserLanguage((UserProfile.PreferredLanguage != null) ?  UserProfile.PreferredLanguage.toString()=="1"? "English":UserProfile.PreferredLanguage.toString()=="2"?"தமிழ்":UserProfile.PreferredLanguage.toString()=="3"? "മലയാളം": "ಕನ್ನಡ" : '');
         setUserLanguageId((UserProfile.PreferredLanguage != null) ? UserProfile.PreferredLanguage : 0);
         setUserGender((UserProfile.GenderId != null) ? UserProfile.GenderId : 0);
         setIsGenderType(genderInfo);
         setDobformat((UserProfile.DOB != null) ? UserProfile.DOB : '')
-        setLoginToken(res.data.updateUserProfile?.token);
+       // setLoginToken(res.data.updateUserProfile?.token);
 
     
               
@@ -469,6 +469,7 @@ if(updateloading){return;}
                
                 setUserLanguage(item.language);
                 setUserLanguageId(item.languageId);
+             //   RNRestart.restart();
             },
         })
     }

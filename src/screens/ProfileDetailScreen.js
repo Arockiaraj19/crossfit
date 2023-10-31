@@ -183,7 +183,7 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                     console.log('User cancelled image picker');
                 } else {
                     setProfileImageUrl(response.assets[0].uri)
-                    uploadImage(Platform.OS === "android" ? ('file://' + response.assets[0].uri) : response.assets[0].uri);
+                    uploadImage(response.assets[0].uri);
                 }
             },
         )
