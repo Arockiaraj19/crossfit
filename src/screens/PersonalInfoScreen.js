@@ -1,25 +1,20 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Dimensions, Platform, Pressable, KeyboardAvoidingView, ScrollView, TextInput, Modal, Alert, FlatList, PermissionsAndroid, ActivityIndicator } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
-import DatePicker from 'react-native-date-picker'
-import moment from "moment";
 import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import Loading from '../components/Loading';
-import { graphql } from 'react-apollo';
-import {getAccessToken, } from '../helpers/AppManager';
-import EncryptedStorage from 'react-native-encrypted-storage';
-import { Query } from 'react-apollo';
-import { useFocusEffect } from '@react-navigation/native';
-import { getUserProfileImage } from '../helpers/AppManager';
-import * as ImagePicker from "react-native-image-picker";
-import ActionSheet from 'react-native-actionsheet';
-import S3 from "aws-sdk/clients/s3";
 import { Credentials } from "aws-sdk";
-import UUIDv4 from '../helpers/uuid';
+import S3 from "aws-sdk/clients/s3";
+import gql from 'graphql-tag';
+import moment from "moment";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Query, graphql } from 'react-apollo';
+import { ActivityIndicator, Alert, Dimensions, FlatList, Image, KeyboardAvoidingView, Modal, PermissionsAndroid, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
+import DatePicker from 'react-native-date-picker';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import * as ImagePicker from "react-native-image-picker";
+import { AuthContext } from '../components/AuthContext';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
+import { getUserProfileImage } from '../helpers/AppManager';
 import uploadImageToStorage from '../helpers/uploadImage';
-import RNRestart from 'react-native-restart'; 
 
 const GETUSERDETAIL_QUERY = gql`
 query {
@@ -62,10 +57,558 @@ mutation ($Id: ID!, $ProfilePicPath: String!){
   }
 `;
 
-const PersonalInfoScreen = ({ navigation, route }) => {
+const lableQuery = gql`
+query getAppLabels($languageId: ID!) {
+    getAppLabels(languageId: $languageId) 
+  }
+`;
+
+const PersonalInfoScreen = ({ navigation }) => {
+
+    useEffect(() => {
+        setIsProfile();
+
+        return () => {
+            removeIsProfile();
+        }
+    }, []);
+
+    const setIsProfile = async () => {
+        await EncryptedStorage.setItem('isProfile', "true");
+    }
+    const removeIsProfile = async () => {
+        EncryptedStorage.removeItem('isProfile');
+    }
+
     const {
+
+        setGetStart,
+
+        setWelcomeText,
+
+        setLoginandSignup,
+
+        setContinueText,
+
+        setEnterPhoneNumebr,
+
+        setEnterYourName,
+
+        setChooseLanguage,
+
+        setOtpVerification,
+
+        setEnterOtp,
+
+        setDidntReceive,
+
+        setErrorNumer,
+
+        setErrorName,
+
+        setDeliverAddress,
+
+        setAddNewAddress,
+
+        setNoAddress,
+
+        setMyAddress,
+
+        setType,
+
+        setUserState,
+
+        setDistrict,
+
+        setTaluk,
+
+        setVillage,
+
+        setDoorNo,
+
+        setPincode,
+
+        setNext,
+
+        setPlaceholderType,
+
+        setPlaceholderState,
+
+        setPlaceholderDistrict,
+
+        setPlaceholderTaluk,
+
+        setPlaceholderTown,
+
+        setPlaceholderVillage,
+
+        setPlaceholderDoorNo,
+
+        setPlaceholderPinCode,
+
+        setSelectAddress,
+
+        setListMyProduct,
+
+        setGradeText,
+
+        setGradePlaceholder,
+
+        setAvailableQuality,
+
+        setAvailableQualityPlaceholdery,
+
+        setWeightPlaceholder,
+
+        setAcres,
+
+        setAcresPlaceholder,
+
+        setProductPrice,
+
+        setProductPricePlaceholder,
+
+        setSaveLot,
+        setGradeAlert,
+        setQuantityAlert,
+        setWeightAlert,
+        setAcreAlert,
+        setPriceAlert,
+        setSuccessText,
+        setSuccessLot,
+        setViewLot,
+        setBackHome,
+        setStatusText,
+        setPlaceBit,
+        setBitsText,
+        setWeightUnitAlert,
+        setSuccessBid,
+        setRequiredQuantity,
+        setBidPrice,
+        setBidView,
+        setStepText,
         saveAddress,
+        setSaveAddresst,
+        setVillageString,
+        setBitsTitle,
+        setEditBits,
+        setDeleteBits,
+        setEnquireText,
+        setBuyText,
+        setSellText,
+        setNewEnquriyText,
+        setDeliverOn,
+        setPlaceEnquiry,
+        setDeliverOnAlert,
+        setProfileText,
+        setEditProfileText,
         personalInformation,
+        setPersonalInformation,
+        setLocationDetail,
+        setFarmDetails,
+        setLogout,
+
+        setNameText,
+
+        setGender,
+
+        setDateOfBirth,
+
+        setMobileNumber,
+
+        setEmailId,
+
+        setPreferredLanguage,
+
+        setPreferredRole,
+
+        setNameAlert,
+
+        setGenderAlert,
+
+        setDobAlert,
+
+        setMobileAlert,
+
+        setEmailAlert,
+
+        setLanguageAlert,
+
+        setRoleAlert,
+
+        setMaleText,
+
+        setFemaleText,
+
+        setOtherText,
+        setCultivableText,
+        setIrrigationText,
+        setGroundWaterText,
+        setSprinklerText,
+        setBorewellText,
+        setOrganicText,
+        setToolsText,
+        setLivestockText,
+        setExpertText,
+        setEnquirySuccess,
+        setViewExpert,
+        setMyExpert,
+        setAlertRequiredQuantity,
+        setBiddedOn,
+        setPickup,
+        setEditLot,
+        setDeleteLotInfo,
+        setSortBy,
+        setBidPricePlaceholder,
+        setUpdateon,
+        setUpdateLot,
+        setUpdateBit,
+        setDeleteBidAlert,
+        setDeleteLotAlert,
+        setDeleteAddresAlert,
+        setOrganic,
+        setPer,
+        setSelectRole,
+        setHome,
+        setBuy,
+        setSell,
+        setBids,
+        setLots,
+        setWatchVideo,
+        setMandiRate,
+        setProfileImage,
+        setBrowseFile,
+        setUseCamera,
+        setLocationMandi,
+        setUploaDMandi,
+        setMandiRates,
+        setRealmandiRates,
+
+        setQuantityText,
+        setApplyText,
+        setReferenceText,
+        setAppliedReference,
+        setCheckQuantityAlert,
+
+
+        setEnquiries,
+        setSellerList,
+        setLotAddedOn,
+        setExpectedon,
+        setShowInterest,
+        setEnquiryAddedOn,
+        setViewEnquiries,
+        setEditEnquiry,
+        setDeleteEnquiryText,
+        setViewResponses,
+        setDeleteEnquiryAlert,
+        setDeleteAddress,
+        setLogoutYes,
+        setLogoutCancel,
+        setNoMandi,
+        setNoLods,
+        setNoBids,
+        changeProfile, setChangeProfile,
+
+        setCheckRate,
+        setQuickSearch,
+        setSellerText,
+        setViewMore,
+        setAreYouSure,
+        setMandiratesSuccess,
+        setEnterLocation,
+        setNoEnquiry,
+        setUpdateSuccess,
+        setEnquiryMessage,
+
+        setHelpLine,
+        setMinAmountPerGvtAlert,
+        setApproveErrorMsg,
+        setPickupAddress,
+        setComingSoon,
+        setAreYouSureAccept,
+        setAreYouSureDecline,
+        setDeleteAccount,
+        setDeleteMessage1,
+        setDeleteMessage2,
+        setDeleteMessage3,
+        setDeleteMessage4,
+
+        setEmptyNotification,
+        setNotificationTitle,
+        setActivity,
+        setBidText,
+        setEnquiryText,
+        setLoginLabel
+
+    } = useContext(AuthContext);
+
+    const updateLableText = async (data) => {
+        setIsGetLables(false)
+        console.log('data ------------------', data);
+        var loginScreenLabels = data.getAppLabels.allLabels.LoginScreen;
+        var sortScreenLabels = data.getAppLabels.allLabels.Sort;
+        var profileScreenLabels = data.getAppLabels.allLabels.ProfileDetails;
+        var personalDetailsScreenLabels = data.getAppLabels.allLabels.PersonalDetails;
+        var farmDetailsScreenLabels = data.getAppLabels.allLabels.FarmDetails;
+        var locationScreenLabels = data.getAppLabels.allLabels.MyLocation;
+        var sellScreenLabels = data.getAppLabels.allLabels.Sell;
+        var buyScreenLabels = data.getAppLabels.allLabels.Buy;
+        var enquiryScreenLabels = data.getAppLabels.allLabels.Enquiry;
+        var footerScreenLabels = data.getAppLabels.allLabels.Footer;
+        var dashboardScreenLabels = data.getAppLabels.allLabels.DashboardScreen;
+
+        setDeleteAccount(profileScreenLabels.DeleteAccountLabel)
+        setDeleteMessage1(profileScreenLabels.DeleteAccountMessage1)
+        setDeleteMessage2(profileScreenLabels.DeleteAccountMessage2)
+        setDeleteMessage3(profileScreenLabels.DeleteAccountMessage3)
+        setDeleteMessage4(profileScreenLabels.DeleteAccountMessage4)
+
+        setEnterLocation(personalDetailsScreenLabels.MandiratesLocationValidation)
+        setNoEnquiry(enquiryScreenLabels.NoEnquiry)
+        setQuickSearch(dashboardScreenLabels.QuickSearch)
+        setCheckRate(personalDetailsScreenLabels.CheckRates)
+        setAreYouSure(profileScreenLabels.LogoutMsg)
+        setViewMore(dashboardScreenLabels.ViewMore)
+        setMandiratesSuccess(personalDetailsScreenLabels.MandiratesSuccess)
+        setEnquiries(enquiryScreenLabels.Enquiries)
+        setSellerList(sellScreenLabels.SellerList)
+        setLotAddedOn(enquiryScreenLabels.Lotaddedon)
+        setExpectedon(enquiryScreenLabels.Expectedon)
+        setShowInterest(enquiryScreenLabels.ShowInterest)
+        setEnquiryAddedOn(enquiryScreenLabels.Enquiryaddedon)
+        setViewEnquiries(enquiryScreenLabels.ViewEnquiries)
+        setEditEnquiry(enquiryScreenLabels.EditEnquiry)
+        setDeleteEnquiryText(enquiryScreenLabels.DeleteEnquiry)
+        setViewResponses(enquiryScreenLabels.ViewResponses)
+        setDeleteEnquiryAlert(enquiryScreenLabels.DeleteEnquiryAlert)
+        setUpdateSuccess(buyScreenLabels.BidSuccessMsg)
+        setEnquiryMessage(enquiryScreenLabels.EnquirySuccessMsg)
+
+        setSellerText(dashboardScreenLabels.Seller)
+        setEmptyNotification(dashboardScreenLabels.NotificationNotAvailableLabel)
+        setNotificationTitle(dashboardScreenLabels.NotificationLabel)
+        setActivity(dashboardScreenLabels.MyActivityLabel)
+        setEnquiryText(dashboardScreenLabels.EnquiryLabel)
+
+        setNoMandi(personalDetailsScreenLabels.NoMandiRates)
+        setDeleteAddress(locationScreenLabels.DeleteAddress)
+        setLogoutYes(locationScreenLabels.YesButton)
+        setLogoutCancel(locationScreenLabels.CancelButton)
+        setNoLods(sellScreenLabels.NoLot)
+        setNoBids(buyScreenLabels.NoBids)
+
+        setWatchVideo(dashboardScreenLabels.WatchVideo)
+
+        setGetStart(loginScreenLabels.GetStarted)
+        setWelcomeText(loginScreenLabels.Header);
+        setContinueText(loginScreenLabels.Continue);
+        setEnterPhoneNumebr(loginScreenLabels.MobilePlaceholder)
+        setEnterYourName(loginScreenLabels.NamePlaceholder)
+        setErrorNumer(loginScreenLabels.MobileValidation)
+        setErrorName(loginScreenLabels.NameValidation)
+        setLoginandSignup(loginScreenLabels.SignUp);
+        setContinueText(loginScreenLabels.Continue)
+        setChooseLanguage(loginScreenLabels.Language);
+        setOtpVerification(loginScreenLabels.OTPHeader);
+        setEnterOtp(loginScreenLabels.OTPEnter);
+        setDidntReceive(loginScreenLabels.OTPRetry);
+        setApplyText(loginScreenLabels.Apply);
+        setReferenceText(loginScreenLabels.EnterReferenceCode);
+        setAppliedReference(loginScreenLabels.AppliedYourReferenceCode);
+        setRoleAlert(loginScreenLabels.RolePlaceholder)
+        setSelectRole(loginScreenLabels.RolePlaceholder);
+        setLoginLabel(loginScreenLabels.LogIn)
+
+        setSortBy(sortScreenLabels.Sortby)
+
+        setProfileText(profileScreenLabels.Profile)
+        setEditProfileText(profileScreenLabels.EditProfile)
+        setPersonalInformation(profileScreenLabels.PersonalInfo)
+        setLocationDetail(profileScreenLabels.LocationDetails)
+        setFarmDetails(profileScreenLabels.FarmDetails)
+        setLogout(profileScreenLabels.Logout)
+        setNext(profileScreenLabels.Next)
+        setHelpLine(profileScreenLabels.HelpLine)
+
+        setNameText(personalDetailsScreenLabels.Name)
+        setGender(personalDetailsScreenLabels.Gender)
+        setDateOfBirth(personalDetailsScreenLabels.DateOfBirth)
+        setMobileNumber(personalDetailsScreenLabels.MobileNumber)
+        setEmailId(personalDetailsScreenLabels.Email)
+        setPreferredRole(personalDetailsScreenLabels.PreferredRole)
+        setNameAlert(personalDetailsScreenLabels.NameMandatory)
+        setGenderAlert(personalDetailsScreenLabels.GenderMandatory)
+        setDobAlert(personalDetailsScreenLabels.DOBMandatory)
+        setMobileAlert(personalDetailsScreenLabels.MobileNumberMandatory)
+        setEmailAlert(personalDetailsScreenLabels.EmailMandatory)
+        setLanguageAlert(personalDetailsScreenLabels.LanguageMandatory)
+        setMaleText(personalDetailsScreenLabels.Male)
+        setFemaleText(personalDetailsScreenLabels.Female)
+        setOtherText(personalDetailsScreenLabels.Other)
+        setPreferredLanguage(personalDetailsScreenLabels.PreferredLanguage)
+        setMandiRate(personalDetailsScreenLabels.UploadMandiRates)
+        setProfileImage(personalDetailsScreenLabels.ProfileImage)
+        setBrowseFile(personalDetailsScreenLabels.BrowseFile)
+        setUseCamera(personalDetailsScreenLabels.UseCamera)
+        setLocationMandi(personalDetailsScreenLabels.Location)
+        setUploaDMandi(personalDetailsScreenLabels.Upload)
+        setMandiRates(personalDetailsScreenLabels.MandiRates)
+        setRealmandiRates(personalDetailsScreenLabels.Getrealtimemandirates)
+        setChangeProfile(personalDetailsScreenLabels.ChangeProfile)
+
+        setCultivableText(farmDetailsScreenLabels.CultivableLand)
+        setIrrigationText(farmDetailsScreenLabels.Irrigation)
+        setGroundWaterText(farmDetailsScreenLabels.Groundwater)
+        setSprinklerText(farmDetailsScreenLabels.Sprinkler)
+        setBorewellText(farmDetailsScreenLabels.Borewell)
+        setOrganicText(farmDetailsScreenLabels.OrganicFarm)
+        setToolsText(farmDetailsScreenLabels.ToolsAvailableforRent)
+        setLivestockText(farmDetailsScreenLabels.Livestock)
+        setExpertText(farmDetailsScreenLabels.ExpertAdviceNeeded)
+
+
+        setUserState(locationScreenLabels.State)
+        setDistrict(locationScreenLabels.District)
+        setTaluk(locationScreenLabels.Taluk)
+        setVillage(locationScreenLabels.Village)
+        setDoorNo(locationScreenLabels.Door)
+        setPincode(locationScreenLabels.Pincode)
+        setPlaceholderState(locationScreenLabels.StateMandatory)
+        setPlaceholderDistrict(locationScreenLabels.DistrictMandatory)
+        setPlaceholderTaluk(locationScreenLabels.TalukMandatory)
+        setPlaceholderTown(locationScreenLabels.TownMandatory)
+        setPlaceholderVillage(locationScreenLabels.VillageMandatory)
+        setPlaceholderDoorNo(locationScreenLabels.DoorMandatory)
+        setPlaceholderPinCode(locationScreenLabels.PinMandatory)
+        setSelectAddress(locationScreenLabels.DeliveryAddressMandatory)
+        setDeleteAddresAlert(locationScreenLabels.DeleteAddressConfirm)
+
+        setDeliverAddress(sellScreenLabels.ProductLocation)
+        setAddNewAddress(sellScreenLabels.AddNewAddress)
+        setNoAddress(sellScreenLabels.AddNotAvailable)
+        setMyAddress(sellScreenLabels.MyAddress)
+        setType(sellScreenLabels.Type)
+        setPlaceholderType(sellScreenLabels.SelectType)
+        setListMyProduct(sellScreenLabels.ListProduct)
+        setGradeText(sellScreenLabels.Grade)
+        setGradePlaceholder(sellScreenLabels.SelectGrade)
+        setAvailableQuality(sellScreenLabels.AvailableQuantity)
+        setAvailableQualityPlaceholdery(sellScreenLabels.SelectQuantity)
+        setWeightPlaceholder(sellScreenLabels.Weight)
+        setOrganic(sellScreenLabels.Organic)
+        setPer(sellScreenLabels.Per)
+        setAcres(sellScreenLabels.CultivatedArea)
+        setAcresPlaceholder(sellScreenLabels.SelectCultivatedArea)
+        setProductPrice(sellScreenLabels.AskingPrice)
+        setLots(sellScreenLabels.Lots)
+        setQuantityText(sellScreenLabels.Quantity)
+        setMinAmountPerGvtAlert(sellScreenLabels.MSPValidationMessage)
+        setPickupAddress(sellScreenLabels.PickupLocation)
+
+        setProductPricePlaceholder(sellScreenLabels.SelectAskingPrice)
+        setSaveLot(sellScreenLabels.SaveLot)
+        setGradeAlert(sellScreenLabels.GradeMandatory)
+        setQuantityAlert(sellScreenLabels.AvailableQuantityMandatory)
+        setWeightAlert(sellScreenLabels.WeightMandatory)
+        setWeightUnitAlert(sellScreenLabels.AvailableQuantityUnitMandatory)
+        setAcreAlert(sellScreenLabels.CultivatedAreaMandatory)
+        setPriceAlert(sellScreenLabels.AskingPriceMandatory)
+        setSuccessText(sellScreenLabels.Success)
+        setSuccessLot(sellScreenLabels.SuccessMsg)
+        setViewLot(sellScreenLabels.ViewLot)
+        setBackHome(sellScreenLabels.BacktoHome)
+        setStatusText(sellScreenLabels.Status)
+        setPlaceBit(sellScreenLabels.PlaceBid)
+        setEditLot(sellScreenLabels.EditLot)
+        setDeleteLotInfo(sellScreenLabels.DeleteLot)
+        setDeleteLotAlert(sellScreenLabels.DeleteLotConfirmation)
+        setComingSoon(sellScreenLabels.NoCategory)
+
+        setBitsText(buyScreenLabels.BidProduct)
+        setSuccessBid(buyScreenLabels.BidSuccess)
+        setRequiredQuantity(buyScreenLabels.RequiredQuantity)
+        setBidPrice(buyScreenLabels.BidPrice)
+        setBidView(buyScreenLabels.ViewBid)
+        setStepText(buyScreenLabels.STEP)
+        setSaveAddresst(buyScreenLabels.Save)
+        setVillageString(buyScreenLabels.Village)
+        setBitsTitle(buyScreenLabels.Bids)
+        setEditBits(buyScreenLabels.EditBid)
+        setDeleteBits(buyScreenLabels.DeleteBid)
+        setBidPricePlaceholder(buyScreenLabels.BidPriceMandatory)
+        setUpdateon(buyScreenLabels.Updatedon)
+        setUpdateLot(buyScreenLabels.UpdateLot)
+        setUpdateBit(buyScreenLabels.UpdateBid)
+        setDeleteBidAlert(buyScreenLabels.DeleteBidConfirmation)
+        setBids(buyScreenLabels.Bids)
+        setCheckQuantityAlert(buyScreenLabels.CheckQuantityAlert)
+        setApproveErrorMsg(buyScreenLabels.ApproveErrorMsg)
+        setAreYouSureAccept(buyScreenLabels.ApproveConfirmMsg)
+        setAreYouSureDecline(buyScreenLabels.DeclineConfirmMsg)
+        setBidText(buyScreenLabels.Bids)
+
+        setEnquireText(enquiryScreenLabels.EnquireNow)
+        setBuyText(enquiryScreenLabels.BuyNow)
+        setSellText(enquiryScreenLabels.SellNow)
+        setNewEnquriyText(enquiryScreenLabels.NewEnquiry)
+        setDeliverOn(enquiryScreenLabels.DeliverOn)
+        setPlaceEnquiry(enquiryScreenLabels.PlaceEnquiry)
+        setDeliverOnAlert(enquiryScreenLabels.DeliveryDateMandatory)
+        setEnquirySuccess(enquiryScreenLabels.SuccessEnquiry)
+        setViewExpert(enquiryScreenLabels.ViewEnquiry)
+        setMyExpert(enquiryScreenLabels.MyEnquiry)
+        setAlertRequiredQuantity(enquiryScreenLabels.RequiredQuantityMandatory)
+        setBiddedOn(enquiryScreenLabels.Biddedon)
+        setPickup(enquiryScreenLabels.PickUpAddress)
+
+        setHome(footerScreenLabels.Home)
+        setBuy(footerScreenLabels.Buy)
+        setSell(footerScreenLabels.Sell)
+        setBids(footerScreenLabels.Bids)
+
+        await EncryptedStorage.setItem('languageId', userLanguageId);
+
+
+
+        if (loading) {
+            setLoadingIndicator(true)
+        }
+        console.log('updateUserProfile', { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) })
+        updateUserProfile({
+            variables: { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) }
+        })
+            .then(async (res) => {
+                console.log('res ------------------', res);
+
+                setUpdateLoading(false);
+                await EncryptedStorage.setItem('userName', userName);
+
+                await EncryptedStorage.setItem("languageId", userLanguageId);
+                Alert.alert('Success', "Profile updated successfully", [{
+                    text: 'OK', onPress: () => {
+                        removeIsProfile();
+                        navigation.goBack();
+
+                        return;
+                    },
+                },
+                ]);
+                // if(languageInfoId !=userLanguageId){
+                //     setHomeFetch(true)
+                //     navigation.navigate('HomeScreen');
+                //    } else {
+                //     navigation.goBack();
+                //    }
+            })
+            .catch(e => {
+                setUpdateLoading(false);
+                setLoadingIndicator(false)
+                console.log('error ------------------', e.message);
+            });
+    }
+    const {
+
         nameText,
         gender,
         dateOfBirth,
@@ -80,17 +623,12 @@ const PersonalInfoScreen = ({ navigation, route }) => {
         genderAlert,
         dobAlert,
         mobileAlert,
-        emailAlert,
         languageAlert,
         roleAlert,
-        changeProfile,
+
         selectRole,
-        setLanguageInfoId,
-        languageInfoId,
-        setLoginToken,
-        setHomeFetch,
     } = useContext(AuthContext);
-const [updateloading,setUpdateLoading]=React.useState(false);
+    const [updateloading, setUpdateLoading] = React.useState(false);
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
     const [isFetch, setIsFetch] = React.useState(true);
     const [isFetchRole, setIsFetchRole] = React.useState(true);
@@ -109,7 +647,7 @@ const [updateloading,setUpdateLoading]=React.useState(false);
     const [modalVisible, setModalVisible] = React.useState(false);
     const dimensions = Dimensions.get('window');
     const [userDate, setUserDate] = React.useState(new Date())
-    const [updateUserProfile, { loading, error, data }] = useMutation(UPDATEUSERPROFILE_QUERY);
+    const [updateUserProfile, { loading }] = useMutation(UPDATEUSERPROFILE_QUERY);
     const [arrayOfItems, setArrayOfItems] = React.useState([]);
     const [isPopupType, setIsPopupType] = React.useState('');
     const [profileImageUrl, setProfileImageUrl] = useState('');
@@ -123,7 +661,7 @@ const [updateloading,setUpdateLoading]=React.useState(false);
         quality: 0.3,
     };
 
-    const [updateUserProfileImage, {}] = useMutation(UPDATEPROFILEIMAGE_QUERY);
+    const [updateUserProfileImage, { }] = useMutation(UPDATEPROFILEIMAGE_QUERY);
     const showActionSheet = () => {
         actionSheet.current.show()
     }
@@ -135,8 +673,8 @@ const [updateloading,setUpdateLoading]=React.useState(false);
         else if (index === 1) {
             handleChooseCamera()
         }
-    }  
-
+    }
+    const [isGetLables, setIsGetLables] = React.useState(false);
     const access = new Credentials({
         accessKeyId: "AKIASVAYFY3SML3QPD5N",
         secretAccessKey: "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",
@@ -148,31 +686,18 @@ const [updateloading,setUpdateLoading]=React.useState(false);
         signatureVersion: "v4",
     });
 
-    const request = async () => {
-        const fileId = 'gt_image_' + UUIDv4() + '.jpg';
-        setUUID(fileId)
-        const signedUrlExpireSeconds = 60 * 15;
 
-        const url = await s3.getSignedUrlPromise("putObject", {
-            Bucket: "userprofileimagescropfit",
-            Key: `${fileId}`,
-            ContentType: "image/jpeg",
-            Expires: signedUrlExpireSeconds,
-        });
-        return url;
-    }  
-
-    const handleChooseCamera = async() => {
+    const handleChooseCamera = async () => {
         const isCameraPermitted = await requestCameraPermission()
-        const isStoragePermitted = await requestExternalWritePermission()  
+        const isStoragePermitted = await requestExternalWritePermission()
         if (isCameraPermitted && isStoragePermitted) {
             ImagePicker.launchCamera(option, (res) => {
                 if (res.didCancel) {
-                
+
                 } else if (res.error) {
-                  
+
                 } else if (res.customButton) {
-                  
+
                     alert(res.customButton);
                 } else {
                     setProfileImageUrl(res.assets[0].uri)
@@ -219,38 +744,27 @@ const [updateloading,setUpdateLoading]=React.useState(false);
         } else return true;
     };
 
-    const handleChoosePhoto = async() => {
-       
-        ImagePicker.launchImageLibrary(
-           { 
-            mediaType : 'photo',
-            includeBase64 : false,
-            quality : 0.3
-         },
-         (response) => {
-            if(response.didCancel) {}
-            else {
-               setProfileImageUrl(response.assets[0].uri) 
-                uploadImage(Platform.OS === "android" ? ('file://' + response.assets[0].uri) : response.assets[0].uri);
-            }
-         })
-    }  
+    const handleChoosePhoto = async () => {
 
-    const fetchUploadUrl = async (data, fileSelected) => {
-        try {
-            let res = await fetch(data, {
-                method: 'PUT',
-                body: fileSelected,
+        ImagePicker.launchImageLibrary(
+            {
+                mediaType: 'photo',
+                includeBase64: false,
+                quality: 0.3
+            },
+            (response) => {
+                if (response.didCancel) { }
+                else {
+                    setProfileImageUrl(response.assets[0].uri)
+                    uploadImage(Platform.OS === "android" ? ('file://' + response.assets[0].uri) : response.assets[0].uri);
+                }
             })
-            return res;
-        } catch (error) {
-            return error;
-        }
     }
-     
-     const uploadImage = async (imageUrl) => {
+
+
+    const uploadImage = async (imageUrl) => {
         setLoadingIndicator(true)
-        const profileImage=await uploadImageToStorage(imageUrl);
+        const profileImage = await uploadImageToStorage(imageUrl);
         // var urlaws = await request();
         // let image_file = await fetch(imageUrl)
         //     .then((r) => r.blob())
@@ -266,42 +780,41 @@ const [updateloading,setUpdateLoading]=React.useState(false);
             updateUserProfileImage({
                 variables: { Id: userId, ProfilePicPath: profileImage }
             })
-                .then(res => {
-                   
+                .then(() => {
+
                     setLoadingIndicator(false)
                     setProfileImageUrl(profileImage);
                     setTimeout(async () => {
                         try {
                             await EncryptedStorage.setItem('ProfileImage', profileImage);
                         } catch (e) {
-                           
+
                         }
                     }, 100);
                 })
-                .catch(e => {
+                .catch(() => {
                     setLoadingIndicator(false)
                 });
         }, 100);
     }
 
 
-    useFocusEffect(
-        React.useCallback(() => {
-            setIsFetch(true);
-            let isActive = true;
-            setTimeout(async () => {
-                let profileImage = await getUserProfileImage();
-                setProfileImageUrl(profileImage)
-            }, 10);
-            return () => {
-                isActive = false;
-            };
+    useEffect(() => {
+        setIsFetch(true);
+        let isActive = true;
+        setTimeout(async () => {
+            let profileImage = await getUserProfileImage();
+            setProfileImageUrl(profileImage)
+        }, 10);
+        return () => {
+            isActive = false;
+        };
     }, [])
-    )
+
     const onPressBack = () => {
         navigation.goBack();
     }
-    const onPressSaveProfile =async () => {
+    const onPressSaveProfile = async () => {
         if (userName == '') {
             Alert.alert('', nameAlert, [{
                 text: 'OK', onPress: () => {
@@ -359,57 +872,23 @@ const [updateloading,setUpdateLoading]=React.useState(false);
             ]);
         }
         else {
-if(updateloading){return;}
+            await EncryptedStorage.setItem('languageId', userLanguageId);
             setUpdateLoading(true);
-
-            if (loading) {
-                setLoadingIndicator(true)
-            }
-            console.log('updateUserProfile',{ Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) })
-            updateUserProfile({
-                variables: { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) }
-            })
-                .then(async(res) => {
-                    console.log('res ------------------', res);
-                    setIsFetch(true);
-                    setUpdateLoading(false);
-                    await   EncryptedStorage.setItem('userName', userName);
-     
-                    await  EncryptedStorage.setItem("languageId", userLanguageId);
-                    Alert.alert('Success', "Profile updated successfully", [{
-                        text: 'OK', onPress: () => {
-                            navigation.goBack();
-                           
-                            return;
-                        },
-                    },
-                    ]);
-                    // if(languageInfoId !=userLanguageId){
-                    //     setHomeFetch(true)
-                    //     navigation.navigate('HomeScreen');
-                    //    } else {
-                    //     navigation.goBack();
-                    //    }
-                })
-                .catch(e => {
-                    setUpdateLoading(false);
-                    setLoadingIndicator(false)
-                    console.log('error ------------------', e.message);
-                });
+            setIsGetLables(true);
         }
     }
     const GetUserProfileInfo = graphql(GETUSERDETAIL_QUERY)(props => {
-        const { error, data, loading } = props.data;
+        const { error, loading } = props.data;
         if (error) {
             setIsFetch(false);
-          
+
             return <View />;
         }
-        
+
         if (!loading) {
             // 
             if (props.data?.getUserProfile != undefined) {
-                console.log('propspropspropspropspropsprops',props.data.getUserProfile)
+                console.log('propspropspropspropspropsprops', props.data.getUserProfile)
                 setTimeout(async () => {
                     updateValue(props.data.getUserProfile);
                 }, 500);
@@ -420,33 +899,33 @@ if(updateloading){return;}
         }
         return <View />;
     });
-    const updateValue = async(UserProfile) => {
+    const updateValue = async (UserProfile) => {
         setIsFetchRole(false)
         let genderInfo = (UserProfile.GenderId != null) ? ((UserProfile.GenderId == 1) ? 'male' : (UserProfile.GenderId == 2) ? 'female' : 'others') : '';
-       
+
         setLoadingIndicator(false)
         setIsFetch(false);
         setUserId(UserProfile.UserId);
         setUserName(UserProfile.UserName);
         setUserMobile(UserProfile.MobileNo);
         setUserEmail((UserProfile.Email != null) ? UserProfile.Email : '');
-        setUserBirthDate((UserProfile.DOB != null) ?moment(Date.parse(UserProfile.DOB)).format("DD - MMMM - YYYY")  : dateOfBirth);
+        setUserBirthDate((UserProfile.DOB != null) ? moment(Date.parse(UserProfile.DOB)).format("DD - MMMM - YYYY") : dateOfBirth);
         setUserRole((UserProfile.PrimaryRoleName != null) ? UserProfile.PrimaryRoleName : '');
         setUserRoleId((UserProfile.PrimaryRole != null) ? UserProfile.PrimaryRole : '');
-        setUserLanguage((UserProfile.PreferredLanguage != null) ?  UserProfile.PreferredLanguage.toString()=="1"? "English":UserProfile.PreferredLanguage.toString()=="2"?"தமிழ்":UserProfile.PreferredLanguage.toString()=="3"? "മലയാളം": "ಕನ್ನಡ" : '');
+        setUserLanguage((UserProfile.PreferredLanguage != null) ? UserProfile.PreferredLanguage.toString() == "1" ? "English" : UserProfile.PreferredLanguage.toString() == "2" ? "தமிழ்" : UserProfile.PreferredLanguage.toString() == "3" ? "മലയാളം" : "ಕನ್ನಡ" : '');
         setUserLanguageId((UserProfile.PreferredLanguage != null) ? UserProfile.PreferredLanguage : 0);
         setUserGender((UserProfile.GenderId != null) ? UserProfile.GenderId : 0);
         setIsGenderType(genderInfo);
         setDobformat((UserProfile.DOB != null) ? UserProfile.DOB : '')
-       // setLoginToken(res.data.updateUserProfile?.token);
+        // setLoginToken(res.data.updateUserProfile?.token);
 
-    
-              
- 
-       
+
+
+
+
     }
     const onPressSelectGender = (type) => {
-      
+
 
         setIsGenderType(type);
         setUserGender((type == 'male') ? 1 : ((type == 'female') ? 2 : 3))
@@ -466,63 +945,43 @@ if(updateloading){return;}
     const onPressSelectLanguage = () => {
         navigation.navigate('LanguageListScreen', {
             onReturn: (item) => {
-               
+
                 setUserLanguage(item.language);
                 setUserLanguageId(item.languageId);
-             //   RNRestart.restart();
+                console.log(item);
+                //   RNRestart.restart();
             },
         })
     }
     const onPressSelectRole = () => {
-      
+
         setModalVisible(true);
         setIsPopupType('Role')
     }
-    const GetRolesComponent = graphql(GETROLES_QUERY)(props => {
-        const { error, getRoles, loading } = props.data;
-      
-        if (getRoles) {
-            setTimeout(async () => {
-                updateLoading(false);
-                updateDate(getRoles)
-            }, 500);
-            return (
-                <View>
-                </View>
-            );
-        }
-        if (error) {
-        
-            setTimeout(async () => {
-                updateLoading(false);
-            }, 500);
-            return (
-                <View>
-                </View>
-            );
-        }
-        setTimeout(async () => {
-            updateLoading(false);
-        }, 500);
-        return <View />;
-    });
     const updateLoading = (isloading) => {
         setIsFetchRole(true);
         setLoadingIndicator((isloading == undefined) ? false : isloading);
     }
     const updateDate = (list) => {
-        list.map((listInfo, i) => {
-            if(listInfo.Id == userRoleId){
+        list.map((listInfo) => {
+            if (listInfo.Id == userRoleId) {
                 setUserRole(listInfo.Name)
             }
 
         })
         setArrayOfItems(list);
     }
-    const handleSelectItem = (item, index) => {
+    const handleSelectItem = (item) => {
         setUserRole(item.Name)
         setUserRoleId(item.Id)
         setModalVisible(false);
+    }
+    const updateValues = (isLoading) => {
+        if (isLoading == false) {
+            setIsGetLables(false);
+        }
+
+
     }
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -545,41 +1004,41 @@ if(updateloading){return;}
             )}
             {(!isFetchRole) && (
                 <Query query={GETROLES_QUERY} variables={{ languageId: userLanguageId }}>
-                {({ loading, error, data }) => {
-                    if (loading) {
-                        () =>
-                        updateLoading(true);
-                        return null
-                    };
-                    if (error) {
-                        updateLoading(false);
+                    {({ loading, error, data }) => {
+                        if (loading) {
+                            () =>
+                                updateLoading(true);
+                            return null
+                        };
+                        if (error) {
+                            updateLoading(false);
+                            return null;
+                        }
+                        if (!data) {
+                            updateLoading(false);
+                            return null;
+                        }
+
+                        updateDate(data.getRoles)
                         return null;
-                    }
-                    if (!data) {
-                        updateLoading(false);
-                        return null;
-                    }
-                   
-                    updateDate(data.getRoles)
-                    return null;
-                }}
-            </Query>
+                    }}
+                </Query>
             )}
             <ScrollView style={{ marginBottom: 80, width: '100%', height: '50%', }}>
                 <View style={styles.view_Main}>
                     <View style={styles.view_top}>
                         <View style={styles.view_profileImage}>
-                            {(profileImageUrl == '') ? 
-                               <Image style={styles.image_user}
-                               source={images.EMPTYPROFILEICON}>
-                           </Image> : 
-                            <Image style={styles.image_user}
-                            source={{ uri: profileImageUrl }}>
-                        </Image>
-                        }
-                            <TouchableOpacity 
-                            style={styles.touch_editProfile}
-                            onPress={showActionSheet}
+                            {(profileImageUrl == '') ?
+                                <Image style={styles.image_user}
+                                    source={images.EMPTYPROFILEICON}>
+                                </Image> :
+                                <Image style={styles.image_user}
+                                    source={{ uri: profileImageUrl }}>
+                                </Image>
+                            }
+                            <TouchableOpacity
+                                style={styles.touch_editProfile}
+                                onPress={showActionSheet}
                             >
                                 <Text style={styles.text_name}>{changeProfile}</Text>
                             </TouchableOpacity>
@@ -611,7 +1070,7 @@ if(updateloading){return;}
                                         <View style={(isGenderType == 'male') ? styles.selectedCircle : styles.unSelectCircle}></View>
                                         <Text style={(isGenderType == 'male') ? styles.text_SelectedMale : styles.text_Male}>{maleText}</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={[styles.view_buttonSelect, { marginLeft: 10,}]}
+                                    <TouchableOpacity style={[styles.view_buttonSelect, { marginLeft: 10, }]}
                                         onPress={() =>
                                             onPressSelectGender('female')}>
                                         <View style={(isGenderType == 'female') ? styles.selectedCircle : styles.unSelectCircle}></View>
@@ -619,13 +1078,13 @@ if(updateloading){return;}
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ width: '95%', height: 50, flexDirection: 'row', alignItems: 'center', }}>
-                                <TouchableOpacity style={[styles.view_buttonSelect, { width: '48%' }]}
+                                    <TouchableOpacity style={[styles.view_buttonSelect, { width: '48%' }]}
                                         onPress={() =>
                                             onPressSelectGender('others')}>
                                         <View style={(isGenderType == 'others') ? styles.selectedCircle : styles.unSelectCircle}></View>
                                         <Text style={(isGenderType == 'others') ? styles.text_SelectedMale : styles.text_Male}>{otherText}</Text>
                                     </TouchableOpacity>
-                                    
+
                                 </View>
                             </View>
                         </View>
@@ -707,54 +1166,54 @@ if(updateloading){return;}
                     onRequestClose={() => {
                         closePopup()
                     }}>
-                    <Pressable style={[styles.popup_view, { justifyContent: ((isPopupType == 'Role') ? 'center' : 'flex-end'),}]}
+                    <Pressable style={[styles.popup_view, { justifyContent: ((isPopupType == 'Role') ? 'center' : 'flex-end'), }]}
                         onPress={() => closePopup()}>
-                            {(isPopupType == 'Role') ? 
+                        {(isPopupType == 'Role') ?
                             <View style={styles.modalView}>
-                            <Text style={styles.modalText}>{selectRole}</Text>
-                            <View style={styles.line} />
-                            <View style={styles.view_List}>
-                                <FlatList
-                                    style={styles.list}
-                                    data={arrayOfItems}
-                                    keyExtractor={(x, i) => i}
-                                    renderItem={({ item, index }) => (
-                                        <TouchableOpacity style={styles.title_view}
-                                            onPress={() => handleSelectItem(item, index)}>
-                                            <Text style={styles.task_title}> {`${item.Name}`} </Text>
-                                            <View style={styles.line} />
-                                        </TouchableOpacity>
-                                    )}
-                                />
-                            </View>
-                        </View> : 
+                                <Text style={styles.modalText}>{selectRole}</Text>
+                                <View style={styles.line} />
+                                <View style={styles.view_List}>
+                                    <FlatList
+                                        style={styles.list}
+                                        data={arrayOfItems}
+                                        keyExtractor={(x, i) => i}
+                                        renderItem={({ item, index }) => (
+                                            <TouchableOpacity style={styles.title_view}
+                                                onPress={() => handleSelectItem(item, index)}>
+                                                <Text style={styles.task_title}> {`${item.Name}`} </Text>
+                                                <View style={styles.line} />
+                                            </TouchableOpacity>
+                                        )}
+                                    />
+                                </View>
+                            </View> :
                             <View style={{ width: '100%', height: 310, }}>
-                            <View style={{ width: '100%', height: 310, backgroundColor: colors.white_color, }}>
-                                <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center' }}>
-                                    <TouchableOpacity style={{ marginLeft: 15, justifyContent: 'center', alignItems: 'center', width: 80, height: 40, borderRadius: 5, borderWidth: 1, borderColor: colors.line_background }}
-                                        onPress={closePopup}>
-                                        <Text style={styles.text_cancel}>{'Cancel'}</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{ position: 'absolute', right: 15, justifyContent: 'center', alignItems: 'center', width: 80, height: 40, borderRadius: 5, borderWidth: 1, borderColor: colors.line_background }}
-                                        onPress={onPressSelectDateOfBirth}>
-                                        <Text style={styles.text_cancel}>{'Done'}</Text>
-                                    </TouchableOpacity>
+                                <View style={{ width: '100%', height: 310, backgroundColor: colors.white_color, }}>
+                                    <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center' }}>
+                                        <TouchableOpacity style={{ marginLeft: 15, justifyContent: 'center', alignItems: 'center', width: 80, height: 40, borderRadius: 5, borderWidth: 1, borderColor: colors.line_background }}
+                                            onPress={closePopup}>
+                                            <Text style={styles.text_cancel}>{'Cancel'}</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={{ position: 'absolute', right: 15, justifyContent: 'center', alignItems: 'center', width: 80, height: 40, borderRadius: 5, borderWidth: 1, borderColor: colors.line_background }}
+                                            onPress={onPressSelectDateOfBirth}>
+                                            <Text style={styles.text_cancel}>{'Done'}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={{ marginTop: 5, width: '100%', height: 250, }}>
+                                        <View style={[styles.view_line, { top: 0, marginTop: 0, width: '100%' }]}></View>
+                                        <DatePicker
+                                            style={{ width: dimensions.width, height: 250, }}
+                                            textColor={'#333333'}
+                                            maximumDate={new Date()}
+                                            date={userDate}
+                                            androidVariant={'nativeAndroid'}
+                                            dividerHeight={50}
+                                            onDateChange={setUserDate}
+                                            mode='date' />
+                                    </View>
                                 </View>
-                                <View style={{ marginTop: 5, width: '100%', height: 250, }}>
-                                    <View style={[styles.view_line, { top: 0, marginTop: 0, width: '100%' }]}></View>
-                                    <DatePicker
-                                        style={{ width: dimensions.width, height: 250, }}
-                                        textColor={'#333333'}
-                                        maximumDate={new Date()}
-                                        date={userDate}
-                                        androidVariant={'nativeAndroid'}
-                                        dividerHeight={50}
-                                        onDateChange={setUserDate}
-                                        mode='date' />
-                                </View>
-                            </View>
-                        </View>}
-                        
+                            </View>}
+
                     </Pressable>
                 </Modal>
             )}
@@ -762,7 +1221,7 @@ if(updateloading){return;}
             <View style={styles.view_headerBottom}>
                 <TouchableOpacity style={styles.button_edit}
                     onPress={onPressSaveProfile}>
-                   {updateloading?   <ActivityIndicator size="small" color={colors.white_color} />:<Text style={styles.text_edit}>{saveAddress}</Text>}         
+                    {updateloading ? <ActivityIndicator size="small" color={colors.white_color} /> : <Text style={styles.text_edit}>{saveAddress}</Text>}
                 </TouchableOpacity>
             </View>
             {loadingIndicator && <Loading />}
@@ -775,6 +1234,36 @@ if(updateloading){return;}
                     handleSelectActionSheet(index)
                 }
             />
+            {(isGetLables) && (
+                <Query query={lableQuery} variables={{ languageId: userLanguageId }}>
+                    {({ loading, error, data }) => {
+                        if (loading) {
+                            () =>
+                                updateValues(true);
+                            return null
+                        };
+                        if (error) {
+                            Alert.alert('Error', error.message, [{
+                                text: 'OK', onPress: () => {
+
+
+                                    return;
+                                },
+                            },
+                            ]);
+                            setUpdateLoading(false);
+                            updateValues(false);
+                            return null;
+                        }
+                        if (!data) {
+                            updateValues(false);
+                            return null;
+                        }
+                        updateLableText(data);
+                        return null;
+                    }}
+                </Query>
+            )}
         </KeyboardAvoidingView>
     );
 };

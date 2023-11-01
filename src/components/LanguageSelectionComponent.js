@@ -94,6 +94,9 @@ const LanguageSelectionComponent = ({
             ]);
         }
         else {
+            console.log("what is the languageId");
+            console.log(selectedLanguageId);
+
             if (isEnterNumber == true) {
                 try {
                     await EncryptedStorage.setItem('languageId', selectedLanguageId);
@@ -103,9 +106,14 @@ const LanguageSelectionComponent = ({
                 onPressContinue(selectedLanguageId, selectedLanguage)
             }
             else {
-                setLoadingIndicator(false)
-                onPressContinue(selectedLanguageId, selectedLanguage);
-                console.log('isEnterNumber ---------------', isEnterNumber)
+                try {
+
+                  
+                    await EncryptedStorage.setItem('languageId', selectedLanguageId);
+                } catch (e) {
+                    console.log('error ---------------', e)
+                }
+                onPressContinue(selectedLanguageId, selectedLanguage)
 
                 // setLoadingIndicator(true);
                 // try {

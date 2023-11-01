@@ -31,18 +31,22 @@ const ViewMoreLotsListScreen = ({ navigation, route }) => {
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
-    useFocusEffect(
-        React.useCallback(() => {
-            let isActive = true;
-            getLots()
-            return () => {
-                isActive = false;
-            };
-        }, [])
-    );
+  
+
+useEffect(() => {
+    let isActive = true;
+    console.log("geLotsOne");
+    getLots()
+
+  return () => {
+    isActive = false;
+};
+}, [])
+
 
     useEffect(() => {
         if(lotData){
+            console.log("rerendering");
         updateDate(lotData)
         }
     }, [lotData])
@@ -53,7 +57,7 @@ const ViewMoreLotsListScreen = ({ navigation, route }) => {
               appState.current.match(/inactive|background/) &&
               nextAppState === 'active'
             ) {
-              getLots()
+             getLots()
               console.log('App has come to the foreground - viewmoreLotListScreen!');
             }
             appState.current = nextAppState;
@@ -84,7 +88,7 @@ const ViewMoreLotsListScreen = ({ navigation, route }) => {
         setLoadingIndicator(isloading);
     }
     const updateDate = (list) => {
-        console.log('listlistlistlist=====================', list);
+       
         var tempArray = list?.getDashboardLotViewMore;
         if(tempArray?.length == 0){
             setIsEmpty(true)

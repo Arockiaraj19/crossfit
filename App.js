@@ -6,82 +6,73 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState, useRef, createContext } from 'react';
 import {
-  Image,
-  StyleSheet,
-  View,
-  Platform,
-  Text,
-  Alert,
-  Linking,
-  Button,
-  BackHandler,
-  TouchableOpacity
-} from 'react-native';
-import Root from './src/navigation/routes';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AuthContext } from './src/components/AuthContext';
-import EncryptedStorage from 'react-native-encrypted-storage';
-import {
-  NavigationContainer,
-  DefaultTheme as NavigationDefaultTheme,
-  DarkTheme as NavigationDarkTheme
+  NavigationContainer
 } from '@react-navigation/native';
-import TabNavigator from './src/screens/TabNavigator';
-import { colors, fonts, images } from './src/core';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
-import { ApolloProvider } from 'react-apollo'
+import React, { createContext, useEffect, useState } from 'react';
+import { ApolloProvider, Query } from 'react-apollo';
+import {
+  BackHandler,
+  Image,
+  Linking,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import { AuthContext } from './src/components/AuthContext';
+import { colors, fonts, images } from './src/core';
+import Root from './src/navigation/routes';
+import TabNavigator from './src/screens/TabNavigator';
 
 
-import LanguageListScreen from './src/screens/LanguageListScreen';
-import DeliveryAddressScreen from './src/screens/DeliveryAddressScreen';
-import AddNewAddressScreen from './src/screens/AddNewAddressScreen';
-import AddProductLotScreen from './src/screens/AddProductLotScreen';
-import LotAddSuccessScreen from './src/screens/LotAddSuccessScreen';
-import ViewLotListScreen from './src/screens/ViewLotListScreen';
-import BidsDetailListScreen from './src/screens/BidsDetailListScreen';
-import PlaceBitInfoScreen from './src/screens/PlaceBitInfoScreen';
-import BidPlacedDetailScreen from './src/screens/BidPlacedDetailScreen';
-import SelectStateScreen from './src/screens/SelectStateScreen';
-import SelectDistrictScreen from './src/screens/SelectDistrictScreen';
-import SelectCityScreen from './src/screens/SelectCityScreen';
-import SelectAddressScreen from './src/screens/SelectAddressScreen';
-import EditBidsInfoScreen from './src/screens/EditBidsInfoScreen';
-import UpdateBidsInfoScreen from './src/screens/UpdateBidsInfoScreen';
-import AddNewEnquiryScreen from './src/screens/AddNewEnquiryScreen';
-import ProfileDetailScreen from './src/screens/ProfileDetailScreen';
-import PersonalInfoScreen from './src/screens/PersonalInfoScreen';
-import FarmDetailsScreen from './src/screens/FarmDetailsScreen';
-import EnquirySuccessScreen from './src/screens/EnquirySuccessScreen';
-import EnquiryListScreen from './src/screens/EnquiryListScreen';
-import BidsProductsScreen from './src/screens/BidsProductsScreen';
-import ViewLotDetailsScreen from './src/screens/ViewLotDetailsScreen';
-import UploadMandiRatesScreen from './src/screens/UploadMandiRatesScreen';
-import MandiListDetailScreen from './src/screens/MandiListDetailScreen';
-import ViewBidDetailsScreen from './src/screens/ViewBidDetailsScreen';
-import UpdateLotInfoScreen from './src/screens/UpdateLotInfoScreen';
-import ViewMoreEnquiryListScreen from './src/screens/ViewMoreEnquiryListScreen';
-import ViewMoreLotsListScreen from './src/screens/ViewMoreLotsListScreen';
-import SellerInfoListScreen from './src/screens/SellerInfoListScreen';
-import ViewEnquiryInfoScreen from './src/screens/ViewEnquiryInfoScreen';
-import ViewResponseEnquiryScreen from './src/screens/ViewResponseEnquiryScreen';
-import UpdateEnquiryScreen from './src/screens/UpdateEnquiryScreen';
-import DeleteAccountScreen from './src/screens/DeleteAccountScreen';
-import LoginScreen from './src/screens/LoginScreen';
-import VersionCheck from 'react-native-version-check';
+import messaging from '@react-native-firebase/messaging';
 import Modal from "react-native-modal";
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import VersionCheck from 'react-native-version-check';
+import AddNewAddressScreen from './src/screens/AddNewAddressScreen';
+import AddNewEnquiryScreen from './src/screens/AddNewEnquiryScreen';
+import AddProductLotScreen from './src/screens/AddProductLotScreen';
+import BidPlacedDetailScreen from './src/screens/BidPlacedDetailScreen';
+import BidsDetailListScreen from './src/screens/BidsDetailListScreen';
+import BidsProductsScreen from './src/screens/BidsProductsScreen';
+import DeleteAccountScreen from './src/screens/DeleteAccountScreen';
+import DeliveryAddressScreen from './src/screens/DeliveryAddressScreen';
+import EditBidsInfoScreen from './src/screens/EditBidsInfoScreen';
+import EnquiryListScreen from './src/screens/EnquiryListScreen';
+import EnquirySuccessScreen from './src/screens/EnquirySuccessScreen';
+import FarmDetailsScreen from './src/screens/FarmDetailsScreen';
+import LanguageListScreen from './src/screens/LanguageListScreen';
+import LotAddSuccessScreen from './src/screens/LotAddSuccessScreen';
+import MandiListDetailScreen from './src/screens/MandiListDetailScreen';
 import NotificationScreen from './src/screens/NotificationScreen';
-import messaging from '@react-native-firebase/messaging';
-import { firebase } from '@react-native-firebase/app';
+import PersonalInfoScreen from './src/screens/PersonalInfoScreen';
+import PlaceBitInfoScreen from './src/screens/PlaceBitInfoScreen';
+import ProfileDetailScreen from './src/screens/ProfileDetailScreen';
+import SelectAddressScreen from './src/screens/SelectAddressScreen';
+import SelectCityScreen from './src/screens/SelectCityScreen';
+import SelectDistrictScreen from './src/screens/SelectDistrictScreen';
+import SelectStateScreen from './src/screens/SelectStateScreen';
+import SellerInfoListScreen from './src/screens/SellerInfoListScreen';
+import UpdateBidsInfoScreen from './src/screens/UpdateBidsInfoScreen';
+import UpdateEnquiryScreen from './src/screens/UpdateEnquiryScreen';
+import UpdateLotInfoScreen from './src/screens/UpdateLotInfoScreen';
+import UploadMandiRatesScreen from './src/screens/UploadMandiRatesScreen';
+import ViewBidDetailsScreen from './src/screens/ViewBidDetailsScreen';
+import ViewEnquiryInfoScreen from './src/screens/ViewEnquiryInfoScreen';
+import ViewLotDetailsScreen from './src/screens/ViewLotDetailsScreen';
+import ViewLotListScreen from './src/screens/ViewLotListScreen';
+import ViewMoreEnquiryListScreen from './src/screens/ViewMoreEnquiryListScreen';
+import ViewMoreLotsListScreen from './src/screens/ViewMoreLotsListScreen';
+import ViewResponseEnquiryScreen from './src/screens/ViewResponseEnquiryScreen';
 
-import { useDispatch } from 'react-redux';
-import { getDashboardData } from './src/features/homeview/controller/home_view_controller';
-import { storee } from './src/redux/store'
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import { storee } from './src/redux/store';
 
 const lableQuery = gql`
 query getAppLabels($languageId: ID!) {
@@ -811,6 +802,8 @@ const App = () => {
 
   }, [])
   const setLanguage = async () => {
+
+
     if (Text.defaultProps == null) Text.defaultProps = {};
     Text.defaultProps.allowFontScaling = false;
 
@@ -854,7 +847,9 @@ const App = () => {
       </View>
     );
   }
-  const updateLableText = (data) => {
+  const updateLableText = async (data) => {
+
+
     console.log('data ---------------------------', data.getAppLabels);
     var loginScreenLabels = data.getAppLabels.allLabels.LoginScreen;
     var sortScreenLabels = data.getAppLabels.allLabels.Sort;
@@ -867,7 +862,10 @@ const App = () => {
     var enquiryScreenLabels = data.getAppLabels.allLabels.Enquiry;
     var footerScreenLabels = data.getAppLabels.allLabels.Footer;
     var dashboardScreenLabels = data.getAppLabels.allLabels.DashboardScreen;
-
+    const res = await EncryptedStorage.getItem('isProfile');
+    if (res != null || res != undefined) {
+      return;
+    }
     setDeleteAccount(profileScreenLabels.DeleteAccountLabel)
     setDeleteMessage1(profileScreenLabels.DeleteAccountMessage1)
     setDeleteMessage2(profileScreenLabels.DeleteAccountMessage2)

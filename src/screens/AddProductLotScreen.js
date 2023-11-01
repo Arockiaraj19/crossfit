@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Platform, Text, Pressable, Image, Alert, Dimensions, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, ScrollView, } from 'react-native';
+import { StyleSheet, View, Platform, Text, Pressable, Image, Alert, Dimensions, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, ScrollView,ActivityIndicator } from 'react-native';
 import { colors, fonts, images } from '../core';
 import HeaderComponents from '../components/HeaderComponents';
 import { AuthContext } from '../components/AuthContext';
@@ -119,19 +119,29 @@ const AddProductLotScreen = ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const onPressShowList = (selectType) => {
+        setSelectedType(selectType);
         setArrayOfItems([]);
-        setPopupTitle((selectType == 'Grade') ? gradeText : weightPlaceholder);
-        setIsFetch(false);
-        setModalVisible(true)
-        setSelectedType(selectType)
-    }
-    const updateLoading = (isloading) => {
+        setLoadingIndicator(true);
         setIsFetch(true);
-        console.log('updateLoading ----- ', isloading)
-
-        setLoadingIndicator((isloading == undefined) ? false : isloading);
+       
+        setPopupTitle((selectType == 'Grade') ? gradeText : weightPlaceholder);
+       
+        setModalVisible(true)
+       
+        
+    }
+   
+    const updateLoading = (isloading) => {
+       
+if(isloading==false){
+    console.log('updateLoading ----- ', isloading);
+    setIsFetch(false);
+    setLoadingIndicator(false);
+}
+     
     }
     const updateDate = (list) => {
+        setIsFetch(false);
         console.log('listlist ----- ', list)
         setArrayOfItems(list);
     }
@@ -450,7 +460,7 @@ const AddProductLotScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </ScrollView>
-            {(!isFetch) && (
+            {(isFetch) && (
                 <DataFetchComponents
                     selectedId={''}
                     isType={selectedType}
@@ -471,7 +481,7 @@ const AddProductLotScreen = ({ navigation, route }) => {
                             <Text style={styles.modalText}>{popupTitle}</Text>
                             <View style={styles.line} />
                             <View style={styles.view_List}>
-                                <FlatList
+                               {loadingIndicator ==true? <ActivityIndicator size="large" color='#000000' />: <FlatList
                                     style={styles.list}
                                     data={arrayOfItems}
                                     keyExtractor={(x, i) => i}
@@ -483,13 +493,13 @@ const AddProductLotScreen = ({ navigation, route }) => {
                                             <View style={styles.line} />
                                         </TouchableOpacity>
                                     )}
-                                />
+                                />}
                             </View>
                         </View>
                     </Pressable>
                 </Modal>
             )}
-            {loadingIndicator && <Loading />}
+            
         </KeyboardAvoidingView>
     );
 };

@@ -41,9 +41,7 @@ const HomeScreen =  ({ navigation, route }) => {
         myActivity,
         bidText,
         enquiryText,
-        // viewLot,
-        // bidView,
-        // viewEnquiries,
+     
         lotText,
         homeReload,
         setHomeFetch,

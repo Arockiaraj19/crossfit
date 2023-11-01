@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Platform, Text, Pressable, Image, Alert, Dimensions, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, ScrollView, } from 'react-native';
+import { StyleSheet, View, Platform, Text, Pressable, Image, Alert, Dimensions, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, ScrollView,ActivityIndicator } from 'react-native';
 import { colors, fonts, images } from '../core';
 import HeaderComponents from '../components/HeaderComponents';
 import { AuthContext } from '../components/AuthContext';
@@ -107,26 +107,37 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const onPressShowList = (selectType) => {
+        setSelectedType(selectType);
         setArrayOfItems([]);
+        setLoadingIndicator(true);
+        setIsFetch(true);
+       
         setPopupTitle((selectType == 'Grade') ? gradeText : weightPlaceholder);
-        setIsFetch(false);
+       
         setModalVisible(true)
         setIsDatePicker(false)
-        setSelectedType(selectType)
+        
     }
     const onPressDatePicker = () => {
-        setIsFetch(false);
+        setSelectedType('datePicker');
+        setLoadingIndicator(true);
+       
+        setIsFetch(true);
         setModalVisible(true)
         setIsDatePicker(true)
-        setSelectedType('datePicker');
+      
     }
     const updateLoading = (isloading) => {
-        setIsFetch(true);
-        console.log('updateLoading ----- ', isloading)
-
-        setLoadingIndicator((isloading == undefined) ? false : isloading);
+       
+if(isloading==false){
+    console.log('updateLoading ----- ', isloading);
+    setIsFetch(false);
+    setLoadingIndicator(false);
+}
+     
     }
     const updateDate = (list) => {
+        setIsFetch(false);
         console.log('listlist ----- ', list)
         setArrayOfItems(list);
     }
@@ -324,7 +335,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </ScrollView>
-            {(!isFetch) && (
+            {(isFetch) && (
                 <DataFetchComponents
                     selectedId={''}
                     isType={selectedType}
@@ -372,7 +383,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                                 <Text style={styles.modalText}>{popupTitle}</Text>
                                 <View style={styles.line} />
                                 <View style={styles.view_List}>
-                                    <FlatList
+                                {loadingIndicator ==true? <ActivityIndicator size="large" color='#000000' />:<FlatList
                                         style={styles.list}
                                         data={arrayOfItems}
                                         keyExtractor={(x, i) => i}
@@ -384,7 +395,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                                                 <View style={styles.line} />
                                             </TouchableOpacity>
                                         )}
-                                    />
+                                    />} 
                                 </View>
                             </View>
                         }
@@ -392,7 +403,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                     </Pressable>
                 </Modal>
             )}
-            {loadingIndicator && <Loading />}
+           
         </KeyboardAvoidingView>
     );
 };

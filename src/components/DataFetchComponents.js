@@ -386,6 +386,16 @@ const DataFetchComponents = ({
                 </View>
             );
         }
+        if (loading) {
+            console.log('errorerrorerrorerror', error);
+            setTimeout(async () => {
+                updateLoading(true);
+            }, 500);
+            return (
+                <View>
+                </View>
+            );
+        }
         setTimeout(async () => {
             updateLoading(false);
             updateValue(true);
@@ -407,6 +417,15 @@ const DataFetchComponents = ({
             );
         }
         if (error) {
+            updateLoading(false);
+            console.log('errorerrorerrorerror', error);
+            return (
+                <View>
+                </View>
+            );
+        }
+        if (loading) {
+            updateLoading(true);
             console.log('errorerrorerrorerror', error);
             return (
                 <View>

@@ -1,22 +1,19 @@
-import React, { useContext, useEffect, useCallback, useState } from 'react';
-import { StyleSheet, Alert, View, Image, PermissionsAndroid, KeyboardAvoidingView, Linking, Dimensions, ImageBackground, TouchableOpacity, Text, ScrollView, TextInput, Modal, Pressable, FlatList, Switch , ActivityIndicator} from 'react-native';
-import { colors, fonts, images } from '../core';
-import LanguageSelectionComponent from '../components/LanguageSelectionComponent';
-import { AuthContext } from '../components/AuthContext';
-import GetLocation from 'react-native-get-location';
-import Loading from '../components/Loading';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
-import { Query } from 'react-apollo';
-import DataFetchComponents from '../components/DataFetchComponents';
-import { graphql } from 'react-apollo';
-import * as ImagePicker from "react-native-image-picker";
-import ActionSheet from 'react-native-actionsheet';
-import UUIDv4 from '../helpers/uuid';
-import S3 from "aws-sdk/clients/s3";
 import { Credentials } from "aws-sdk";
+import S3 from "aws-sdk/clients/s3";
+import gql from 'graphql-tag';
+import React, { useContext, useEffect, useState } from 'react';
+import { Query } from 'react-apollo';
+import { ActivityIndicator, Alert, Dimensions, FlatList, Image, ImageBackground, KeyboardAvoidingView, Linking, Modal, PermissionsAndroid, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
+import GetLocation from 'react-native-get-location';
+import * as ImagePicker from "react-native-image-picker";
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import LanguageSelectionComponent from '../components/LanguageSelectionComponent';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 import { getPushToken } from '../helpers/AppManager';
-import { useFocusEffect } from '@react-navigation/native';
 import uploadImageToStorage from '../helpers/uploadImage';
 
 
@@ -64,7 +61,7 @@ query checkReferalCode($referalCode: String!) {
 
 
 
-const EnterMobileNumberScreen = ({ navigation, route }) => {
+const EnterMobileNumberScreen = ({ navigation }) => {
 
     const dimensions = Dimensions.get('window');
     const imageHeight = Math.round(dimensions.width * 9 / 12);
@@ -98,15 +95,9 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
     });
     const {
         pushDeviceToken,
-        isLoading,
-        setIsLoading,
-        loginToken,
-        setLoginToken,
-        getStart,
         setGetStart,
         welcomeText,
         setWelcomeText,
-        loginandSignup,
         setLoginandSignup,
         continueText,
         setContinueText,
@@ -114,302 +105,195 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         setEnterPhoneNumebr,
         enterYourName,
         setEnterYourName,
-        chooseLanguage,
         setChooseLanguage,
-        locationAlert,
-        setLocationAlert,
-        otpVerification,
         setOtpVerification,
-        enterOtp,
         setEnterOtp,
-        didntReceive,
         setDidntReceive,
         errorNumer,
         setErrorNumer,
         errorName,
         setErrorName,
-        languageList,
-        setLanguageList,
-        buySearchPlaceholder,
-        setBuySearchPlaceholder,
-        deliverAddress,
         setDeliverAddress,
-        addNewAddress,
         setAddNewAddress,
-        noAddress,
         setNoAddress,
-        myAddress,
         setMyAddress,
-        type,
         setType,
-        userState,
         setUserState,
-        district,
         setDistrict,
-        taluk,
         setTaluk,
-        village,
         setVillage,
-        doorNo,
         setDoorNo,
-        pincode,
         setPincode,
-        next,
         setNext,
-        placeholderType,
         setPlaceholderType,
-        placeholderState,
         setPlaceholderState,
-        placeholderDistrict,
         setPlaceholderDistrict,
-        placeholderTaluk,
         setPlaceholderTaluk,
-        placeholderTown,
         setPlaceholderTown,
-        placeholderVillage,
         setPlaceholderVillage,
-        placeholderDoorNo,
         setPlaceholderDoorNo,
-        placeholderPinCode,
         setPlaceholderPinCode,
-        selectAddress,
         setSelectAddress,
-        listMyProduct,
         setListMyProduct,
-        gradeText,
         setGradeText,
-        gradePlaceholder,
         setGradePlaceholder,
-        availableQuality,
         setAvailableQuality,
-        availableQualityPlaceholder,
         setAvailableQualityPlaceholdery,
-        weightPlaceholder,
         setWeightPlaceholder,
-        acres,
         setAcres,
-        acresPlaceholder,
         setAcresPlaceholder,
-        productPrice,
         setProductPrice,
-        productPricePlaceholder,
         setProductPricePlaceholder,
-        saveLot,
         setSaveLot,
-        gradeAlert,
         setGradeAlert,
-        quantityAlert,
         setQuantityAlert,
-        weightAlert,
         setWeightAlert,
-        acreAlert,
         setAcreAlert,
-        priceAlert,
         setPriceAlert,
-        successText,
         setSuccessText,
-        successLot,
         setSuccessLot,
-        viewLot,
         setViewLot,
-        backHome,
         setBackHome,
-        statusText,
         setStatusText,
-        placeBit,
         setPlaceBit,
-        bitsText,
         setBitsText,
-        weightUnitAlert,
         setWeightUnitAlert,
-        successBid,
         setSuccessBid,
-        requiredQuantity,
         setRequiredQuantity,
-        bidPrice,
         setBidPrice,
-        bidView,
         setBidView,
-        stepText,
         setStepText,
-        saveAddress,
         setSaveAddresst,
-        villageString,
         setVillageString,
-        bitsTitle,
         setBitsTitle,
-        editBits,
         setEditBits,
-        deleteBits,
         setDeleteBits,
-        enquireText,
         setEnquireText,
-        buyText,
         setBuyText,
-        sellText,
         setSellText,
-        newEnquriyText,
         setNewEnquriyText,
-        deliverOn,
         setDeliverOn,
-        placeEnquiry,
         setPlaceEnquiry,
-        deliverOnAlert,
         setDeliverOnAlert,
-        profileText,
         setProfileText,
-        editProfileText,
         setEditProfileText,
-        personalInformation,
         setPersonalInformation,
-        locationDetail,
         setLocationDetail,
-        farmDetails,
         setFarmDetails,
-        logout,
         setLogout,
-        nameText,
         setNameText,
-        gender,
         setGender,
-        dateOfBirth,
         setDateOfBirth,
-        mobileNumber,
         setMobileNumber,
-        emailId,
         setEmailId,
-        preferredLanguage,
         setPreferredLanguage,
-        preferredRole,
         setPreferredRole,
-        nameAlert,
         setNameAlert,
-        genderAlert,
         setGenderAlert,
-        dobAlert,
         setDobAlert,
-        mobileAlert,
         setMobileAlert,
-        emailAlert,
         setEmailAlert,
         languageAlert,
         setLanguageAlert,
         roleAlert,
         setRoleAlert,
-        maleText,
         setMaleText,
-        femaleText,
         setFemaleText,
-        otherText,
         setOtherText,
-        cultivableText,
         setCultivableText,
-        irrigationText,
         setIrrigationText,
-        groundWaterText,
         setGroundWaterText,
-        sprinklerText,
         setSprinklerText,
-        borewellText,
         setBorewellText,
-        organicText,
         setOrganicText,
-        toolsText,
         setToolsText,
-        livestockText,
         setLivestockText,
-        expertText,
         setExpertText,
-        enquirySuccess,
         setEnquirySuccess,
-        viewExpert,
         setViewExpert,
-        myExpert,
         setMyExpert,
-        alertRequiredQuantity,
         setAlertRequiredQuantity,
-        biddedOn,
         setBiddedOn,
-        pickup, setPickup,
-        editLot, setEditLot,
-        deleteLotInfo, setDeleteLotInfo,
-        sortBy, setSortBy,
-        bidPricePlaceholder, setBidPricePlaceholder,
-        updateon, setUpdateon,
-        updateLot, setUpdateLot,
-        updateBit, setUpdateBit,
-        deleteBidAlert, setDeleteBidAlert,
-        deleteLotAlert, setDeleteLotAlert,
-        deleteAddressAlert, setDeleteAddresAlert,
-        organic, setOrganic,
-        per, setPer,
+        setPickup,
+        setEditLot,
+        setDeleteLotInfo,
+        setSortBy,
+        setBidPricePlaceholder,
+        setUpdateon,
+        setUpdateLot,
+        setUpdateBit,
+        setDeleteBidAlert,
+        setDeleteLotAlert,
+        setDeleteAddresAlert,
+        setOrganic,
+        setPer,
         selectRole, setSelectRole,
-        home, setHome,
-        buy, setBuy,
-        sell, setSell,
-        bids, setBids,
-        lots, setLots,
-        watchVideo, setWatchVideo,
-        mandiRate, setMandiRate,
+        setHome,
+        setBuy,
+        setSell,
+        setBids,
+        setLots,
+        setWatchVideo,
+        setMandiRate,
         profileImage, setProfileImage,
-        browseFile, setBrowseFile,
-        useCamera, setUseCamera,
-        locationMandi, setLocationMandi,
-        uploaDMandi, setUploaDMandi,
-        mandiRates, setMandiRates,
-        realmandiRates, setRealmandiRates,
-        languageInfoId, setLanguageInfoId,
-        quantityText, setQuantityText,
-        applyText, setApplyText,
-        referenceText, setReferenceText,
+        setBrowseFile,
+        setUseCamera,
+        setLocationMandi,
+        setUploaDMandi,
+        setMandiRates,
+        setRealmandiRates,
+        setLanguageInfoId,
+        setQuantityText,
+        setApplyText,
+        setReferenceText,
         appliedReference, setAppliedReference,
-        checkQuantityAlert, setCheckQuantityAlert,
-        acceptBit, setAcceptBit,
-        declineBit, setDeclineBit,
-        enquiries, setEnquiries,
-        sellerList, setSellerList,
-        lotAddedOn, setLotAddedOn,
-        expectedon, setExpectedon,
-        showInterest, setShowInterest,
-        enquiryAddedOn, setEnquiryAddedOn,
-        viewEnquiries, setViewEnquiries,
-        editEnquiry, setEditEnquiry,
-        deleteEnquiryText, setDeleteEnquiryText,
-        viewResponses, setViewResponses,
-        deleteEnquiryAlert, setDeleteEnquiryAlert,
-        deleteAddress, setDeleteAddress,
-        logoutYes, setLogoutYes,
-        logoutCancel, setLogoutCancel,
-        noMandi, setNoMandi,
-        noLods, setNoLods,
-        noBids, setNoBids,
-        changeProfile, setChangeProfile,
-        isBackOption, setIsBackOption,
-        checkRate, setCheckRate,
-        quickSearch, setQuickSearch,
-        buyerText, setBuyerText,
-        sellerText, setSellerText,
-        viewMore, setViewMore,
-        areYouSure, setAreYouSure,
-        mandiratesSuccess, setMandiratesSuccess,
-        enterLocation, setEnterLocation,
-        noEnquiry, setNoEnquiry,
+        setCheckQuantityAlert,
+
+
+        setEnquiries,
+        setSellerList,
+        setLotAddedOn,
+        setExpectedon,
+        setShowInterest,
+        setEnquiryAddedOn,
+        setViewEnquiries,
+        setEditEnquiry,
+        setDeleteEnquiryText,
+        setViewResponses,
+        setDeleteEnquiryAlert,
+        setDeleteAddress,
+        setLogoutYes,
+        setLogoutCancel,
+        setNoMandi,
+        setNoLods,
+        setNoBids,
+        setChangeProfile,
+
+        setCheckRate,
+        setQuickSearch,
+
+        setSellerText,
+        setViewMore,
+        setAreYouSure,
+        setMandiratesSuccess,
+        setEnterLocation,
+        setNoEnquiry,
         setUpdateSuccess,
         setEnquiryMessage,
-        termsAndConditions, setTermsAndConditions,
-        helpLine, setHelpLine,
-        minAmountPerGvtAlert, setMinAmountPerGvtAlert,
-        approveErrorMsg, setApproveErrorMsg,
-        pickupAddress, setPickupAddress,
-        comingSoon, setComingSoon,
-        areYouSureAccept, setAreYouSureAccept,
-        areYouSureDecline, setAreYouSureDecline,
+        termsAndConditions,
+        setHelpLine,
+        setMinAmountPerGvtAlert,
+        setApproveErrorMsg,
+        setPickupAddress,
+        setComingSoon,
+        setAreYouSureAccept,
+        setAreYouSureDecline,
         setDeleteAccount,
         setDeleteMessage1,
         setDeleteMessage2,
         setDeleteMessage3,
         setDeleteMessage4,
-        alreadyRegister, singinText,
+        alreadyRegister,
         isShowLanguage,
         loginLabel,
         setEmptyNotification,
@@ -417,11 +301,9 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         setActivity,
         setBidText,
         setEnquiryText,
-        setLoginLabel,
-        referralCode
-    } = useContext(AuthContext);
+        setLoginLabel } = useContext(AuthContext);
 
-    const [generateOTP, { loading, error, data }] = useMutation(CONTINENT_QUERY);
+    const [generateOTP] = useMutation(CONTINENT_QUERY);
     let options = {
         storageOptions: {
             skipBackup: true,
@@ -430,35 +312,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         quality: 0.3,
     };
 
-    const GetRolesComponent = graphql(GETROLES_QUERY)(props => {
-        const { error, getRoles, loading } = props.data;
-        { console.log('propspropsprops 121212121 ---- ', props) }
-        if (getRoles) {
-            setTimeout(async () => {
-                updateLoading(false);
-                updateDate(getRoles)
-            }, 500);
-            return (
-                <View>
-                </View>
-            );
-        }
-        if (error) {
-            console.log('errorerrorerrorerror', error);
-            setTimeout(async () => {
-                updateLoading(false);
-            }, 500);
-            return (
-                <View>
-                </View>
-            );
-        }
-        setTimeout(async () => {
-            updateLoading(false);
-        }, 500);
-        return <View />;
-    });
-   
+
     useEffect(() => {
         setTimeout(async () => {
             let token = await getPushToken()
@@ -470,7 +324,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
                     enableHighAccuracy: true,
                     timeout: 15000,
                 })
-                    .then(location => {
+                    .then(() => {
                         // setIsUpdated(true)
                         // setCurrentLocationDetails({
                         //   latitude: location.latitude,
@@ -533,7 +387,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         setIsShowLanguageList(false);
     }
     const onPressContinue = () => {
-        if(registerLoading){
+        if (registerLoading) {
             return;
         }
         console.log('mobileNumber.lengthmobileNumber.lengthmobileNumber.length', userMobileNumber.length)
@@ -586,11 +440,11 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
             ]);
         }
         else if (userMobileNumber != '' && userName != '' && state.languageId != '' && userRoleId != '' && checkBoxSelected) {
-            console.log("sinup",{ mobileNo: userMobileNumber, language: state.languageId, roleId: userRoleId, profilePicPath: userProfileImage, userName: userName, referalCode: referalCode, deviceToken: pushDeviceToken })
- 
-           setregisterLoading(true);
+            console.log("sinup", { mobileNo: userMobileNumber, language: state.languageId, roleId: userRoleId, profilePicPath: userProfileImage, userName: userName, referalCode: referalCode, deviceToken: pushDeviceToken })
+
+            setregisterLoading(true);
             generateOTP({
-                variables: { mobileNo: userMobileNumber, language: state.languageId, roleId: userRoleId, profilePicPath: userProfileImage, userName: userName, referalCode: referalCode, deviceToken: pushDeviceToken}
+                variables: { mobileNo: userMobileNumber, language: state.languageId, roleId: userRoleId, profilePicPath: userProfileImage, userName: userName, referalCode: referalCode, deviceToken: pushDeviceToken }
             })
                 .then(res => {
                     setregisterLoading(false);
@@ -711,7 +565,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         setRoleAlert(loginScreenLabels.RolePlaceholder)
         setSelectRole(loginScreenLabels.RolePlaceholder);
         setLoginLabel(loginScreenLabels.LogIn)
-        
+
         setSortBy(sortScreenLabels.Sortby)
 
         setProfileText(profileScreenLabels.Profile)
@@ -816,7 +670,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         setDeleteLotInfo(sellScreenLabels.DeleteLot)
         setDeleteLotAlert(sellScreenLabels.DeleteLotConfirmation)
         setComingSoon(sellScreenLabels.NoCategory)
-        
+
         setBitsText(buyScreenLabels.BidProduct)
         setSuccessBid(buyScreenLabels.BidSuccess)
         setRequiredQuantity(buyScreenLabels.RequiredQuantity)
@@ -887,7 +741,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         setModalVisible(true);
 
     }
-    const handleSelectItem = (item, index) => {
+    const handleSelectItem = (item) => {
         setUserRole(item.Name)
         setUserRoleId(item.Id)
         setModalVisible(false);
@@ -1002,34 +856,10 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
 
     const s3 = new S3({
         credentials: access,
-		endpoint: 'https://s3.filebase.com', 
+        endpoint: 'https://s3.filebase.com',
         region: "us-east-1",
         signatureVersion: "v4",
     });
-    const request = async () => {
-        const fileId = 'gt_image_' + UUIDv4() + '.jpg';
-        setUUID(fileId)
-        const signedUrlExpireSeconds = 60 * 15;
-
-        const url = await s3.getSignedUrlPromise("putObject", {
-            Bucket: "userprofileimagescropfit",
-            Key: `${fileId}`,
-            ContentType: "image/jpeg",
-            Expires: signedUrlExpireSeconds,
-        });
-        return url;
-    }
-    const fetchUploadUrl = async (data, fileSelected) => {
-        try {
-            let res = await fetch(data, {
-                method: 'PUT',
-                body: fileSelected,
-            })
-            return res;
-        } catch (error) {
-            return error;
-        }
-    }
     const uploadImage = async (imageUrl) => {
         setLoadingIndicator(true)
         // var urlaws = await request();
@@ -1043,33 +873,20 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         //     );
         // console.log('url -----------', image_file)
 
-        const profileImage=await uploadImageToStorage(imageUrl);
+        const profileImage = await uploadImageToStorage(imageUrl);
         setTimeout(async () => {
             // const res = await fetchUploadUrl(urlaws, image_file);
             setUserProfileImage(profileImage)
-           
+
             setLoadingIndicator(false)
         }, 100);
     }
-    const onPressCheckReferalCode = () => {
-        if (referalCode.length < 4) {
-            Alert.alert('', 'Please enter valid referal code', [{
-                text: 'OK', onPress: () => {
-                    return;
-                },
-            },
-            ]);
-        }
-        else {
-            setIsReferalApi(true)
-        }
-    }
     const onPressTerms = () => {
-        if(privacyPolicy != ''){
+        if (privacyPolicy != '') {
             Linking.openURL(privacyPolicy)
         }
     }
-    const updatePolicyLoading = (isloading) => {
+    const updatePolicyLoading = () => {
         setIsFetchPolicy(false);
     }
     const updatePolicyDate = (privacyPolicyInfo) => {
@@ -1081,12 +898,11 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
         navigation.navigate('LoginScreen')
     }
 
-    const toggleSwitch = () =>  setIsToggleEnabled(previousState => !previousState)
 
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}>
-                {(!isFetchPolicy) && (
+            {(!isFetchPolicy) && (
                 <DataFetchComponents
                     selectedId={''}
                     isType={'policy'}
@@ -1111,14 +927,14 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
                         <Text style={styles.text_login}>{loginandSignup}</Text>
                         <View style={[styles.line_view, { marginLeft: 10, }]}></View>
                     </View> */}
-                    <View style={{marginTop:10,flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
+                    <View style={{ marginTop: 10, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                         <Text style={{ color: colors.text_Color, fontFamily: fonts.MONTSERRAT_MEDIUM, }}>
                             {alreadyRegister}?</Text>
                         <TouchableOpacity onPress={navigateLoginScreen}>
                             <Text style={{ color: "red", paddingHorizontal: 5, textAlign: 'center' }}>{loginLabel}</Text></TouchableOpacity>
                     </View>
 
-                    <View style={[styles.view_top,{marginTop:10}]}>
+                    <View style={[styles.view_top, { marginTop: 10 }]}>
                         <View style={styles.view_profileImage}>
                             {(profileImageUrl == '') ?
                                 <Image style={styles.image_user}
@@ -1239,7 +1055,7 @@ const EnterMobileNumberScreen = ({ navigation, route }) => {
             <View style={{ marginTop: 20, width: '100%', height: 45, alignItems: 'center' }}>
                 <TouchableOpacity style={styles.continue_touch}
                     onPress={onPressContinue}>
-              {registerLoading?   <ActivityIndicator size="small" color={colors.white_color} />:<Text style={styles.continue_text}>{continueText}</Text>}      
+                    {registerLoading ? <ActivityIndicator size="small" color={colors.white_color} /> : <Text style={styles.continue_text}>{continueText}</Text>}
                 </TouchableOpacity>
             </View>
             <View style={{ width: '100%', height: 25, }} />
@@ -1610,8 +1426,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 30,
         width: '80%',
-        alignItems:"center",
-        justifyContent:"space-between"
+        alignItems: "center",
+        justifyContent: "space-between"
     }
 });
 

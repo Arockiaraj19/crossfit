@@ -4,13 +4,13 @@ import { colors, fonts, images } from '../core';
 import { AuthContext } from '../components/AuthContext';
 import HeaderComponents from '../components/HeaderComponents';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, useMutation } from 'react-apollo';
 import BidsInfoComponents from '../components/BidsInfoComponents';
 import Loading from '../components/Loading';
 import moment from "moment";
 import { handlePhoneCall } from '../helpers/AppManager';
 import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY } from '../helpers/Schema';
+import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 
 const GETLOTSBYCOMMODITY_QUERY = gql`
 query getLotsByCommodityChild($commodityChildId: ID!){
@@ -58,7 +58,7 @@ const BidsDetailListScreen = ({ navigation, route }) => {
     const [bidsDetails, setBidsDetails] = React.useState([]);
     const [loadingIndicator, setLoadingIndicator] = React.useState(true);
     const flatList = createRef();
-    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = fetchDataFromServer(ALLOWMOBILENUMVIEW_QUERY)
+    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = useMutation(MOBILENUMBERAUDIT_QUERY)
     const updateValue = (flag) => {
         setTimeout(async () => {
             setLoadingIndicator(true)
@@ -106,15 +106,16 @@ const BidsDetailListScreen = ({ navigation, route }) => {
         setArrayOfList(bidsTemp);
     }
 
-    useEffect(() => {
-        if (mobileViewData != undefined) {
-            (async () => {
-                await handlePhoneCall(bidsDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
-            })()
-        }
-    }, [mobileViewData])
+    // useEffect(() => {
+    //     if (mobileViewData != undefined) {
+    //         (async () => {
+    //             await handlePhoneCall(bidsDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
+    //         })()
+    //     }
+    // }, [mobileViewData])
 
     const onPressMakeCall = async() => {
+        await handlePhoneCall(bidsDetails.MobileNo, navigation);
         return await getMobileView({ variables: { transactiontype: "Lot", transactionid: bidsDetails.Id }})
     } 
 

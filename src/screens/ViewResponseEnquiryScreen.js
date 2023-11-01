@@ -11,7 +11,7 @@ import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { handlePhoneCall } from '../helpers/AppManager';
 import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY } from '../helpers/Schema';
+import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 
 const SHOWINTERESTENQUIRY_QUERY = gql`
 mutation ($enquiryId: ID!){
@@ -38,7 +38,7 @@ const ViewResponseEnquiryScreen = ({ navigation, route }) => {
     const flatList = createRef();
     const [enquiryInterest, { loading, error, data }] = useMutation(SHOWINTERESTENQUIRY_QUERY);
     const [NotificationStatus, { }] = useMutation(NOTIFICATIONSTATUS_QUERY);
-    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = fetchDataFromServer(ALLOWMOBILENUMVIEW_QUERY)
+    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = useMutation (MOBILENUMBERAUDIT_QUERY)
     const [item,setItem] = useState(null)
 
     useFocusEffect(
@@ -99,16 +99,17 @@ const ViewResponseEnquiryScreen = ({ navigation, route }) => {
         return momentObj
     }
 
-    useEffect(() => {
-        if (mobileViewData != undefined) {
-            (async () => {
-                await handlePhoneCall(item.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
-            })()
-        }
-    }, [mobileViewData])
+    // useEffect(() => {
+    //     if (mobileViewData != undefined) {
+    //         (async () => {
+    //             await handlePhoneCall(item.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
+    //         })()
+    //     }
+    // }, [mobileViewData])
 
     const onPressMakeCall = async(item) => {
-        setItem(item)
+        setItem(item);
+        await handlePhoneCall(item.MobileNo, navigation);
         return await getMobileView({ variables: { transactiontype: "Enquiry", transactionid: item.Id }})
         // handlePhoneCall(item.MobileNo,navigation)
     }

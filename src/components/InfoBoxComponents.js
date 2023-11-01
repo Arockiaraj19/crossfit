@@ -17,17 +17,17 @@ const InfoBoxComponents = ({
     }, [])
 
     const ResizeImage = ({ uri, desiredHeight }) => {
-        const [desiredWeight, setDesiredWeight] = React.useState(0)
-        Image.getSize(uri, (width, height) => {
-            setDesiredWeight(desiredHeight / height * width)
-        })
+        // const [desiredWeight, setDesiredWeight] = React.useState(0)
+        // Image.getSize(uri, (width, height) => {
+        //     setDesiredWeight(desiredHeight / height * width)
+        // })
         return (
             <Image
                 source={{ uri }}
                 style={{
                     backgroundColor: 'transparent',
                     height: desiredHeight,
-                    width: desiredWeight,
+                    width: 70,
                 }}
             />
         )

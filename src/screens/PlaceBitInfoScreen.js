@@ -1,14 +1,13 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Image, Text, TextInput, Platform, Alert, Pressable, KeyboardAvoidingView, ScrollView, TouchableOpacity, Modal, FlatList } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import DataFetchComponents from '../components/DataFetchComponents';
-import InputBoxComponent from '../components/InputBoxComponent';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { weightConvertKilogram,currencyFormat } from '../helpers/AppManager';
+import React, { useContext, useEffect } from 'react';
+import { Alert, FlatList, Image, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import HeaderComponents from '../components/HeaderComponents';
 import Loading from '../components/Loading';
+import { colors, fonts } from '../core';
+import { currencyFormat, weightConvertKilogram } from '../helpers/AppManager';
 
 
 const ADDEDITBID_QUERY = gql`
@@ -174,7 +173,13 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
                     onPressViewBidInfo(res.data.addEditBid.Quantity);
                 })
                 .catch(e => {
-                    setLoadingIndicator(false)
+                    Alert.alert('Error', e.message, [{
+                        text: 'OK', onPress: () => {
+                            return;
+                        },
+                    },
+                    ]);
+                    setLoadingIndicator(false);
                     console.log('errer ------------------', e.message);
                 });
         }

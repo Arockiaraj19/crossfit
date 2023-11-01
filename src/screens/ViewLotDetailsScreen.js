@@ -11,7 +11,7 @@ import { Query } from 'react-apollo';
 import { useMutation } from '@apollo/react-hooks';
 import { handlePhoneCall } from '../helpers/AppManager';
 import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY } from '../helpers/Schema';
+import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 
 const GETBIDSBYLOT_QUERY = gql`
 query getBidsbyLotId($lotId: ID!){
@@ -68,7 +68,7 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
     const [bidsDetails, setBidsDetails] = React.useState([]);
     const [updateBidStatus, { loading, error, data }] = useMutation(UPDATEBITSTATUS_QUERY);
     const [updateNotificationStatus, { }] = useMutation(UPDATENOTIFICATIONSTATUS_QUERY);
-    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = fetchDataFromServer(ALLOWMOBILENUMVIEW_QUERY)
+    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = useMutation(MOBILENUMBERAUDIT_QUERY)
 
 
     const {
@@ -205,16 +205,17 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
              
     }
     
-    useEffect(() => {
-        if (mobileViewData != undefined) {
-            (async () => {
-                await handlePhoneCall(bidsDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
-            })()
-        }
-    }, [mobileViewData])
+    // useEffect(() => {
+    //     if (mobileViewData != undefined) {
+    //         (async () => {
+    //             await handlePhoneCall(bidsDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
+    //         })()
+    //     }
+    // }, [mobileViewData])
 
 
     const onPressMakeCall = async() => {
+        await handlePhoneCall(bidsDetails.MobileNo, navigation);
          return await getMobileView({ variables: { transactiontype: "Bid", transactionid: bidsDetails.Id }})
         // handlePhoneCall(bidsDetails.MobileNo,navigation)
     }

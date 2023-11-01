@@ -10,7 +10,7 @@ import Loading from '../components/Loading';
 import { useMutation } from '@apollo/react-hooks';
 import { handlePhoneCall } from '../helpers/AppManager';
 import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY } from '../helpers/Schema';
+import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 
 const GETLOTSBYCOMMODITY_QUERY = gql`
 query getLotById($lotId: ID!){
@@ -59,7 +59,7 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
     const [loadingIndicator, setLoadingIndicator] = React.useState(true);
     const [bidsDetails, setBidsDetails] = React.useState([]);
     const [updateBidStatus, { loading, error, data }] = useMutation(UPDATEBITSTATUS_QUERY);
-    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = fetchDataFromServer(ALLOWMOBILENUMVIEW_QUERY)
+    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = useMutation(MOBILENUMBERAUDIT_QUERY)
     
     useEffect(() => {
         console.log('route ------------ 11 ', route.params);
@@ -98,16 +98,17 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
         return momentObj
     }
 
-    useEffect(() => {
-        if (mobileViewData != undefined) {
-            (async () => {
-                await handlePhoneCall(bidsDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
-            })()
-        }
-    }, [mobileViewData])
+    // useEffect(() => {
+    //     if (mobileViewData != undefined) {
+    //         (async () => {
+    //             await handlePhoneCall(bidsDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
+    //         })()
+    //     }
+    // }, [mobileViewData])
 
 
     const onPressMakeCall = async() => {
+        await handlePhoneCall(bidsDetails.MobileNo, navigation);
         return await getMobileView({ variables: { transactiontype: "Lot", transactionid: bidsDetails.Id }})
         // handlePhoneCall(bidsDetails.MobileNo,navigation)
     }
