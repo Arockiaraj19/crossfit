@@ -1,11 +1,10 @@
 
-import { getBackgroundColor } from '../helpers/AppManager';
 
 
 export const colors = {
     background_color: '#fafafa',
-    white_color:  '#ffffff',
-    black_color:  '#000000',
+    white_color: '#ffffff',
+    black_color: '#000000',
     landing_background: '#016130',
     landing_border: '#01a552',
     text_Color: '#333333',
@@ -13,7 +12,7 @@ export const colors = {
     search_placeholder: '#8B8E8E',
     line_background: 'rgba(112, 112, 112, 0.2)',
     lite_black: 'rgba(0,0,0,0.3)',
-    lite_naviBlue:'#b1d2f2'
+    lite_naviBlue: '#b1d2f2'
 
 };
 
@@ -26,8 +25,8 @@ export const fonts = {
 };
 
 export const images = {
-    CROPFITWHITELOGO: require('../assets/images/cropfit_logo_white.png'),
-    CROPFITBLACKLOGO: require('../assets/images/cropfit_logo_black.png'),
+    CROPFITWHITELOGO: require('../assets/images/farmfit_logo_white.png'),
+    CROPFITBLACKLOGO: require('../assets/images/farmfit_logo_black.png'),
     GETSTARTARROW: require('../assets/images/get_started_arrow.png'),
     HEADINGBACKGROUNDIMAGE: require('../assets/images/heading_background_image.png'),
     LANGUAGEICON: require('../assets/images/language_icon.png'),
@@ -82,15 +81,15 @@ export const images = {
     WARNINGDELETE: require('../assets/images/warning_delete.png'),
     SHAREIMAGE: require('../assets/images/share.png'),
     NOTIFICATION: require('../assets/images/notification.png'),
-    EMPTYNOTIFICATION : require('../assets/images/empty_notification.png'),
-    NOTIFICATIONLOGO : require('../assets/images/notification-logo.png'),
-    BIDIMAGE : require('../assets/images/bidImage.png'),
-    BOOKMARKICON : require('../assets/images/bookmark.png'),
-    EMPTYBOOKMARKICON : require('../assets/images/empty-bookmark.png'),
-    ACTIVITYWHITE : require('../assets/images/activity_white.png'),
-    ACTIVITYBID : require('../assets/images/viewbids.png'),
-    ACTIVITYSELL : require('../assets/images/viewbuy.png'),
-    ACTIVITYENQUIRY : require('../assets/images/enquiry.png'),
-    ACTIVITYLOTICON : require('../assets/images/myactivity-loticon.png'),
-    MYACTIVITYLOTIMAGE : require('../assets/images/loticon.png')
+    EMPTYNOTIFICATION: require('../assets/images/empty_notification.png'),
+    NOTIFICATIONLOGO: require('../assets/images/notification-logo.png'),
+    BIDIMAGE: require('../assets/images/bidImage.png'),
+    BOOKMARKICON: require('../assets/images/bookmark.png'),
+    EMPTYBOOKMARKICON: require('../assets/images/empty-bookmark.png'),
+    ACTIVITYWHITE: require('../assets/images/activity_white.png'),
+    ACTIVITYBID: require('../assets/images/viewbids.png'),
+    ACTIVITYSELL: require('../assets/images/viewbuy.png'),
+    ACTIVITYENQUIRY: require('../assets/images/enquiry.png'),
+    ACTIVITYLOTICON: require('../assets/images/myactivity-loticon.png'),
+    MYACTIVITYLOTIMAGE: require('../assets/images/loticon.png')
 };

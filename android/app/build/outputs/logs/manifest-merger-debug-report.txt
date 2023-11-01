@@ -212,12 +212,16 @@ uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:13:3-78
 	android:name
 		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:13:20-75
-uses-feature#android.hardware.camera
-ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:14:3-58
+uses-permission#android.permission.READ_MEDIA_IMAGES
+ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:14:3-73
 	android:name
-		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:14:17-55
+		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:14:20-71
+uses-feature#android.hardware.camera
+ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:15:3-58
+	android:name
+		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:15:17-55
 application
-ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:16:3-50:17
+ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:17:3-50:17
 MERGED from [:react-native-firebase_messaging] E:\bharath\cropfit\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:5-43:19
 MERGED from [:react-native-firebase_messaging] E:\bharath\cropfit\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:5-43:19
 MERGED from [:react-native-firebase_app] E:\bharath\cropfit\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:10:5-30:19
@@ -311,11 +315,9 @@ MERGED from [net.time4j:time4j-android:4.8-2021a] C:\Users\punit\.gradle\caches\
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.8.0] C:\Users\punit\.gradle\caches\transforms-3\7e1da3333c208928317e3faa2f5431a5\transformed\core-1.8.0\AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:18:5-37
-	android:roundIcon
-		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:20:5-50
+		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:19:5-37
 	android:icon
-		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:19:5-39
+		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:20:5-39
 	android:allowBackup
 		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:21:5-32
 	android:theme
@@ -323,7 +325,7 @@ MERGED from [net.time4j:time4j-android:4.8-2021a] C:\Users\punit\.gradle\caches\
 	android:usesCleartextTraffic
 		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:23:5-40
 	android:name
-		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:17:5-36
+		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:18:5-36
 activity#com.farmer.farmfit.MainActivity
 ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:26:5-43:16
 	android:label

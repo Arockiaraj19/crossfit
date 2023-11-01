@@ -1,13 +1,11 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Image, Text, ScrollView, Platform, Alert, Keyboard, TouchableOpacity,ActivityIndicator } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import DataFetchComponents from '../components/DataFetchComponents';
-import Loading from '../components/Loading';
-import InputBoxComponent from '../components/InputBoxComponent';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import React, { useContext, useEffect } from 'react';
+import { ActivityIndicator, Alert, Keyboard, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import HeaderComponents from '../components/HeaderComponents';
+import InputBoxComponent from '../components/InputBoxComponent';
+import { colors, fonts } from '../core';
 
 const ADDADDRESS_QUERY = gql`
 mutation ($addressType: ID!, $addressLine1: String!, $addressLine2: String!, $state: ID!, $district: ID!, $town: ID!, $taluk: ID!, $village: String!, $postal: ID!){
@@ -60,15 +58,15 @@ const SelectAddressScreen = ({ navigation, route }) => {
     const [isKeyboardVisible, setKeyboardVisible] = React.useState(false);
 
     useEffect(() => {
-        if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
+        if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
             console.log("this is one triggere or not");
             console.log(route.params.data.AddressLine1);
             setUserDoorNo(route.params.data.AddressLine1);
-            setUserPincode(route.params.data.PostalCode); 
-            setUserVillage(route.params.data.Village);   
-                      
-                    
-                    }
+            setUserPincode(route.params.data.PostalCode);
+            setUserVillage(route.params.data.Village);
+
+
+        }
         const keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
             () => {
@@ -85,7 +83,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
             keyboardDidHideListener.remove();
             keyboardDidShowListener.remove();
         };
-        
+
     }, [])
 
     const onPressBack = () => {
@@ -94,7 +92,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile =()=> {
+    const onPressProile = () => {
         navigation.navigate('ProfileDetailScreen')
     }
     const onPressNextAction = () => {
@@ -136,35 +134,37 @@ const SelectAddressScreen = ({ navigation, route }) => {
 
 
             console.log("what is the params i am getting");
-          
-            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
-                console.log({Id:route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town:"", taluk:"", village: userVillage, postal: parseInt(userPincode) });
+
+            if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
+                console.log({ Id: route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: "", taluk: "", village: userVillage, postal: parseInt(userPincode) });
                 updateUserAddress({
-                    variables: {Id:route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town:1, taluk:1, village: userVillage, postal: parseInt(userPincode) }
+                    variables: { Id: route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: 1, village: userVillage, postal: parseInt(userPincode) }
                 })
                     .then(res => {
                         setLoadingIndicator(false)
                         console.log('res ------------------', res);
                         Alert.alert('Success', "Address updated successfully", [{
                             text: 'OK', onPress: () => {
-                                return  navigation.pop(3);
+                                return navigation.pop(3);
                             },
                         }]);
-                       
+
                     })
                     .catch(e => {
                         setLoadingIndicator(false)
                         console.log('errer ------------------', e.message);
                     });
-            }else{
+            } else {
+                console.log("add adress");
+                console.log({ addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: 1, village: userVillage, postal: parseInt(userPincode) });
                 addUserAddress({
-                    variables: { addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town:1, taluk:1, village: userVillage, postal: parseInt(userPincode) }
+                    variables: { addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: 1, village: userVillage, postal: parseInt(userPincode) }
                 })
                     .then(res => {
                         setLoadingIndicator(false)
                         Alert.alert('Success', "Address added successfully", [{
                             text: 'OK', onPress: () => {
-                                return  navigation.pop(3);
+                                return navigation.pop(3);
                             },
                         }]);
                     })
@@ -173,7 +173,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
                         console.log('errer ------------------', e.message);
                     });
             }
-           
+
         }
     }
     const updateTextInputValue = (text, type) => {
@@ -192,7 +192,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
 
     }
 
-   
+
     return (
         <View style={styles.container}>
             <View style={styles.view_header}>
@@ -257,7 +257,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
                     </View>
                     <View style={{ width: '100%', height: '70%', }}>
                         <InputBoxComponent
-                        value={userVillage}
+                            value={userVillage}
                             title={villageString}
                             enterText={updateTextInputValue}
                             dropDownType={'Village'}
@@ -267,7 +267,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
                             keyboardType={'default'}
                         />
                         <InputBoxComponent
-                        value={userDoorNo}
+                            value={userDoorNo}
                             title={doorNo}
                             enterText={updateTextInputValue}
                             dropDownType={'DoorNo'}
@@ -277,7 +277,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
                             keyboardType={'default'}
                         />
                         <InputBoxComponent
-                        value={userPincode}
+                            value={userPincode}
                             title={pincode}
                             enterText={updateTextInputValue}
                             dropDownType={'Pincode'}
@@ -293,11 +293,11 @@ const SelectAddressScreen = ({ navigation, route }) => {
             {(!isKeyboardVisible) && (
                 <TouchableOpacity style={styles.view_bottom}
                     onPress={onPressNextAction}>
-              {loadingIndicator? <ActivityIndicator size="small" color={colors.white_color} />: <Text style={styles.text_next}>{route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true?"Update":"Save"}</Text>}     
+                    {loadingIndicator ? <ActivityIndicator size="small" color={colors.white_color} /> : <Text style={styles.text_next}>{route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true ? "Update" : "Save"}</Text>}
                 </TouchableOpacity>
             )}
 
-          
+
         </View>
     );
 };

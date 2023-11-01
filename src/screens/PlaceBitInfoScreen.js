@@ -62,7 +62,7 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
         setWeightCode(route?.params.bidsDetails.QuantityActualCode);
         setWeightValue(route?.params.bidsDetails.QuantityCode);
     }, [])
-   
+
 
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
@@ -99,20 +99,20 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
         console.log('availableValue ----- ', availableValue)
         console.log('askingPrice ----- ', askingPrice)
 
-        var minRatePerQuintal=route?.params.details?.MSP ? parseInt(route?.params.details?.MSP) : 0;
-        var isValidAmountPerGvt=true;
-        var totalPrice=0;
-        if(weightCode.toLocaleLowerCase()=='kg'){
-            var minAmountPerKg=minRatePerQuintal/100;
-            totalPrice=minAmountPerKg*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
-        }else if (weightCode.toLocaleLowerCase()=='ton'){
-            var minAmountPerTon=minRatePerQuintal*10;
-            totalPrice=minAmountPerTon*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
-        }else if (weightCode.toLocaleLowerCase()=='qtl'){
-            totalPrice=minRatePerQuintal*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
+        var minRatePerQuintal = route?.params.details?.MSP ? parseInt(route?.params.details?.MSP) : 0;
+        var isValidAmountPerGvt = true;
+        var totalPrice = 0;
+        if (weightCode.toLocaleLowerCase() == 'kg') {
+            var minAmountPerKg = minRatePerQuintal / 100;
+            totalPrice = minAmountPerKg * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
+        } else if (weightCode.toLocaleLowerCase() == 'ton') {
+            var minAmountPerTon = minRatePerQuintal * 10;
+            totalPrice = minAmountPerTon * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
+        } else if (weightCode.toLocaleLowerCase() == 'qtl') {
+            totalPrice = minRatePerQuintal * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
         }
 
         if (availableValue > 0) {
@@ -152,8 +152,8 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
                 },
             },
             ]);
-        }else if(!isValidAmountPerGvt){
-            Alert.alert('', minAmountPerGvtAlert+" "+currencyFormat(totalPrice)+"/"+weightValue, [{
+        } else if (!isValidAmountPerGvt) {
+            Alert.alert('', minAmountPerGvtAlert + " " + currencyFormat(totalPrice) + "/" + weightValue, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -162,7 +162,9 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
         }
         else {
             setLoadingIndicator(true)
-
+            console.log({
+                variables: { bidId: (route?.params.isEdit) ? parseInt(route?.params.bidsDetails.Id) : 0, userAddressId: parseInt(route?.params.addressId), lotId: parseInt(route?.params.bidsDetails.Id), quantity: parseFloat(trimAvailableValue), quantityUnit: parseInt(weightId), requestedPrice: parseFloat(trimAskingPrice) }
+            });
             //  console.log('route?.params', { bidId: (route?.params.isEdit) ? parseInt(route?.params.bidsDetails.Id) : 0, userAddressId: parseInt(route?.params.addressId), lotId: parseInt(route?.params.bidsDetails.Id), quantity: parseFloat(trimAvailableValue), quantityUnit: parseInt(weightId), requestedPrice: parseFloat(trimAskingPrice) });
             addEditBid({
                 variables: { bidId: (route?.params.isEdit) ? parseInt(route?.params.bidsDetails.Id) : 0, userAddressId: parseInt(route?.params.addressId), lotId: parseInt(route?.params.bidsDetails.Id), quantity: parseFloat(trimAvailableValue), quantityUnit: parseInt(weightId), requestedPrice: parseFloat(trimAskingPrice) }
@@ -187,21 +189,21 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
     const onPressViewBidInfo = (Value) => {
         navigation.navigate('BidPlacedDetailScreen', { details: route?.params.details, bidsDetails: route?.params.bidsDetails, availableValue: Value, quantityUnit: weightValue, requestedPrice: askingPrice.replace(/\s/g, '') })
     }
-    const onChangeAvailableText=(text) => {
+    const onChangeAvailableText = (text) => {
         const validated = text.match(/^\d+$/);
-         if (validated) {
+        if (validated) {
             setAvailableValue(text)
-         }else if(text==''){
+        } else if (text == '') {
             setAvailableValue(text)
-         }
-     }
+        }
+    }
     const floatTwoDecFromString = (value, type) => {
         let newValue = value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
         newValue =
             newValue.indexOf('.') !== -1
                 ? newValue.slice(0, newValue.indexOf('.') + 3)
                 : newValue;
-        if(type == 'price') {
+        if (type == 'price') {
             setAskingPrice(newValue)
         }
         else {
@@ -291,7 +293,7 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
 
                         </View>
                         <View style={{ alignItems: 'center', width: '100%', height: 85, }}>
-                            <View style={[styles.view_inner, { marginTop: 0,}]}>
+                            <View style={[styles.view_inner, { marginTop: 0, }]}>
                                 <Text style={styles.text_title}>{'Price'}
                                 </Text>
                                 <View style={styles.view_enter}>
@@ -308,7 +310,7 @@ const PlaceBitInfoScreen = ({ navigation, route }) => {
                                     </TextInput>
                                 </View>
                             </View>
-                            <View style={[styles.view_line, {marginTop: 0, width: '90%',  }]}></View>
+                            <View style={[styles.view_line, { marginTop: 0, width: '90%', }]}></View>
                         </View>
 
                         {/* <InputBoxComponent

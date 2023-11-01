@@ -1,342 +1,362 @@
 [
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_star_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_star_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_acc_delete.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_acc_delete.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_check_rates_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_check_rates_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_helpline_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_helpline_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-xxxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-xxxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_language_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_language_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_bidimage.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_bidimage.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_logout_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_logout_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_farm_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_farm_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_bidimage.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_bidimage.png"
     },
     {
         "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-xxxhdpi_ic_launcher.png.flat",
         "source": "com.farmer.farmfit.app-main-47:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_crop_clinic_img.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_crop_clinic_img.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_viewbids.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_viewbids.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_warning_delete.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_warning_delete.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_lot_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_lot_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_lot_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_lot_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_banner_refer_friend.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_banner_refer_friend.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_notification_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_notification_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/xml_network_security_config.xml.flat",
-        "source": "com.farmer.farmfit.app-main-47:/xml/network_security_config.xml"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_get_started_arrow.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_get_started_arrow.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_loticon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_loticon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_logout_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_logout_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_check_rates_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_check_rates_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable_rn_edit_text_material.xml.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable/rn_edit_text_material.xml"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_myactivityloticon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_myactivityloticon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_language_icon_black.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_language_icon_black.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_empty_notification.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_empty_notification.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_get_started_arrow.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_get_started_arrow.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_home_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_home_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-xxxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-xxxhdpi\\node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-hdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-hdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_buy.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_buy.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backiconmask.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_browse_file_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_browse_file_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-xxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-xxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_dropdown_arrow.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_dropdown_arrow.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_cropfit_logo_black.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_cropfit_logo_black.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_back.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_back.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable_rn_edit_text_material.xml.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable\\rn_edit_text_material.xml"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_sell.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_sell.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_view_enquires_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_view_enquires_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_viewbuy.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_viewbuy.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_bids.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_bids.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-xhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-xhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_personal_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_personal_icon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_tick_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_tick_icon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_selected_category.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_selected_category.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_back_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_back_icon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_farm_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_farm_icon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_sell.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_sell.png"
     },
     {
         "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-hdpi_ic_launcher.png.flat",
         "source": "com.farmer.farmfit.app-main-47:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_location_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_location_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_emptybookmark.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_emptybookmark.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_notification_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_notification_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_bids_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_bids_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_search_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_search_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_take_photo_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_take_photo_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_right_arrow.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_right_arrow.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_viewbids.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_viewbids.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_phone_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_phone_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_edit_profile_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_edit_profile_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_enquiry.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_enquiry.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_buy.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_buy.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_enquiry.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_enquiry.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_empty_profile.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_empty_profile.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_empty_notification.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_empty_notification.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_dob_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_dob_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_document_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_document_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_bids_active.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_bids_active.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_bids_active.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_bids_active.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_search_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_search_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_language_closeicon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_language_closeicon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_share.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_share.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_location_home.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_location_home.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_edit_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_edit_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_otp_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_otp_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
         "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-xhdpi_ic_launcher.png.flat",
         "source": "com.farmer.farmfit.app-main-47:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_browse_file_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_browse_file_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_activity_white.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_activity_white.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_heading_background_image.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_heading_background_image.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_home_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_home_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_organic_logo.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_organic_logo.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_play_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_play_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_take_photo_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_take_photo_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_notification.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_notification.png"
     },
     {
         "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "com.farmer.farmfit.app-main-47:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_edit_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_edit_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-xxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_emptybookmark.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_emptybookmark.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_white_tick_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_white_tick_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_location_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_location_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_notificationlogo.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_notificationlogo.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_organic_logo.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_organic_logo.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_bookmark.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_bookmark.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-mdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_home_icon_active.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_home_icon_active.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_banner_refer_friend.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_banner_refer_friend.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_bids_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_bids_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_upload_mandi_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_upload_mandi_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_otp_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_otp_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_language_icon_black.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_language_icon_black.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_dropdown_arrow.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_dropdown_arrow.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-hdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-hdpi\\node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_buy_active.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_buy_active.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_video_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_video_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\xml_network_security_config.xml.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\xml\\network_security_config.xml"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_cropfit_logo_black.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_cropfit_logo_black.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_right_arrow.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_right_arrow.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_personal_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_personal_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_phone_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_phone_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_white_tick_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_white_tick_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_notificationlogo.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_notificationlogo.png"
     },
     {
         "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-mdpi_ic_launcher.png.flat",
         "source": "com.farmer.farmfit.app-main-47:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_cropfit_logo_white.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_cropfit_logo_white.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_heading_background_image.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_heading_background_image.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_activity_white.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_activity_white.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_dob_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_dob_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_remove_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_remove_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_crop_clinic_img.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_crop_clinic_img.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_home_icon_active.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_home_icon_active.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_checkbox.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_checkbox.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_sell_active.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_sell_active.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_warning_delete.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_warning_delete.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-xxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-xxhdpi\\node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_buy_active.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_buy_active.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_view_enquires_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_view_enquires_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\node_modules_reactnavigation_elements_src_assets_backiconmask.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_sell_active.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_sell_active.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_tick_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_tick_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_video_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_video_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_back_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_back_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_helpline_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_helpline_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_checkbox.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_checkbox.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_back.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_back.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_viewbuy.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_viewbuy.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_bids.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_bids.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_notification.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_notification.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_document_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_document_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_cropfit_logo_white.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_cropfit_logo_white.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_language_closeicon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_language_closeicon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_star_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_star_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_acc_delete.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_acc_delete.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-xhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-xhdpi\\node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_myactivityloticon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_myactivityloticon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_bookmark.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_bookmark.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_share.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_share.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_remove_icon.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_remove_icon.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\mipmap-xhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_edit_profile_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_edit_profile_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_selected_category.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_selected_category.png"
     },
     {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_location_home.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_location_home.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_loticon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_loticon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/mipmap-mdpi/ic_launcher_round.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_play_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_play_icon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_language_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_language_icon.png"
-    },
-    {
-        "merged": "com.farmer.farmfit.app-merged_res-45:/drawable-mdpi_src_assets_images_upload_mandi_icon.png.flat",
-        "source": "com.farmer.farmfit.app-main-47:/drawable-mdpi/src_assets_images_upload_mandi_icon.png"
+        "merged": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-merged_res-45:\\drawable-mdpi_src_assets_images_empty_profile.png.flat",
+        "source": "C:\\Users\\punit\\.gradle\\daemon\\7.3.3\\com.farmer.farmfit.app-main-47:\\drawable-mdpi\\src_assets_images_empty_profile.png"
     }
 ]

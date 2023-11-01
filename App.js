@@ -84,11 +84,6 @@ const Stack = createNativeStackNavigator();
 
 export const TasksDispatchContext = createContext(null);
 const App = () => {
-
-
-
-
-
   const [isLoading, setIsLoading] = useState(true);
   const [loginToken, setLoginToken] = useState('');
   const [getStart, setGetStart] = useState('Get Started');
@@ -862,10 +857,10 @@ const App = () => {
     var enquiryScreenLabels = data.getAppLabels.allLabels.Enquiry;
     var footerScreenLabels = data.getAppLabels.allLabels.Footer;
     var dashboardScreenLabels = data.getAppLabels.allLabels.DashboardScreen;
-    const res = await EncryptedStorage.getItem('isProfile');
-    if (res != null || res != undefined) {
-      return;
-    }
+    // const res = await EncryptedStorage.getItem('isProfile');
+    // if (res != null || res != undefined) {
+    //   return;
+    // }
     setDeleteAccount(profileScreenLabels.DeleteAccountLabel)
     setDeleteMessage1(profileScreenLabels.DeleteAccountMessage1)
     setDeleteMessage2(profileScreenLabels.DeleteAccountMessage2)

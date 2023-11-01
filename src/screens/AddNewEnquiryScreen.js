@@ -1,15 +1,14 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Platform, Text, Pressable, Image, Alert, Dimensions, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, ScrollView,ActivityIndicator } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import Loading from '../components/Loading';
-import DropDownTextComponent from '../components/DropDownTextComponent';
-import DataFetchComponents from '../components/DataFetchComponents';
-import moment from "moment";
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import DatePicker from 'react-native-date-picker'
+import moment from "moment";
+import React, { useContext, useEffect } from 'react';
+import { ActivityIndicator, Alert, Dimensions, FlatList, Image, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import DropDownTextComponent from '../components/DropDownTextComponent';
+import HeaderComponents from '../components/HeaderComponents';
+import { colors, fonts, images } from '../core';
 
 
 const ADDEDITENQUIRY_QUERY = gql`
@@ -93,7 +92,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
 
     }, [])
     const onPressBack = () => {
-        if(route.params.isEdit){
+        if (route.params.isEdit) {
 
         }
         else {
@@ -111,30 +110,30 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
         setArrayOfItems([]);
         setLoadingIndicator(true);
         setIsFetch(true);
-       
+
         setPopupTitle((selectType == 'Grade') ? gradeText : weightPlaceholder);
-       
+
         setModalVisible(true)
         setIsDatePicker(false)
-        
+
     }
     const onPressDatePicker = () => {
         setSelectedType('datePicker');
         setLoadingIndicator(true);
-       
+
         setIsFetch(true);
         setModalVisible(true)
         setIsDatePicker(true)
-      
+
     }
     const updateLoading = (isloading) => {
-       
-if(isloading==false){
-    console.log('updateLoading ----- ', isloading);
-    setIsFetch(false);
-    setLoadingIndicator(false);
-}
-     
+
+        if (isloading == false) {
+            console.log('updateLoading ----- ', isloading);
+            setIsFetch(false);
+            setLoadingIndicator(false);
+        }
+
     }
     const updateDate = (list) => {
         setIsFetch(false);
@@ -198,7 +197,7 @@ if(isloading==false){
             if (loading) {
                 setLoadingIndicator(true)
             }
-            console.log('route?.params.addressId 111', { enquiryId: (route.params.isEdit) ? route.params.enquiryInfo.Id : 0, userAddressId: (route.params.isEdit) ? parseInt(route?.params.enquiryInfo.UserAddressId) : parseInt(route?.params.addressId), gradeId: parseInt(gradeId), commodityChildId: ((route.params.isEdit) ? parseInt(route?.params.enquiryInfo.CommodityGroupId) : parseInt(route?.params.productDetail.Id)), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), deliveryOn: dateOfDelivaty })
+            console.log({ enquiryId: (route.params.isEdit) ? route.params.enquiryInfo.Id : 0, userAddressId: (route.params.isEdit) ? parseInt(route?.params.enquiryInfo.UserAddressId) : parseInt(route?.params.addressId), gradeId: parseInt(gradeId), commodityChildId: ((route.params.isEdit) ? parseInt(route?.params.enquiryInfo.CommodityChildId) : parseInt(route?.params.productDetail.Id)), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), deliveryOn: dateOfDelivaty });
             addEditEnquiry({
                 variables: { enquiryId: (route.params.isEdit) ? route.params.enquiryInfo.Id : 0, userAddressId: (route.params.isEdit) ? parseInt(route?.params.enquiryInfo.UserAddressId) : parseInt(route?.params.addressId), gradeId: parseInt(gradeId), commodityChildId: ((route.params.isEdit) ? parseInt(route?.params.enquiryInfo.CommodityChildId) : parseInt(route?.params.productDetail.Id)), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), deliveryOn: dateOfDelivaty }
             })
@@ -234,11 +233,11 @@ if(isloading==false){
     }
     const floatTwoDecFromString = (value) => {
         const validated = value.match(/^\d+$/);
-         if (validated) {
+        if (validated) {
             setAvailableValue(value)
-         }else if(value==''){
+        } else if (value == '') {
             setAvailableValue(value)
-         }
+        }
         // let newValue = value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
         // newValue =
         //     newValue.indexOf('.') !== -1
@@ -251,7 +250,7 @@ if(isloading==false){
             style={styles.container}>
             <View style={styles.view_header}>
                 <HeaderComponents
-                    headerTitle={(route.params.isEdit) ?  editEnquiry : newEnquriyText }
+                    headerTitle={(route.params.isEdit) ? editEnquiry : newEnquriyText}
                     isBackButton={true}
                     onPressBack={onPressBack}
                     onPressProile={onPressProile}
@@ -328,7 +327,7 @@ if(isloading==false){
                         <View style={styles.view_bottom}>
                             <TouchableOpacity style={styles.button_save}
                                 onPress={onPressSaveEnquiryInfo}>
-                                <Text style={styles.text_lot}>{(route?.params.isEdit) ?   editEnquiry : placeEnquiry}</Text>
+                                <Text style={styles.text_lot}>{(route?.params.isEdit) ? editEnquiry : placeEnquiry}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{ width: '100%', height: 20, }} />
@@ -383,7 +382,7 @@ if(isloading==false){
                                 <Text style={styles.modalText}>{popupTitle}</Text>
                                 <View style={styles.line} />
                                 <View style={styles.view_List}>
-                                {loadingIndicator ==true? <ActivityIndicator size="large" color='#000000' />:<FlatList
+                                    {loadingIndicator == true ? <ActivityIndicator size="large" color='#000000' /> : <FlatList
                                         style={styles.list}
                                         data={arrayOfItems}
                                         keyExtractor={(x, i) => i}
@@ -395,7 +394,7 @@ if(isloading==false){
                                                 <View style={styles.line} />
                                             </TouchableOpacity>
                                         )}
-                                    />} 
+                                    />}
                                 </View>
                             </View>
                         }
@@ -403,7 +402,7 @@ if(isloading==false){
                     </Pressable>
                 </Modal>
             )}
-           
+
         </KeyboardAvoidingView>
     );
 };
