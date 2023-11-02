@@ -856,7 +856,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                     await EncryptedStorage.setItem("languageId", userLanguageId);
                     Alert.alert('Success', "Profile updated successfully", [{
                         text: 'OK', onPress: () => {
-                            removeIsProfile();
+
                             navigation.goBack();
 
                             return;

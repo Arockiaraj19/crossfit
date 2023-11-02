@@ -35,6 +35,8 @@ import messaging from '@react-native-firebase/messaging';
 import Modal from "react-native-modal";
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 import VersionCheck from 'react-native-version-check';
+import { Provider } from 'react-redux';
+import { storee } from './src/redux/store';
 import AddNewAddressScreen from './src/screens/AddNewAddressScreen';
 import AddNewEnquiryScreen from './src/screens/AddNewEnquiryScreen';
 import AddProductLotScreen from './src/screens/AddProductLotScreen';
@@ -70,9 +72,6 @@ import ViewLotListScreen from './src/screens/ViewLotListScreen';
 import ViewMoreEnquiryListScreen from './src/screens/ViewMoreEnquiryListScreen';
 import ViewMoreLotsListScreen from './src/screens/ViewMoreLotsListScreen';
 import ViewResponseEnquiryScreen from './src/screens/ViewResponseEnquiryScreen';
-
-import { Provider } from 'react-redux';
-import { storee } from './src/redux/store';
 const lableQuery = gql`
 query getAppLabels($languageId: ID!) {
     getAppLabels(languageId: $languageId) 
