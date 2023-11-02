@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-no/values-no.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-47:/values-no/values-no.xml",
             "map": [
                 {
                     "source": "E:\\bharath\\cropfit\\node_modules\\react-native-date-picker\\android\\build\\intermediates\\packaged_res\\debug\\values-no\\values-no.xml",

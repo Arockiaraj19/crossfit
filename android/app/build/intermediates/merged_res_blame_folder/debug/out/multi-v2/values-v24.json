@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-v24/values-v24.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-47:/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\705b3107c1b7090ee6a21b3c568efba7\\transformed\\material-1.9.0\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\eda0d2870e1e5b05bdf605e44efa40fd\\transformed\\material-1.9.0\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,9,12,15",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\261e4e11b3c36f71e2c94a827a0f82ef\\transformed\\appcompat-1.5.0\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\03a7948ee408b88fbc6eed9aaf0b55f0\\transformed\\appcompat-1.5.0\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

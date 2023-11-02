@@ -1,32 +1,31 @@
-import React, { useEffect, useContext, useState, useCallback, useRef } from 'react';
-import { AppState, StyleSheet, View, Image, Text, ScrollView, Platform, Dimensions, TouchableOpacity, Linking, ImageBackground, Alert } from 'react-native';
-import { colors, fonts, images } from '../../../core';
-import HeaderComponents from '../../../components/HeaderComponents';
 import { useFocusEffect } from '@react-navigation/native';
-import Loading from '../../../components/Loading';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { AppState, Image, ImageBackground, Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../../../components/AuthContext';
+import HeaderComponents from '../../../components/HeaderComponents';
+import Loading from '../../../components/Loading';
+import { colors, images } from '../../../core';
 
 import { graphql } from 'react-apollo';
-import { Query } from 'react-apollo';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import EncryptedStorage from 'react-native-encrypted-storage';
-import messaging from '@react-native-firebase/messaging';
-import { getUserName } from '../../../helpers/AppManager';
-import Toast from 'react-native-toast-message';
 import { useMutation } from '@apollo/react-hooks';
-import { USERINFORMATIONLOG_QUERY } from '../../../helpers/Schema';
+import messaging from '@react-native-firebase/messaging';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import Toast from 'react-native-toast-message';
+import { getUserName } from '../../../helpers/AppManager';
 import { sendDataToServer } from '../../../helpers/QueryFetching';
-import styles from '../style/home_screen_style'
-import {GET_ENQUIRY_QUERY,HOMEPAGEDETAIL_QUERY} from '../query/home_screen_query'
-import BannerComponent from '../components/banner_component'
+import { USERINFORMATIONLOG_QUERY } from '../../../helpers/Schema';
+import BannerComponent from '../components/banner_component';
+import { GET_ENQUIRY_QUERY, HOMEPAGEDETAIL_QUERY } from '../query/home_screen_query';
+import styles from '../style/home_screen_style';
 
 
 
 
 
-const HomeScreen =  ({ navigation, route }) => {
+const HomeScreen = ({ navigation, route }) => {
     const {
         watchVideo,
         enquiries,
@@ -41,7 +40,7 @@ const HomeScreen =  ({ navigation, route }) => {
         myActivity,
         bidText,
         enquiryText,
-     
+
         lotText,
         homeReload,
         setHomeFetch,
@@ -49,7 +48,7 @@ const HomeScreen =  ({ navigation, route }) => {
     const appState = useRef(AppState.currentState);
     const [loading, setLoading] = React.useState(false);
     const [isFetch, setIsFetch] = React.useState(false);
-  
+
     const [userName, setUserName] = useState('');
     const [notification, setNotification] = useState()
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
@@ -65,52 +64,52 @@ const HomeScreen =  ({ navigation, route }) => {
 
     });
     const [enquiryDetail, { }] = useMutation(GET_ENQUIRY_QUERY);
-    const { uploadData: handleUserInfromation, loading : userInformationLoading, error: userInformationError, data : userInformationData } = sendDataToServer(USERINFORMATIONLOG_QUERY)
+    const { uploadData: handleUserInfromation, loading: userInformationLoading, error: userInformationError, data: userInformationData } = sendDataToServer(USERINFORMATIONLOG_QUERY)
 
     useEffect(() => {
         getName()
     }, [userName])
 
 
-    useEffect(()=>{
-        if(homeReload){
-          EncryptedStorage.setItem('reloadBuy',"true");
-          EncryptedStorage.setItem('reloadSell',"true");
-          setLoading(true);
-          setIsFetch(true)
+    useEffect(() => {
+        if (homeReload) {
+            EncryptedStorage.setItem('reloadBuy', "true");
+            EncryptedStorage.setItem('reloadSell', "true");
+            setLoading(true);
+            setIsFetch(true)
         }
-      },[homeReload])
+    }, [homeReload])
 
-   
+
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
-          if (
-            appState.current.match(/inactive|background/) &&
-            nextAppState === 'active'
-          ) {
-            setIsFetch(true)
-            // setBackgroundFetch(true)
-            console.log('App has come to the foreground- homescreen!');
-          }
-          appState.current = nextAppState;
-          setAppStateVisible(appState.current);
-          console.log('AppState', appState.current);
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === 'active'
+            ) {
+                setIsFetch(true)
+                // setBackgroundFetch(true)
+                console.log('App has come to the foreground- homescreen!');
+            }
+            appState.current = nextAppState;
+            setAppStateVisible(appState.current);
+            console.log('AppState', appState.current);
         });
-    
-        return () => {
-          subscription.remove();
-        };
-      }, []);
 
-      useEffect(() => {
-        userEntryCounts().then(({data})=>{
-            console.log("userInformationLog",data)
+        return () => {
+            subscription.remove();
+        };
+    }, []);
+
+    useEffect(() => {
+        userEntryCounts().then(({ data }) => {
+            console.log("userInformationLog", data)
         }).catch(err => console.log(err))
-      }, [])
-    
-      const userEntryCounts = async() => {
-         return await handleUserInfromation({ variables :{} })                                 
-      } 
+    }, [])
+
+    const userEntryCounts = async () => {
+        return await handleUserInfromation({ variables: {} })
+    }
 
 
     useEffect(() => {
@@ -202,7 +201,7 @@ const HomeScreen =  ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const updateValue = (homeDetailList) => {
-     
+
         setLoading(false)
         setIsFetch(false);
         setHomeFetch(false)
@@ -249,7 +248,7 @@ const HomeScreen =  ({ navigation, route }) => {
         }
         return <View />;
     });
-   
+
     const onPressMondiDetail = () => {
         navigation.navigate('MandiListDetailScreen')
     }
@@ -260,7 +259,7 @@ const HomeScreen =  ({ navigation, route }) => {
         Linking.openURL(urslString);
     }
 
-   
+
     const LocalImageSize = ({ uri, desiredHeight }) => {
         const [desiredWeight, setDesiredWeight] = React.useState(0)
         Image.getSize(uri, (width, height) => {
@@ -358,10 +357,10 @@ const HomeScreen =  ({ navigation, route }) => {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}>
                 <View style={{ width: '100%', marginBottom: 50, alignItems: 'center' }}>
-                  
-                       <BannerComponent listOfCropfit={state.listOfCropfit}  message={state.message} applink={state.applink}/>
-                    
-                   
+
+                    <BannerComponent listOfCropfit={state.listOfCropfit} message={state.message} applink={state.applink} />
+
+
                     <View style={[styles.myActivity, { flexDirection: "column", padding: 20 }]}>
                         <View style={{ flexDirection: "row" }}>
                             <LinearGradient
@@ -382,12 +381,12 @@ const HomeScreen =  ({ navigation, route }) => {
                         </View>
                         <View style={{ marginVertical: 15, flexDirection: "row", justifyContent: "space-between" }}>
                             <TouchableOpacity
-                            onPress={handleNavigateViewLot}
-                             style={{ width: 90, height: 100 }}>
+                                onPress={handleNavigateViewLot}
+                                style={{ width: 90, height: 100 }}>
                                 <LinearGradient
                                     start={{ x: 0, y: 0.5 }}
-                                    locations={[0 ,0.90]}
-                                    end={{ x: 1, y: 1 }}   
+                                    locations={[0, 0.90]}
+                                    end={{ x: 1, y: 1 }}
                                     colors={['#8B0000', '#c8333b']}
                                     style={[styles.activity_linearGradient, { marginLeft: 0, borderRadius: 5 }]}
                                 >
@@ -396,19 +395,19 @@ const HomeScreen =  ({ navigation, route }) => {
                                         source={images.MYACTIVITYLOTIMAGE}
                                     />
                                 </LinearGradient>
-                                <View style={{borderBottomLeftRadius:5,borderBottomRightRadius:5, backgroundColor: "#F3E8EA", padding: 5, alignItems: "center", justifyContent: "center" }}>
+                                <View style={{ borderBottomLeftRadius: 5, borderBottomRightRadius: 5, backgroundColor: "#F3E8EA", padding: 5, alignItems: "center", justifyContent: "center" }}>
                                     <Text style={styles.activity_btn_text}>{lotText}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity 
-                            onPress={handleNavigateViewEnquiry}
-                            style={{ width: 90, height: 100 }}>
+                            <TouchableOpacity
+                                onPress={handleNavigateViewEnquiry}
+                                style={{ width: 90, height: 100 }}>
                                 <LinearGradient
                                     start={{ x: 0, y: 0.5 }}
-                                    locations={[0.5 ,0.90]}
+                                    locations={[0.5, 0.90]}
                                     end={{ x: 1, y: 1 }}
-                                    colors={['#006d5b','#339966']}
-                                    
+                                    colors={['#006d5b', '#339966']}
+
                                     style={[styles.activity_linearGradient, { marginLeft: 0, borderRadius: 5 }]}
                                 >
                                     <Image
@@ -416,18 +415,18 @@ const HomeScreen =  ({ navigation, route }) => {
                                         source={images.ACTIVITYENQUIRY}
                                     />
                                 </LinearGradient>
-                                <View style={{borderBottomLeftRadius:5,borderBottomRightRadius:5, backgroundColor: "#CDFFCD", padding: 5, alignItems: "center", justifyContent: "center" }}>
-                                <Text style={styles.activity_btn_text}>{enquiryText}</Text>
+                                <View style={{ borderBottomLeftRadius: 5, borderBottomRightRadius: 5, backgroundColor: "#CDFFCD", padding: 5, alignItems: "center", justifyContent: "center" }}>
+                                    <Text style={styles.activity_btn_text}>{enquiryText}</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity 
-                            onPress={handleNavigateViewBid}
-                            style={{ width: 90, height: 100 }}>
+                            <TouchableOpacity
+                                onPress={handleNavigateViewBid}
+                                style={{ width: 90, height: 100 }}>
                                 <LinearGradient
-                                start={{ x: 0, y: 0.5 }}
-                                locations={[0.5 ,0.90]}
-                                end={{ x: 1, y: 1 }}
-                                 colors={['#ff6600', '#ff9966']}   
+                                    start={{ x: 0, y: 0.5 }}
+                                    locations={[0.5, 0.90]}
+                                    end={{ x: 1, y: 1 }}
+                                    colors={['#ff6600', '#ff9966']}
                                     style={[styles.activity_linearGradient, { marginLeft: 0, borderRadius: 5 }]}
                                 >
                                     <Image
@@ -435,7 +434,7 @@ const HomeScreen =  ({ navigation, route }) => {
                                         source={images.ACTIVITYBID}
                                     />
                                 </LinearGradient>
-                                <View style={{borderBottomLeftRadius:5,borderBottomRightRadius:5, backgroundColor: "#FFD580", padding: 5, alignItems: "center", justifyContent: "center" }}>
+                                <View style={{ borderBottomLeftRadius: 5, borderBottomRightRadius: 5, backgroundColor: "#FFD580", padding: 5, alignItems: "center", justifyContent: "center" }}>
                                     <Text style={styles.activity_btn_text}>{bidText}</Text>
                                 </View>
                             </TouchableOpacity>

@@ -73,7 +73,6 @@ import ViewResponseEnquiryScreen from './src/screens/ViewResponseEnquiryScreen';
 
 import { Provider } from 'react-redux';
 import { storee } from './src/redux/store';
-
 const lableQuery = gql`
 query getAppLabels($languageId: ID!) {
     getAppLabels(languageId: $languageId) 
@@ -657,6 +656,7 @@ const App = () => {
 
 
   useEffect(() => {
+
     console.log("useEffect");
     checkVersion()
   }, [])

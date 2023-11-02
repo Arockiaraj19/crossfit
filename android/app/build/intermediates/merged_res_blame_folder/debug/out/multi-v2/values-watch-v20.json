@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-47:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\02399e9e5f0073152dd9dbe3e10ef187\\transformed\\jetified-play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
+                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\ef26e3fbec12464dca6d6117af645323\\transformed\\jetified-play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\261e4e11b3c36f71e2c94a827a0f82ef\\transformed\\appcompat-1.5.0\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\03a7948ee408b88fbc6eed9aaf0b55f0\\transformed\\appcompat-1.5.0\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

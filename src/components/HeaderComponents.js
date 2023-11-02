@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, Image, Platform, Animated, Easing, } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Animated, Easing, Image, Platform, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { colors, fonts, images } from '../core';
 import { getUserProfileImage } from '../helpers/AppManager';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import DataFetchComponents from './DataFetchComponents';
 import { AuthContext } from './AuthContext';
+import DataFetchComponents from './DataFetchComponents';
 
 
 const HeaderComponents = ({
@@ -26,11 +26,11 @@ const HeaderComponents = ({
     const [notificationAnimation] = useState(new Animated.Value(0));
 
     const {
-        notificationLength, 
+        notificationLength,
         setNotificationLength,
-        activeNotification, 
-        setActiveNotification 
-    } =useContext(AuthContext)
+        activeNotification,
+        setActiveNotification
+    } = useContext(AuthContext)
 
     useEffect(() => {
         getProfileImage()
@@ -50,18 +50,18 @@ const HeaderComponents = ({
 
 
     const handleNotification = () => {
-        setTimeout(()=>{
-            if(!otherIcons) setIsFetch(true);
-        },10)
+        setTimeout(() => {
+            if (!otherIcons) setIsFetch(true);
+        }, 10)
     }
 
-    useFocusEffect(
-        useCallback(()=>{
-            setTimeout(()=>{
-                if(!otherIcons) setIsFetch(true)
-            },5) 
-        },[])
-    )
+    // useFocusEffect(
+    //     useCallback(()=>{
+    //         setTimeout(()=>{
+    //             if(!otherIcons) setIsFetch(true)
+    //         },5) 
+    //     },[])
+    // )
 
 
     useFocusEffect(
@@ -112,8 +112,9 @@ const HeaderComponents = ({
     }
 
     const updateDate = (getNotificationData) => {
-        // console.log("getNotificationData",getNotificationData);
-        // if(!getNotificationData) setIsFetch(false)
+
+        console.log("getNotificationData", getNotificationData);
+        // if (!getNotificationData) setIsFetch(false)
         if (Array.isArray(getNotificationData) && getNotificationData?.length) {
             setNotificationLength(getNotificationData.length)
         } else {
@@ -139,7 +140,7 @@ const HeaderComponents = ({
                 )}
 
                 <View style={[styles.text_view, { marginLeft: (isBackButton) ? 0 : 25 }]}>
-                    <Text style={[styles.text_title,{width : isHome ? '91%' : '100%' }]}
+                    <Text style={[styles.text_title, { width: isHome ? '91%' : '100%' }]}
                         numberOfLines={2}>{headerTitle}</Text>
                 </View>
                 {(!otherIcons) && (
@@ -197,7 +198,7 @@ const HeaderComponents = ({
                 )}
             </View>
 
-            {(isFetch ) && (
+            {(isFetch) && (
                 <DataFetchComponents
                     selectedId={''}
                     isType={'Notification'}

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-43:/values-port/values-port.xml",
+            "outputFile": "com.farmer.farmfit.app-mergeDebugResources-47:/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\261e4e11b3c36f71e2c94a827a0f82ef\\transformed\\appcompat-1.5.0\\res\\values-port\\values-port.xml",
+                    "source": "C:\\Users\\punit\\.gradle\\caches\\transforms-3\\03a7948ee408b88fbc6eed9aaf0b55f0\\transformed\\appcompat-1.5.0\\res\\values-port\\values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
