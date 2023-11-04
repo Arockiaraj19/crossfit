@@ -667,7 +667,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                     alert(res.customButton);
                 } else {
                     setProfileImageUrl(res.assets[0].uri)
-                    uploadImage(Platform.OS === "android" ? ('file://' + res.assets[0].uri) : res.assets[0].uri);
+                    uploadImage(Platform.OS === "android" ? res.assets[0].uri : res.assets[0].uri);
                 }
             });
         }
@@ -722,7 +722,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                 if (response.didCancel) { }
                 else {
                     setProfileImageUrl(response.assets[0].uri)
-                    uploadImage(Platform.OS === "android" ? ('file://' + response.assets[0].uri) : response.assets[0].uri);
+                    uploadImage(response.assets[0].uri);
                 }
             })
     }
