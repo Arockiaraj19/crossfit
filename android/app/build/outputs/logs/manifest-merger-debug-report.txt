@@ -18,6 +18,7 @@ MERGED from [:react-native-clipboard_clipboard] E:\bharath\cropfit\node_modules\
 MERGED from [:react-native-community_masked-view] E:\bharath\cropfit\node_modules\@react-native-community\masked-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-compressor] E:\bharath\cropfit\node_modules\react-native-compressor\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-date-picker] E:\bharath\cropfit\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-device-info] E:\bharath\cropfit\node_modules\react-native-device-info\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-document-picker] E:\bharath\cropfit\node_modules\react-native-document-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-encrypted-storage] E:\bharath\cropfit\node_modules\react-native-encrypted-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-10:12
 MERGED from [:react-native-gesture-handler] E:\bharath\cropfit\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
@@ -85,6 +86,7 @@ MERGED from [androidx.sqlite:sqlite:2.1.0] C:\Users\punit\.gradle\caches\transfo
 MERGED from [androidx.security:security-crypto:1.1.0-alpha03] C:\Users\punit\.gradle\caches\transforms-3\be09373d869484b9194e003afbeec441\transformed\jetified-security-crypto-1.1.0-alpha03\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] C:\Users\punit\.gradle\caches\transforms-3\57ccfc75c65c18ea98c8587b7ed44608\transformed\exifinterface-1.3.3\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.gms:play-services-auth:20.7.0] C:\Users\punit\.gradle\caches\transforms-3\ef26e3fbec12464dca6d6117af645323\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:17:1-40:12
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:17:1-28:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] C:\Users\punit\.gradle\caches\transforms-3\55f5d6931b74a3091cd6a76141e98715\transformed\jetified-play-services-auth-api-phone-18.0.1\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.4] C:\Users\punit\.gradle\caches\transforms-3\0792d02a408c283bd019275a9afd5c02\transformed\jetified-play-services-auth-base-18.0.4\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-fido:20.0.1] C:\Users\punit\.gradle\caches\transforms-3\22f4cf2d1a5d378c258ec451c3a04689\transformed\jetified-play-services-fido-20.0.1\AndroidManifest.xml:2:1-10:12
@@ -143,6 +145,7 @@ MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\punit\.
 MERGED from [com.facebook.fresco:fbcore:2.6.0] C:\Users\punit\.gradle\caches\transforms-3\bc199a033a5e2c671f59fc3ab9fefc12\transformed\jetified-fbcore-2.6.0\AndroidManifest.xml:2:1-9:12
 MERGED from [com.github.henninghall:numberpickerview:v1.1.5] C:\Users\punit\.gradle\caches\transforms-3\58717c43b1d3a0034cfd56b2ff9f8a45\transformed\jetified-numberpickerview-v1.1.5\AndroidManifest.xml:2:1-11:12
 MERGED from [net.time4j:time4j-android:4.8-2021a] C:\Users\punit\.gradle\caches\transforms-3\9e6a5fb18f614b08687d7f105b35b8b7\transformed\jetified-time4j-android-4.8-2021a\AndroidManifest.xml:2:1-13:12
+MERGED from [com.android.installreferrer:installreferrer:1.1.2] C:\Users\punit\.gradle\caches\transforms-3\99cbcc00f8ee975671eef9f73c5be96e\transformed\jetified-installreferrer-1.1.2\AndroidManifest.xml:2:1-13:12
 INJECTED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:1:1-59:12
 INJECTED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:1:1-59:12
 INJECTED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:1:1-59:12
@@ -182,6 +185,8 @@ MERGED from [com.google.android.gms:play-services-measurement:21.5.0] C:\Users\p
 MERGED from [com.google.android.gms:play-services-measurement:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\22304810131daafe104207cfe06e64a3\transformed\jetified-play-services-measurement-21.5.0\AndroidManifest.xml:23:5-67
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\40a5bbbc9a49940338293b392e00ffbc\transformed\jetified-play-services-measurement-impl-21.5.0\AndroidManifest.xml:23:5-67
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\40a5bbbc9a49940338293b392e00ffbc\transformed\jetified-play-services-measurement-impl-21.5.0\AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] C:\Users\punit\.gradle\caches\transforms-3\a714d6a0a1cfebbd4b231caf36738016\transformed\jetified-play-services-cloud-messaging-17.0.1\AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] C:\Users\punit\.gradle\caches\transforms-3\a714d6a0a1cfebbd4b231caf36738016\transformed\jetified-play-services-cloud-messaging-17.0.1\AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\b25f473889e04e309745e3453cd57bc8\transformed\jetified-play-services-measurement-sdk-api-21.5.0\AndroidManifest.xml:23:5-67
@@ -294,6 +299,8 @@ MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] C:\Users
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] C:\Users\punit\.gradle\caches\transforms-3\c056b157fb11ed672de4b0f60e489784\transformed\jetified-firebase-measurement-connector-19.0.0\AndroidManifest.xml:22:5-23:19
 MERGED from [com.google.android.gms:play-services-auth:20.7.0] C:\Users\punit\.gradle\caches\transforms-3\ef26e3fbec12464dca6d6117af645323\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:22:5-38:19
 MERGED from [com.google.android.gms:play-services-auth:20.7.0] C:\Users\punit\.gradle\caches\transforms-3\ef26e3fbec12464dca6d6117af645323\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:26:5-20
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:26:5-20
 MERGED from [com.google.android.gms:play-services-fido:20.0.1] C:\Users\punit\.gradle\caches\transforms-3\22f4cf2d1a5d378c258ec451c3a04689\transformed\jetified-play-services-fido-20.0.1\AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.android.gms:play-services-fido:20.0.1] C:\Users\punit\.gradle\caches\transforms-3\22f4cf2d1a5d378c258ec451c3a04689\transformed\jetified-play-services-fido-20.0.1\AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.firebase:firebase-appcheck-interop:17.1.0] C:\Users\punit\.gradle\caches\transforms-3\d393f1784401ead95d8284d7c12358fc\transformed\jetified-firebase-appcheck-interop-17.1.0\AndroidManifest.xml:21:5-20
@@ -326,6 +333,8 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\pu
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\punit\.gradle\caches\transforms-3\584672637da74a86b724cac80a48b4a8\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
 MERGED from [net.time4j:time4j-android:4.8-2021a] C:\Users\punit\.gradle\caches\transforms-3\9e6a5fb18f614b08687d7f105b35b8b7\transformed\jetified-time4j-android-4.8-2021a\AndroidManifest.xml:11:5-20
 MERGED from [net.time4j:time4j-android:4.8-2021a] C:\Users\punit\.gradle\caches\transforms-3\9e6a5fb18f614b08687d7f105b35b8b7\transformed\jetified-time4j-android-4.8-2021a\AndroidManifest.xml:11:5-20
+MERGED from [com.android.installreferrer:installreferrer:1.1.2] C:\Users\punit\.gradle\caches\transforms-3\99cbcc00f8ee975671eef9f73c5be96e\transformed\jetified-installreferrer-1.1.2\AndroidManifest.xml:11:5-20
+MERGED from [com.android.installreferrer:installreferrer:1.1.2] C:\Users\punit\.gradle\caches\transforms-3\99cbcc00f8ee975671eef9f73c5be96e\transformed\jetified-installreferrer-1.1.2\AndroidManifest.xml:11:5-20
 	android:requestLegacyExternalStorage
 		ADDED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml:25:5-48
 	android:appComponentFactory
@@ -428,6 +437,8 @@ MERGED from [:react-native-compressor] E:\bharath\cropfit\node_modules\react-nat
 MERGED from [:react-native-compressor] E:\bharath\cropfit\node_modules\react-native-compressor\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-date-picker] E:\bharath\cropfit\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-date-picker] E:\bharath\cropfit\node_modules\react-native-date-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-device-info] E:\bharath\cropfit\node_modules\react-native-device-info\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-device-info] E:\bharath\cropfit\node_modules\react-native-device-info\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-document-picker] E:\bharath\cropfit\node_modules\react-native-document-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-document-picker] E:\bharath\cropfit\node_modules\react-native-document-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-encrypted-storage] E:\bharath\cropfit\node_modules\react-native-encrypted-storage\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:6:5-8:41
@@ -562,6 +573,8 @@ MERGED from [androidx.exifinterface:exifinterface:1.3.3] C:\Users\punit\.gradle\
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] C:\Users\punit\.gradle\caches\transforms-3\57ccfc75c65c18ea98c8587b7ed44608\transformed\exifinterface-1.3.3\AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.gms:play-services-auth:20.7.0] C:\Users\punit\.gradle\caches\transforms-3\ef26e3fbec12464dca6d6117af645323\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth:20.7.0] C:\Users\punit\.gradle\caches\transforms-3\ef26e3fbec12464dca6d6117af645323\transformed\jetified-play-services-auth-20.7.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] C:\Users\punit\.gradle\caches\transforms-3\55f5d6931b74a3091cd6a76141e98715\transformed\jetified-play-services-auth-api-phone-18.0.1\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] C:\Users\punit\.gradle\caches\transforms-3\55f5d6931b74a3091cd6a76141e98715\transformed\jetified-play-services-auth-api-phone-18.0.1\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.4] C:\Users\punit\.gradle\caches\transforms-3\0792d02a408c283bd019275a9afd5c02\transformed\jetified-play-services-auth-base-18.0.4\AndroidManifest.xml:5:5-44
@@ -678,6 +691,8 @@ MERGED from [com.github.henninghall:numberpickerview:v1.1.5] C:\Users\punit\.gra
 MERGED from [com.github.henninghall:numberpickerview:v1.1.5] C:\Users\punit\.gradle\caches\transforms-3\58717c43b1d3a0034cfd56b2ff9f8a45\transformed\jetified-numberpickerview-v1.1.5\AndroidManifest.xml:7:5-9:41
 MERGED from [net.time4j:time4j-android:4.8-2021a] C:\Users\punit\.gradle\caches\transforms-3\9e6a5fb18f614b08687d7f105b35b8b7\transformed\jetified-time4j-android-4.8-2021a\AndroidManifest.xml:7:5-9:41
 MERGED from [net.time4j:time4j-android:4.8-2021a] C:\Users\punit\.gradle\caches\transforms-3\9e6a5fb18f614b08687d7f105b35b8b7\transformed\jetified-time4j-android-4.8-2021a\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.installreferrer:installreferrer:1.1.2] C:\Users\punit\.gradle\caches\transforms-3\99cbcc00f8ee975671eef9f73c5be96e\transformed\jetified-installreferrer-1.1.2\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.installreferrer:installreferrer:1.1.2] C:\Users\punit\.gradle\caches\transforms-3\99cbcc00f8ee975671eef9f73c5be96e\transformed\jetified-installreferrer-1.1.2\AndroidManifest.xml:5:5-7:41
 INJECTED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml
 INJECTED from E:\bharath\cropfit\android\app\src\main\AndroidManifest.xml
 	android:targetSdkVersion
@@ -866,6 +881,8 @@ ADDED from [com.google.firebase:firebase-messaging:23.3.1] C:\Users\punit\.gradl
 		ADDED from [com.google.firebase:firebase-messaging:23.3.1] C:\Users\punit\.gradle\caches\transforms-3\6579026f2a724393e403d751a3406e8f\transformed\jetified-firebase-messaging-23.3.1\AndroidManifest.xml:23:22-74
 uses-permission#com.google.android.c2dm.permission.RECEIVE
 ADDED from [com.google.firebase:firebase-messaging:23.3.1] C:\Users\punit\.gradle\caches\transforms-3\6579026f2a724393e403d751a3406e8f\transformed\jetified-firebase-messaging-23.3.1\AndroidManifest.xml:26:5-82
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:23:5-82
+MERGED from [com.google.android.gms:play-services-iid:17.0.0] C:\Users\punit\.gradle\caches\transforms-3\acf99e3c5fee9816f1e797a0e0bff9a5\transformed\jetified-play-services-iid-17.0.0\AndroidManifest.xml:23:5-82
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] C:\Users\punit\.gradle\caches\transforms-3\a714d6a0a1cfebbd4b231caf36738016\transformed\jetified-play-services-cloud-messaging-17.0.1\AndroidManifest.xml:11:5-82
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] C:\Users\punit\.gradle\caches\transforms-3\a714d6a0a1cfebbd4b231caf36738016\transformed\jetified-play-services-cloud-messaging-17.0.1\AndroidManifest.xml:11:5-82
 	android:name
@@ -1310,6 +1327,8 @@ uses-permission#com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_S
 ADDED from [com.google.android.gms:play-services-measurement:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\22304810131daafe104207cfe06e64a3\transformed\jetified-play-services-measurement-21.5.0\AndroidManifest.xml:26:5-110
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\40a5bbbc9a49940338293b392e00ffbc\transformed\jetified-play-services-measurement-impl-21.5.0\AndroidManifest.xml:26:5-110
 MERGED from [com.google.android.gms:play-services-measurement-impl:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\40a5bbbc9a49940338293b392e00ffbc\transformed\jetified-play-services-measurement-impl-21.5.0\AndroidManifest.xml:26:5-110
+MERGED from [com.android.installreferrer:installreferrer:1.1.2] C:\Users\punit\.gradle\caches\transforms-3\99cbcc00f8ee975671eef9f73c5be96e\transformed\jetified-installreferrer-1.1.2\AndroidManifest.xml:9:5-110
+MERGED from [com.android.installreferrer:installreferrer:1.1.2] C:\Users\punit\.gradle\caches\transforms-3\99cbcc00f8ee975671eef9f73c5be96e\transformed\jetified-installreferrer-1.1.2\AndroidManifest.xml:9:5-110
 	android:name
 		ADDED from [com.google.android.gms:play-services-measurement:21.5.0] C:\Users\punit\.gradle\caches\transforms-3\22304810131daafe104207cfe06e64a3\transformed\jetified-play-services-measurement-21.5.0\AndroidManifest.xml:26:22-107
 receiver#com.google.android.gms.measurement.AppMeasurementReceiver

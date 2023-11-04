@@ -4,6 +4,7 @@ import S3 from "aws-sdk/clients/s3";
 import gql from 'graphql-tag';
 import React, { useContext, useEffect, useState } from 'react';
 import { Alert, Image, KeyboardAvoidingView, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import * as ImagePicker from "react-native-image-picker";
 import { AuthContext } from '../components/AuthContext';
 import Loading from '../components/Loading';
@@ -52,8 +53,11 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
     };
 
     useEffect(() => {
-
-    }, [])
+        if (Platform.OS == "android" && DeviceInfo.getApiLevelSync() >= 33) {
+            requestPermission();
+        }
+        return () => { };
+    }, []);
 
     const onPressBack = () => {
         navigation.goBack();
@@ -263,6 +267,25 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                 console.log('errer ------------------', e.message);
             });
     }
+
+    async function requestPermission() {
+        try {
+            await PermissionsAndroid.requestMultiple(
+                [
+                    PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    PermissionsAndroid.PERMISSIONS.CAMERA,
+                ],
+                {
+                    title: "TEST",
+                    message: "permissions.locationPermissionMessage",
+                }
+            );
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}>

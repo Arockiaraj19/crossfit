@@ -29,6 +29,8 @@ import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
 import com.reactnativecompressor.CompressorPackage;
 // react-native-date-picker
 import com.henninghall.date_picker.DatePickerPackage;
+// react-native-device-info
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 // react-native-document-picker
 import com.reactnativedocumentpicker.DocumentPickerPackage;
 // react-native-encrypted-storage
@@ -109,6 +111,7 @@ public class PackageList {
       new ReactNativeFirebaseStoragePackage(),
       new CompressorPackage(),
       new DatePickerPackage(),
+      new RNDeviceInfo(),
       new DocumentPickerPackage(),
       new RNEncryptedStoragePackage(),
       new RNGestureHandlerPackage(),
