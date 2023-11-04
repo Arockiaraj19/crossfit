@@ -369,7 +369,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                                         <DatePicker
                                             style={{ width: dimensions.width, height: 250, }}
                                             textColor={'#333333'}
-                                            minimumDate={new Date()}
+                                            // minimumDate={new Date()}
                                             date={deliveryDate}
                                             androidVariant={'nativeAndroid'}
                                             dividerHeight={50}

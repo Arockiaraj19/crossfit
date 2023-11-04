@@ -749,7 +749,7 @@ const HomeScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </ScrollView>
-            {loading && <Loading />}
+            {/* {loading && <Loading />} */}
         </View>
     );
 };

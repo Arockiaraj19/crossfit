@@ -779,6 +779,14 @@ const PersonalInfoScreen = ({ navigation }) => {
     const onPressBack = () => {
         navigation.goBack();
     }
+    function validateEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+    function validatePhone(number) {
+        var re = /^\d{10}$/;
+        return re.test(number);
+    }
     const onPressSaveProfile = async () => {
         if (userName == '') {
             Alert.alert('', nameAlert, [{
@@ -812,14 +820,22 @@ const PersonalInfoScreen = ({ navigation }) => {
             },
             ]);
         }
-        // else if (userEmail == '') {
-        //     Alert.alert('', emailAlert, [{
-        //         text: 'OK', onPress: () => {
-        //             return;
-        //         },
-        //     },
-        //     ]);
-        // }
+        else if (validatePhone(userMobile) == false) {
+            Alert.alert('', "Please enter valid mobile number", [{
+                text: 'OK', onPress: () => {
+                    return;
+                },
+            },
+            ]);
+        }
+        else if (userEmail != '' && validateEmail(userEmail) == false) {
+            Alert.alert('', "Please enter valid email", [{
+                text: 'OK', onPress: () => {
+                    return;
+                },
+            },
+            ]);
+        }
         else if (userLanguageId == '') {
             Alert.alert('', languageAlert, [{
                 text: 'OK', onPress: () => {
@@ -1208,7 +1224,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                                         <DatePicker
                                             style={{ width: dimensions.width, height: 250, }}
                                             textColor={'#333333'}
-                                            maximumDate={new Date()}
+                                            // maximumDate={new Date()}
                                             date={userDate}
                                             androidVariant={'nativeAndroid'}
                                             dividerHeight={50}

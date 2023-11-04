@@ -1,18 +1,15 @@
-import React, { useEffect, useContext, useRef } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Platform, Alert, PermissionsAndroid,Linking,BackHandler,ScrollView } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
-import { getUserName, getUserId, getUserProfileImage ,getHelpLineNumber} from '../helpers/AppManager';
-import { useFocusEffect } from '@react-navigation/native';
-import * as ImagePicker from "react-native-image-picker";
-import ActionSheet from 'react-native-actionsheet';
-import UUIDv4 from '../helpers/uuid';
-import S3 from "aws-sdk/clients/s3";
-import { Credentials } from "aws-sdk";
 import { useMutation } from '@apollo/react-hooks';
+import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import Loading from '../components/Loading';
+import React, { useContext, useEffect, useRef } from 'react';
+import { Alert, BackHandler, Image, Linking, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import * as ImagePicker from "react-native-image-picker";
+import { AuthContext } from '../components/AuthContext';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
+import { getHelpLineNumber, getUserId, getUserName, getUserProfileImage } from '../helpers/AppManager';
 import uploadImageToStorage from '../helpers/uploadImage';
 
 //  import { ScrollView } from 'react-native-gesture-handler';
@@ -80,14 +77,14 @@ const ProfileDetailScreen = ({ navigation, route }) => {
         }, [])
     );
     useEffect(() => {
-        if(BackHandler){
+        if (BackHandler) {
             BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
             return () => {
                 BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
             };
         }
     }, [])
-    const handleBackButtonClick= () => {
+    const handleBackButtonClick = () => {
         navigation.goBack();
         return true;
     }
@@ -115,8 +112,8 @@ const ProfileDetailScreen = ({ navigation, route }) => {
     const onPressMandiRate = () => {
         navigation.navigate('UploadMandiRatesScreen');
     }
-    const  onPressHelpLine= () => {
-        if(helpLineNumber){
+    const onPressHelpLine = () => {
+        if (helpLineNumber) {
             Linking.openURL(`tel:${helpLineNumber}`)
         }
     }
@@ -126,10 +123,10 @@ const ProfileDetailScreen = ({ navigation, route }) => {
         },
         {
             text: logoutYes,
-            onPress: () => {  
-                setEnableLogin((pre)=> !pre)
-                setLoginToken('') 
-                setTimeout(async () => { 
+            onPress: () => {
+                setEnableLogin((pre) => !pre)
+                setLoginToken('')
+                setTimeout(async () => {
                     try {
                         await EncryptedStorage.setItem('ProfileImage', '');
                         await EncryptedStorage.setItem('languageId', '1');
@@ -139,7 +136,7 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                 }, 100);
                 setTimeout(async () => {
                     try {
-                        await EncryptedStorage.setItem('loginTrue',"true")
+                        await EncryptedStorage.setItem('loginTrue', "true")
                         await EncryptedStorage.setItem('access_token', '');
                         await EncryptedStorage.setItem('userName', '');
                         await EncryptedStorage.setItem('userId', '');
@@ -240,18 +237,18 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                     alert(res.customButton);
                 } else {
                     setProfileImageUrl(res.assets[0].uri)
-                    uploadImage(Platform.OS === "android" ? ('file://' + res.assets[0].uri) : res.assets[0].uri);
+                    uploadImage(Platform.OS === "android" ? res.assets[0].uri : res.assets[0].uri);
                 }
             });
         }
     };
-   
-   
+
+
     const uploadImage = async (imageUrl) => {
         setLoadingIndicator(true);
-       
-const profileImage=await uploadImageToStorage(imageUrl);
-      
+
+        const profileImage = await uploadImageToStorage(imageUrl);
+
         setTimeout(async () => {
             // const res = await fetchUploadUrl(urlaws, image_file);
             // let profileImage = res.url.split('?')[0];
@@ -377,7 +374,7 @@ const profileImage=await uploadImageToStorage(imageUrl);
                         </TouchableOpacity>
                         <View style={styles.view_line}></View> */}
 
-                        
+
                         {/* <TouchableOpacity style={styles.view_box}
                     onPress={onPressFarmDetails}>
                     <Image style={styles.image_Icon}

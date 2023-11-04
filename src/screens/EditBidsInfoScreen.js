@@ -1,16 +1,15 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { StyleSheet, View, Image, Text, Platform, TouchableOpacity, Linking, Alert } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import moment from "moment";
-import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
-import Loading from '../components/Loading';
 import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import moment from "moment";
+import React, { useContext, useEffect, useState } from 'react';
+import { Query } from 'react-apollo';
+import { Alert, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
-import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
+import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 
 const GETLOTSBYCOMMODITY_QUERY = gql`
 query getLotById($lotId: ID!){
@@ -60,7 +59,7 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
     const [bidsDetails, setBidsDetails] = React.useState([]);
     const [updateBidStatus, { loading, error, data }] = useMutation(UPDATEBITSTATUS_QUERY);
     const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = useMutation(MOBILENUMBERAUDIT_QUERY)
-    
+
     useEffect(() => {
         console.log('route ------------ 11 ', route.params);
 
@@ -107,9 +106,9 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
     // }, [mobileViewData])
 
 
-    const onPressMakeCall = async() => {
+    const onPressMakeCall = async () => {
         await handlePhoneCall(bidsDetails.MobileNo, navigation);
-        return await getMobileView({ variables: { transactiontype: "Lot", transactionid: bidsDetails.Id }})
+        return await getMobileView({ variables: { transactiontype: "Lot", transactionid: bidsDetails.Id } })
         // handlePhoneCall(bidsDetails.MobileNo,navigation)
     }
     const onPressAccept = () => {
@@ -121,7 +120,7 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
             text: 'Yes',
             onPress: () => {
                 updateBidStatus({
-                    variables: { bidId: bidsDetails.Id, statusId: 2,currentLotQuantity: parseFloat(bidsDetails.CurrentLotQuantity) }
+                    variables: { bidId: bidsDetails.Id, statusId: 2, currentLotQuantity: parseFloat(bidsDetails.CurrentLotQuantity) }
                 })
                     .then(res => {
                         setLoadingIndicator(false)
@@ -145,7 +144,7 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
             },
         },
         ]);
-        
+
     }
     const onPressDecline = () => {
         Alert.alert('', areYouSureDecline, [{
@@ -155,7 +154,7 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
             text: 'Yes',
             onPress: () => {
                 updateBidStatus({
-                    variables: { bidId: bidsDetails.Id, statusId: 3 ,currentLotQuantity: parseFloat(bidsDetails.CurrentLotQuantity) }
+                    variables: { bidId: bidsDetails.Id, statusId: 3, currentLotQuantity: parseFloat(bidsDetails.CurrentLotQuantity) }
                 })
                     .then(res => {
                         setLoadingIndicator(false)
@@ -179,7 +178,7 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
             },
         },
         ]);
-       
+
     }
     return (
         <View style={styles.container}>
@@ -202,15 +201,15 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
                         <Text style={styles.text_description}>{route?.params.AddressInfo}</Text>
                     </View>
                 </View>
-                <View style={{ width: '100%', height: ((route.params.isAccept) && (route.params.Status == '1')) ? 340 : 300, alignItems: 'center', justifyContent: 'center',}}>
-                    <View style={[styles.view_detailInner,{ height: ((route.params.isAccept) && (route.params.Status == '1')) ? 300 : 260} ]}>
+                <View style={{ width: '100%', height: ((route.params.isAccept) && (route.params.Status == '1')) ? 340 : 300, alignItems: 'center', justifyContent: 'center', }}>
+                    <View style={[styles.view_detailInner, { height: ((route.params.isAccept) && (route.params.Status == '1')) ? 300 : 260 }]}>
                         <View style={styles.view_topInner}>
                             <View style={styles.view_circule}>
                                 <View style={{ width: '27%', height: 130, marginLeft: '12%', marginTop: 10, }}>
                                     <Text style={styles.text_ask}>{quantityText}</Text>
                                     <Text style={styles.text_price}>{route?.params.Quantity}</Text>
                                     <Text style={[styles.text_ask, { top: 95 }]}>{productPrice}</Text>
-                                    <Text style={[styles.text_price, { top: 108 }]}>{'₹ ' + bidsDetails.SellerPrice }</Text>
+                                    <Text style={[styles.text_price, { top: 108 }]}>{'₹ ' + bidsDetails.SellerPrice}</Text>
                                 </View>
                             </View>
                         </View>
@@ -227,7 +226,7 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
                             )}
                             {(bidsDetails.ProfilePicImageURL != '') && (
                                 <Image style={styles.profile_image}
-                                    source={{ uri: route.params.ProfilePicImageURL }} />
+                                    source={{ uri: bidsDetails.ProfilePicImageURL }} />
                             )}
                             <View style={styles.view_user}>
                                 <Text style={styles.text_userName}>{bidsDetails.UserName}</Text>

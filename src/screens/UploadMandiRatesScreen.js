@@ -1,17 +1,15 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Image, Text, Platform, Alert, TextInput, PermissionsAndroid, KeyboardAvoidingView, ScrollView, TouchableOpacity, } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
-import * as ImagePicker from "react-native-image-picker";
-import UUIDv4 from '../helpers/uuid';
-import S3 from "aws-sdk/clients/s3";
-import { Credentials } from "aws-sdk";
 import { useMutation } from '@apollo/react-hooks';
+import { Credentials } from "aws-sdk";
+import S3 from "aws-sdk/clients/s3";
 import gql from 'graphql-tag';
+import React, { useContext, useEffect, useState } from 'react';
+import { Alert, Image, KeyboardAvoidingView, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import * as ImagePicker from "react-native-image-picker";
+import { AuthContext } from '../components/AuthContext';
 import Loading from '../components/Loading';
-import DocumentPicker from 'react-native-document-picker';
-import { useState } from 'react';
+import { colors, fonts, images } from '../core';
 import uploadImageToStorage from '../helpers/uploadImage';
+import UUIDv4 from '../helpers/uuid';
 
 const UPDATEMANDIRATE_QUERY = gql`
 mutation ($fileName: String!, $filePath: String!,$title: String!){ 
@@ -42,12 +40,12 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
     const [fileType, setFileType] = React.useState('image/jpeg');
     const [fileExtension, setFileExtension] = React.useState('.jpg');
     const [isPhoto, setIsPhoto] = React.useState(false);
-    const [title,setTitle] = useState('')
+    const [title, setTitle] = useState('')
 
     let options = {
         storageOptions: {
-          skipBackup: true,
-          path: 'images',
+            skipBackup: true,
+            path: 'images',
         },
         quality: 0.3,
         cameraType: 'back'
@@ -171,7 +169,7 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         signatureVersion: "v4",
     });
     const request = async () => {
-        const fileId = 'gt_image_' + UUIDv4() + '_'+fileExtension;
+        const fileId = 'gt_image_' + UUIDv4() + '_' + fileExtension;
         setUUID(fileId)
         const signedUrlExpireSeconds = 60 * 15;
 
@@ -195,7 +193,7 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         }
     }
     const uploadImage = async () => {
-        if(mandiImage == ''){
+        if (mandiImage == '') {
             Alert.alert('', 'Please select file', [{
                 text: 'OK', onPress: () => {
                     return;
@@ -203,25 +201,25 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
             },
             ]);
         }
-        else if(mandiLocation.trim() == '') {
+        else if (mandiLocation.trim() == '') {
             Alert.alert('', enterLocation, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
             },
             ]);
-        } 
-        else if(title.trim() == '') {
+        }
+        else if (title.trim() == '') {
             Alert.alert('', enterMandiTitle, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
             },
-            ]); 
+            ]);
         }
         else {
             setLoadingIndicator(true);
-            
+
             // var urlaws = await request();
             // let image_file = await fetch(mandiImage)
             //     .then((r) => r.blob())
@@ -231,10 +229,10 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
             //                 type: fileType,
             //             }),
             //     );
-           // console.log('url -----------', image_file)
-            const profileImage=await uploadImageToStorage(mandiImage);
+            // console.log('url -----------', image_file)
+            const profileImage = await uploadImageToStorage(mandiImage);
             setTimeout(async () => {
-               
+
                 setMandiImageUrl(profileImage)
                 onPressUploadMandi(profileImage)
             }, 100);
@@ -244,26 +242,26 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
     const onPressRemoveImage = () => {
         setMandiImage('')
     }
-    const onPressUploadMandi =(uploadImageUrl)=> {
+    const onPressUploadMandi = (uploadImageUrl) => {
         addMandiRates({
             variables: { fileName: mandiLocation, filePath: uploadImageUrl, title: title }
         })
-        .then(res => {
-            setLoadingIndicator(false)
-            console.log('res ------------------', res);
-            Alert.alert('', mandiratesSuccess, [{
-                text: 'Ok',
-                onPress: () => {
-                    onPressBack()                    
-                    return;
+            .then(res => {
+                setLoadingIndicator(false)
+                console.log('res ------------------', res);
+                Alert.alert('', mandiratesSuccess, [{
+                    text: 'Ok',
+                    onPress: () => {
+                        onPressBack()
+                        return;
+                    },
                 },
-            },
-            ]);
-        })
-        .catch(e => {
-            setLoadingIndicator(false)
-            console.log('errer ------------------', e.message);
-        });
+                ]);
+            })
+            .catch(e => {
+                setLoadingIndicator(false)
+                console.log('errer ------------------', e.message);
+            });
     }
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -302,20 +300,20 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                     </View>
                     {(mandiImage != '' && !isPhoto) && (
                         <View style={{ marginTop: 15, width: '100%', height: 200, flexDirection: 'row', }}>
-                        <View style={{ width: '80%', height: 200, alignItems: 'center', flexDirection: 'row', }}>
-                            <Image style={{ marginLeft: 20, width: 100, height: 100, borderRadius: 5 }}
-                                source={images.DOCUMENTICON}>
-                            </Image>
-                            <Text style={[styles.text_file, { width: '58%',marginLeft: 10, marginTop: 0,}]}>{fileExtension}</Text>
+                            <View style={{ width: '80%', height: 200, alignItems: 'center', flexDirection: 'row', }}>
+                                <Image style={{ marginLeft: 20, width: 100, height: 100, borderRadius: 5 }}
+                                    source={images.DOCUMENTICON}>
+                                </Image>
+                                <Text style={[styles.text_file, { width: '58%', marginLeft: 10, marginTop: 0, }]}>{fileExtension}</Text>
+                            </View>
+                            <View style={{ marginLeft: 5, width: '18%', height: 200, justifyContent: 'center', alignItems: 'center', }}>
+                                <TouchableOpacity style={{ width: 50, height: 50, justifyContent: 'center', alignItems: 'center', }}
+                                    onPress={onPressRemoveImage}>
+                                    <Image style={{ width: 35, height: 35 }}
+                                        source={images.REMOVEICON}></Image>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={{ marginLeft: 5, width: '18%', height: 200, justifyContent: 'center', alignItems: 'center', }}>
-                            <TouchableOpacity style={{ width: 50, height: 50, justifyContent: 'center', alignItems: 'center', }}
-                                onPress={onPressRemoveImage}>
-                                <Image style={{ width: 35, height: 35 }}
-                                    source={images.REMOVEICON}></Image>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
                     )}
                     {(mandiImage != '' && isPhoto) && (
                         <View style={{ marginTop: 15, width: '100%', height: 200, flexDirection: 'row', }}>
@@ -333,28 +331,28 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                             </View>
                         </View>
                     )}
-                    <View style={{ marginTop: 20, width: '100%', height: 100, justifyContent: 'center', alignItems: 'center',}}>
-                    <Text style={styles.text_heading}>{locationMandi}</Text>
-                    <View style={styles.view_textInput}>
-                        <TextInput style={styles.textInput_view}
-                            placeholder={locationMandi}
-                            value={mandiLocation}
-                            onChangeText={setMandiLocation}
-                            keyboardType='default'
-                        />
-                    </View>
-                    </View>
-                    <View style={{ marginTop: 10, width: '100%', height: 100, justifyContent: 'center', alignItems: 'center',}}>
-                    <Text style={styles.text_heading}>{mandiTitle}</Text>
-                    <View style={styles.view_textInput}>
-                        <TextInput style={styles.textInput_view}
-                            placeholder={mandiTitle}
-                            value={title}
-                            onChangeText={setTitle}
-                            keyboardType='default'
-                        />
+                    <View style={{ marginTop: 20, width: '100%', height: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        <Text style={styles.text_heading}>{locationMandi}</Text>
+                        <View style={styles.view_textInput}>
+                            <TextInput style={styles.textInput_view}
+                                placeholder={locationMandi}
+                                value={mandiLocation}
+                                onChangeText={setMandiLocation}
+                                keyboardType='default'
+                            />
                         </View>
+                    </View>
+                    <View style={{ marginTop: 10, width: '100%', height: 100, justifyContent: 'center', alignItems: 'center', }}>
+                        <Text style={styles.text_heading}>{mandiTitle}</Text>
+                        <View style={styles.view_textInput}>
+                            <TextInput style={styles.textInput_view}
+                                placeholder={mandiTitle}
+                                value={title}
+                                onChangeText={setTitle}
+                                keyboardType='default'
+                            />
                         </View>
+                    </View>
                 </ScrollView>
             </View>
             <View style={styles.view_edit}>

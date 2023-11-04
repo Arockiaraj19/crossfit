@@ -134,7 +134,8 @@ const HeaderComponents = ({
                     </TouchableOpacity>
                 )}
                 {(isHome) && (
-                    <Image style={{ marginLeft: 20, width: 37, height: 50, }}
+                    <Image style={{ marginLeft: 20, width: 37, height: 50 }}
+                        resizeMode='contain'
                         source={images.CROPFITBLACKLOGO}>
                     </Image>
                 )}

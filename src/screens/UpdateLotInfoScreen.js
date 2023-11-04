@@ -1,14 +1,13 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Platform, Text, Pressable, Image, Alert, Dimensions, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, ScrollView, } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import Loading from '../components/Loading';
-import DropDownTextComponent from '../components/DropDownTextComponent';
-import DataFetchComponents from '../components/DataFetchComponents';
-import InputBoxComponent from '../components/InputBoxComponent';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import React, { useContext, useEffect } from 'react';
+import { ActivityIndicator, Alert, Dimensions, FlatList, Image, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import DropDownTextComponent from '../components/DropDownTextComponent';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 import { currencyFormat } from '../helpers/AppManager';
 
 const ADDEDITLOT_QUERY = gql`
@@ -78,20 +77,20 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
     const [productId, setProductId] = React.useState('');
     const [lotId, setLotId] = React.useState('');
     const [cultivatedUnit, setCultivatedUnit] = React.useState(0);
-
+    const [saveLoading, setSaveLoading] = React.useState(false);
     const dimensions = Dimensions.get('window');
     const [addEditLot, { loading, error, data }] = useMutation(ADDEDITLOT_QUERY);
 
     useEffect(() => {
-        console.log('route?.params ----',route?.params);
+        console.log('route?.params ----', route?.params);
 
         setProductImage((route?.params?.isEdit) ? route?.params.lotInfo.CommodityChildImageURL : route?.params.productDetail.ImageURL);
-        setProductName((route?.params?.isEdit) ? route?.params.lotInfo.CommodityChild :route?.params.productDetail.Name);
-        setProductAddress((route?.params?.isEdit) ? route?.params.lotInfo.AddressInfo :route?.params.address);
-        setProductAddressId((route?.params?.isEdit) ? route?.params.lotInfo.UserAddressId :route?.params.addressId);
-        setProductId((route?.params?.isEdit) ? route?.params.lotInfo.CommodityChildId :route?.params.productDetail.Id);
+        setProductName((route?.params?.isEdit) ? route?.params.lotInfo.CommodityChild : route?.params.productDetail.Name);
+        setProductAddress((route?.params?.isEdit) ? route?.params.lotInfo.AddressInfo : route?.params.address);
+        setProductAddressId((route?.params?.isEdit) ? route?.params.lotInfo.UserAddressId : route?.params.addressId);
+        setProductId((route?.params?.isEdit) ? route?.params.lotInfo.CommodityChildId : route?.params.productDetail.Id);
         setOrganicType((route?.params?.isEdit) ? ((route?.params.lotInfo.IsOrganic == 1) ? 'yes' : 'no') : 'yes')
-        if(route?.params?.isEdit){
+        if (route?.params?.isEdit) {
             setGradeValue(route?.params.lotInfo.GradeValue);
             setGradeId(route?.params.lotInfo.GradeId);
             setWeightValue(route?.params.lotInfo.QuantityCode);
@@ -104,30 +103,40 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
             setLotId(route?.params.lotInfo.Id);
         }
     }, [])
-    
+
     const onPressBack = () => {
         navigation.goBack();
     }
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile =()=> {
+    const onPressProile = () => {
         navigation.navigate('ProfileDetailScreen')
     }
     const onPressShowList = (selectType) => {
+
+        setSelectedType(selectType);
         setArrayOfItems([]);
+        setLoadingIndicator(true);
+        setIsFetch(true);
+
         setPopupTitle((selectType == 'Grade') ? gradeText : weightPlaceholder);
-        setIsFetch(false);
+
         setModalVisible(true)
-        setSelectedType(selectType)
+
+
+
     }
     const updateLoading = (isloading) => {
-        setIsFetch(true);
-        console.log('updateLoading ----- ', isloading)
-
-        setLoadingIndicator((isloading == undefined) ? false : isloading);
+        if (isloading == false) {
+            console.log('updateLoading ----- ', isloading);
+            setIsFetch(false);
+            setLoadingIndicator(false);
+        }
     }
     const updateDate = (list) => {
+        setIsFetch(false);
+        setLoadingIndicator(false);
         console.log('listlist ----- ', list)
         setArrayOfItems(list);
     }
@@ -147,24 +156,24 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
         var tempAcre = parseFloat(availableAcre)
         var tempAcre1 = tempAcre.toFixed(2)
         var acreValue = (availableAcre != '') ? parseFloat(tempAcre1) : 0
-        
-        var minRatePerQuintal=route?.params?.lotInfo?.MSP ? parseInt(route?.params?.lotInfo?.MSP) : 0;
-        var isValidAmountPerGvt=true;
-        var totalPrice=0;
-        if(weightCode.toLocaleLowerCase()=='kg'){
-            var minAmountPerKg=minRatePerQuintal/100;
-            totalPrice=minAmountPerKg*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
-        }else if (weightCode.toLocaleLowerCase()=='ton'){
-            var minAmountPerTon=minRatePerQuintal*10;
-            totalPrice=minAmountPerTon*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
-        }else if (weightCode.toLocaleLowerCase()=='qtl'){
-            totalPrice=minRatePerQuintal*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
+
+        var minRatePerQuintal = route?.params?.lotInfo?.MSP ? parseInt(route?.params?.lotInfo?.MSP) : 0;
+        var isValidAmountPerGvt = true;
+        var totalPrice = 0;
+        if (weightCode.toLocaleLowerCase() == 'kg') {
+            var minAmountPerKg = minRatePerQuintal / 100;
+            totalPrice = minAmountPerKg * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
+        } else if (weightCode.toLocaleLowerCase() == 'ton') {
+            var minAmountPerTon = minRatePerQuintal * 10;
+            totalPrice = minAmountPerTon * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
+        } else if (weightCode.toLocaleLowerCase() == 'qtl') {
+            totalPrice = minRatePerQuintal * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
         }
-       
-        console.log("weightValue",weightCode,"isValidAmountPerGvt",isValidAmountPerGvt,"askingPrice",askingPrice,"totalprice",totalPrice)
+
+        console.log("weightValue", weightCode, "isValidAmountPerGvt", isValidAmountPerGvt, "askingPrice", askingPrice, "totalprice", totalPrice)
 
         if (gradeId == '') {
             Alert.alert('', gradeAlert, [{
@@ -197,8 +206,8 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                 },
             },
             ]);
-        }else if(!isValidAmountPerGvt){
-            Alert.alert('', minAmountPerGvtAlert+" "+currencyFormat(totalPrice)+"/"+weightValue, [{
+        } else if (!isValidAmountPerGvt) {
+            Alert.alert('', minAmountPerGvtAlert + " " + currencyFormat(totalPrice) + "/" + weightValue, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -222,27 +231,25 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
         //     ]);
         // }
         else {
-            if (loading) {
-                setLoadingIndicator(true)
-            }
-            console.log('route?.params.addressId', { lotId: (route?.params?.isEdit) ? lotId : 0, userAddressId: parseInt(productAddressId), gradeId: parseInt(gradeId), commodityChildId: parseInt(productId), isOrganic: (organicType == 'yes') ? 1 : 0, quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), cultivatedArea: acreValue, areaUnit: (route?.params?.isEdit) ? cultivatedUnit : 1, sellerPrice: parseFloat(askingPrice), currentQuantity: parseFloat(availableValue), currentPrice: parseFloat(askingPrice), currentQuantityUnit:parseFloat(weightId) })
+            setSaveLoading(true);
+            console.log('route?.params.addressId', { lotId: (route?.params?.isEdit) ? lotId : 0, userAddressId: parseInt(productAddressId), gradeId: parseInt(gradeId), commodityChildId: parseInt(productId), isOrganic: (organicType == 'yes') ? 1 : 0, quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), cultivatedArea: acreValue, areaUnit: (route?.params?.isEdit) ? cultivatedUnit : 1, sellerPrice: parseFloat(askingPrice), currentQuantity: parseFloat(availableValue), currentPrice: parseFloat(askingPrice), currentQuantityUnit: parseFloat(weightId) })
             addEditLot({
-                variables: { lotId: (route?.params?.isEdit) ? lotId : 0, userAddressId: parseInt(productAddressId), gradeId: parseInt(gradeId), commodityChildId: parseInt(productId), isOrganic: (organicType == 'yes') ? 1 : 0, quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), cultivatedArea: acreValue, areaUnit: (route?.params?.isEdit) ? cultivatedUnit : 1, sellerPrice: parseFloat(askingPrice), currentQuantity: parseFloat(availableValue), currentPrice: parseFloat(askingPrice), currentQuantityUnit:parseFloat(weightId) }
+                variables: { lotId: (route?.params?.isEdit) ? lotId : 0, userAddressId: parseInt(productAddressId), gradeId: parseInt(gradeId), commodityChildId: parseInt(productId), isOrganic: (organicType == 'yes') ? 1 : 0, quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), cultivatedArea: acreValue, areaUnit: (route?.params?.isEdit) ? cultivatedUnit : 1, sellerPrice: parseFloat(askingPrice), currentQuantity: parseFloat(availableValue), currentPrice: parseFloat(askingPrice), currentQuantityUnit: parseFloat(weightId) }
             })
-            .then(res => {
-                setLoadingIndicator(false)
-                console.log('res ------------------', res);
-                if(route?.params?.isEdit){
-                    navigation.goBack();
-                }
-                else {
-                    navigation.navigate('LotAddSuccessScreen', { grade: gradeValue, lotDetail: res.data.addEditLot, productDetail: route?.params.productDetail, address: route?.params.address });
-                }
-            })
-            .catch(e => {
-                setLoadingIndicator(false)
-                console.log('errer ------------------', e.message);
-            });
+                .then(res => {
+                    setSaveLoading(false);
+                    console.log('res ------------------', res);
+                    if (route?.params?.isEdit) {
+                        navigation.goBack();
+                    }
+                    else {
+                        navigation.navigate('LotAddSuccessScreen', { grade: gradeValue, lotDetail: res.data.addEditLot, productDetail: route?.params.productDetail, address: route?.params.address });
+                    }
+                })
+                .catch(e => {
+                    setSaveLoading(false);
+                    console.log('errer ------------------', e.message);
+                });
         }
     }
     const roundToHundredths = num => {
@@ -260,26 +267,26 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
         }
     }
     const onPressSelectOrganic = (type) => {
-       setOrganicType(type);
+        setOrganicType(type);
     }
-    const onPressTextChange =(text)=>{
+    const onPressTextChange = (text) => {
         const temp = parseFloat(text).toFixed(2)
         setAvailableAcre(temp)
     }
-    const onChangeAvailableText=(text) => {
+    const onChangeAvailableText = (text) => {
         const validated = text.match(/^\d+$/);
-         if (validated) {
-             setAvailableValue(text)
-         }else if(text==''){
-             setAvailableValue(text)
-          }
-     }
+        if (validated) {
+            setAvailableValue(text)
+        } else if (text == '') {
+            setAvailableValue(text)
+        }
+    }
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}>
             <View style={styles.view_header}>
                 <HeaderComponents
-                    headerTitle={ (route?.params?.isEdit) ? editLot : listMyProduct}
+                    headerTitle={(route?.params?.isEdit) ? editLot : listMyProduct}
                     isBackButton={true}
                     onPressBack={onPressBack}
                     onPressProile={onPressProile}
@@ -287,7 +294,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
             </View>
             <View style={styles.view_top}>
                 <Image style={styles.image_category}
-                    source={{ uri:  productImage}}>
+                    source={{ uri: productImage }}>
                 </Image>
                 <View style={styles.view_text}>
                     <Text style={styles.text_name}>{productName}</Text>
@@ -304,12 +311,12 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                             placeHolder={gradePlaceholder}
                             dropDownType={'Grade'}
                             onPressShowList={onPressShowList} />
-                            
-                            <View style={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'space-between',}}>
-                            <View style={[styles.view_inner, { marginLeft: 15, width: '56%',}]}>
+
+                        <View style={{ alignItems: 'center', width: '100%', flexDirection: 'row', justifyContent: 'space-between', }}>
+                            <View style={[styles.view_inner, { marginLeft: 15, width: '56%', }]}>
                                 <Text style={styles.text_title}>{availableQuality}
                                 </Text>
-                                <View style={{ marginTop: 5, width: '100%', height: 45, flexDirection: 'row', justifyContent: 'space-between',}}>
+                                <View style={{ marginTop: 5, width: '100%', height: 45, flexDirection: 'row', justifyContent: 'space-between', }}>
                                     <View style={{ width: '100%', height: '100%', }}>
                                         <TextInput style={styles.search_Input}
                                             value={availableValue}
@@ -325,19 +332,19 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                                 </View>
                                 <View style={[styles.view_line, { width: '100%' }]}></View>
                             </View>
-                            <View style={[styles.view_inner, { marginRight: 15, width: '32%',}]}>
+                            <View style={[styles.view_inner, { marginRight: 15, width: '32%', }]}>
                                 <Text style={styles.text_title}>{weightPlaceholder}
                                 </Text>
-                                <View style={{ marginTop: 5, width: '100%', height: 45, flexDirection: 'row', justifyContent: 'space-between',}}>
-                                    <TouchableOpacity style={{ width: '100%', height: '100%', flexDirection: 'row',  alignItems: 'center',}}
+                                <View style={{ marginTop: 5, width: '100%', height: 45, flexDirection: 'row', justifyContent: 'space-between', }}>
+                                    <TouchableOpacity style={{ width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', }}
                                         onPress={() => onPressShowList('Weight')}>
                                         <Text style={styles.text_weight}>{(weightValue == '') ? weightPlaceholder : weightValue}
                                         </Text>
                                         <Image style={[styles.image_dropDown, { right: 5 }]}
                                             source={images.DROPDOWNARROWICON} />
-                                </TouchableOpacity>
+                                    </TouchableOpacity>
                                 </View>
-                                <View style={[styles.view_line, { width: '100%'}]}></View>
+                                <View style={[styles.view_line, { width: '100%' }]}></View>
                             </View>
 
                         </View>
@@ -373,7 +380,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                                 <Text style={styles.text_title}>{acres}
                                 </Text>
                                 <View style={styles.view_enter}>
-                                    <TextInput style={[styles.search_Input, { width: '100%',}]}
+                                    <TextInput style={[styles.search_Input, { width: '100%', }]}
                                         value={availableAcre}
                                         onChangeText={setAvailableAcre}
                                         autoCapitalize='none'
@@ -384,7 +391,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                                         placeholder={acresPlaceholder}>
                                     </TextInput>
                                 </View>
-                                <View style={[styles.view_line, { bottom: -5, width: '100%'}]}></View>
+                                <View style={[styles.view_line, { bottom: -5, width: '100%' }]}></View>
                             </View>
                         </View>
                         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, height: 85, }}>
@@ -392,7 +399,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                                 <Text style={styles.text_title}>{(weightValue == '') ? productPrice : (productPrice + ' ' + per + ' ' + weightValue)}
                                 </Text>
                                 <View style={styles.view_enter}>
-                                    <TextInput style={[styles.search_Input, { width: '100%',}]}
+                                    <TextInput style={[styles.search_Input, { width: '100%', }]}
                                         value={askingPrice}
                                         onChangeText={setAskingPrice}
                                         autoCapitalize='none'
@@ -403,7 +410,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                                         placeholder={productPricePlaceholder}>
                                     </TextInput>
                                 </View>
-                                <View style={[styles.view_line, { bottom: -5, width: '100%'}]}></View>
+                                <View style={[styles.view_line, { bottom: -5, width: '100%' }]}></View>
                             </View>
                         </View>
                         <View style={[styles.view_info, { height: 60, flexDirection: 'row', alignItems: 'center' }]}>
@@ -431,7 +438,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </ScrollView>
-            {(!isFetch) && (
+            {(isFetch) && (
                 <DataFetchComponents
                     selectedId={''}
                     isType={selectedType}
@@ -452,7 +459,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                             <Text style={styles.modalText}>{popupTitle}</Text>
                             <View style={styles.line} />
                             <View style={styles.view_List}>
-                                <FlatList
+                                {loadingIndicator == true ? <ActivityIndicator size="large" color='#000000' /> : <FlatList
                                     style={styles.list}
                                     data={arrayOfItems}
                                     keyExtractor={(x, i) => i}
@@ -464,13 +471,13 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
                                             <View style={styles.line} />
                                         </TouchableOpacity>
                                     )}
-                                />
+                                />}
                             </View>
                         </View>
                     </Pressable>
                 </Modal>
             )}
-            {loadingIndicator && <Loading />}
+            {saveLoading && <Loading />}
         </KeyboardAvoidingView>
     );
 };

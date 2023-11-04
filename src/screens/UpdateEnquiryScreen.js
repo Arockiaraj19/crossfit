@@ -1,16 +1,15 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Platform, Text, Pressable, Image, Alert, Dimensions, TextInput, TouchableOpacity, Modal, FlatList, KeyboardAvoidingView, ScrollView, } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import Loading from '../components/Loading';
-import DropDownTextComponent from '../components/DropDownTextComponent';
-import DataFetchComponents from '../components/DataFetchComponents';
-import moment from "moment";
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import DatePicker from 'react-native-date-picker'
-
+import moment from "moment";
+import React, { useContext, useEffect } from 'react';
+import { ActivityIndicator, Alert, Dimensions, FlatList, Image, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import DropDownTextComponent from '../components/DropDownTextComponent';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 
 const ADDEDITENQUIRY_QUERY = gql`
 mutation ($enquiryId: ID!, $userAddressId: ID!, $gradeId: ID!, $commodityChildId: ID!, $quantity: Float!, $quantityUnit: ID!, $deliveryOn: String!){
@@ -74,7 +73,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
     const [isDatePicker, setIsDatePicker] = React.useState(false);
     const [deliveryOnValue, setDeliveryOnValue] = React.useState('');
     const [dateOfDelivaty, setDateOfDelivaty] = React.useState('');
-
+    const [saveLoading, setSaveLoading] = React.useState(false);
     const dimensions = Dimensions.get('window');
     const [addEditEnquiry, { loading, error, data }] = useMutation(ADDEDITENQUIRY_QUERY);
 
@@ -93,7 +92,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
 
     }, [])
     const onPressBack = () => {
-        if(route.params.isEdit){
+        if (route.params.isEdit) {
 
         }
         else {
@@ -107,12 +106,16 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const onPressShowList = (selectType) => {
+        setSelectedType(selectType);
         setArrayOfItems([]);
+        setLoadingIndicator(true);
+        setIsFetch(true);
+
         setPopupTitle((selectType == 'Grade') ? gradeText : weightPlaceholder);
-        setIsFetch(false);
+
         setModalVisible(true)
         setIsDatePicker(false)
-        setSelectedType(selectType)
+
     }
     const onPressDatePicker = () => {
         setIsFetch(false);
@@ -121,12 +124,15 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
         setSelectedType('datePicker');
     }
     const updateLoading = (isloading) => {
-        setIsFetch(true);
-        console.log('updateLoading ----- ', isloading)
-
-        setLoadingIndicator((isloading == undefined) ? false : isloading);
+        if (isloading == false) {
+            console.log('updateLoading ----- ', isloading);
+            setIsFetch(false);
+            setLoadingIndicator(false);
+        }
     }
     const updateDate = (list) => {
+        setIsFetch(false);
+        setLoadingIndicator(false);
         console.log('listlist ----- ', list)
         setArrayOfItems(list);
     }
@@ -184,15 +190,13 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
             ]);
         }
         else {
-            if (loading) {
-                setLoadingIndicator(true)
-            }
+            setSaveLoading(true);
             console.log('route?.params.addressId 111', { enquiryId: (route.params.isEdit) ? route.params.enquiryInfo.Id : 0, userAddressId: (route.params.isEdit) ? parseInt(route?.params.enquiryInfo.UserAddressId) : parseInt(route?.params.addressId), gradeId: parseInt(gradeId), commodityChildId: ((route.params.isEdit) ? parseInt(route?.params.enquiryInfo.CommodityGroupId) : parseInt(route?.params.productDetail.Id)), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), deliveryOn: dateOfDelivaty })
             addEditEnquiry({
                 variables: { enquiryId: (route.params.isEdit) ? route.params.enquiryInfo.Id : 0, userAddressId: (route.params.isEdit) ? parseInt(route?.params.enquiryInfo.UserAddressId) : parseInt(route?.params.addressId), gradeId: parseInt(gradeId), commodityChildId: ((route.params.isEdit) ? parseInt(route?.params.enquiryInfo.CommodityChildId) : parseInt(route?.params.productDetail.Id)), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), deliveryOn: dateOfDelivaty }
             })
                 .then(res => {
-                    setLoadingIndicator(false)
+                    setSaveLoading(false);
                     console.log('res ------------------', res);
                     if (route.params.isEdit) {
                         navigation.goBack();
@@ -202,7 +206,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
                     }
                 })
                 .catch(e => {
-                    setLoadingIndicator(false)
+                    setSaveLoading(false);
                     console.log('errer ------------------', e.message);
                 });
         }
@@ -229,20 +233,20 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
                 : newValue;
         setAvailableValue(value)
     }
-    const onChangeAvailableText=(text) => {
+    const onChangeAvailableText = (text) => {
         const validated = text.match(/^\d+$/);
-         if (validated) {
-             setAvailableValue(text)
-         }else if(text==''){
-             setAvailableValue(text)
-          }
-     }
+        if (validated) {
+            setAvailableValue(text)
+        } else if (text == '') {
+            setAvailableValue(text)
+        }
+    }
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}>
             <View style={styles.view_header}>
                 <HeaderComponents
-                    headerTitle={(route.params.isEdit) ?  editEnquiry : newEnquriyText }
+                    headerTitle={(route.params.isEdit) ? editEnquiry : newEnquriyText}
                     isBackButton={true}
                     onPressBack={onPressBack}
                     onPressProile={onPressProile}
@@ -319,14 +323,14 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
                         <View style={styles.view_bottom}>
                             <TouchableOpacity style={styles.button_save}
                                 onPress={onPressSaveEnquiryInfo}>
-                                <Text style={styles.text_lot}>{(route?.params.isEdit) ?   editEnquiry : placeEnquiry}</Text>
+                                <Text style={styles.text_lot}>{(route?.params.isEdit) ? "Save" : placeEnquiry}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{ width: '100%', height: 20, }} />
                     </View>
                 </View>
             </ScrollView>
-            {(!isFetch) && (
+            {(isFetch) && (
                 <DataFetchComponents
                     selectedId={''}
                     isType={selectedType}
@@ -361,7 +365,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
                                         <DatePicker
                                             style={{ width: dimensions.width, height: 250, }}
                                             textColor={'#333333'}
-                                            minimumDate={new Date()}
+                                            // minimumDate={new Date()}
                                             date={deliveryDate}
                                             androidVariant={'nativeAndroid'}
                                             dividerHeight={50}
@@ -374,7 +378,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
                                 <Text style={styles.modalText}>{popupTitle}</Text>
                                 <View style={styles.line} />
                                 <View style={styles.view_List}>
-                                    <FlatList
+                                    {loadingIndicator == true ? <ActivityIndicator size="large" color='#000000' /> : <FlatList
                                         style={styles.list}
                                         data={arrayOfItems}
                                         keyExtractor={(x, i) => i}
@@ -386,7 +390,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
                                                 <View style={styles.line} />
                                             </TouchableOpacity>
                                         )}
-                                    />
+                                    />}
                                 </View>
                             </View>
                         }
@@ -394,7 +398,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
                     </Pressable>
                 </Modal>
             )}
-            {loadingIndicator && <Loading />}
+            {saveLoading && <Loading />}
         </KeyboardAvoidingView>
     );
 };
