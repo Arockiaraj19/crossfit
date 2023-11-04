@@ -4,14 +4,15 @@ import gql from 'graphql-tag';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Alert, BackHandler, Image, Linking, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
+import DeviceInfo from 'react-native-device-info';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import * as ImagePicker from "react-native-image-picker";
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { AuthContext } from '../components/AuthContext';
 import Loading from '../components/Loading';
 import { colors, fonts, images } from '../core';
 import { getHelpLineNumber, getUserId, getUserName, getUserProfileImage } from '../helpers/AppManager';
 import uploadImageToStorage from '../helpers/uploadImage';
-
 //  import { ScrollView } from 'react-native-gesture-handler';
 
 const UPDATEPROFILEIMAGE_QUERY = gql`
@@ -225,8 +226,8 @@ const ProfileDetailScreen = ({ navigation, route }) => {
     };
     const handleCamera = async () => {
         let isCameraPermitted = await requestCameraPermission();
-        let isStoragePermitted = await requestExternalWritePermission();
-        if (isCameraPermitted && isStoragePermitted) {
+
+        if (isCameraPermitted) {
             ImagePicker.launchCamera(options, (res) => {
                 if (res.didCancel) {
                     console.log('User cancelled image picker');
@@ -277,6 +278,39 @@ const ProfileDetailScreen = ({ navigation, route }) => {
     const onUpdateProgress = (progress) => {
 
     }
+
+    useEffect(() => {
+        if (Platform.OS == "android" && DeviceInfo.getApiLevelSync() >= 33) {
+            requestPermission();
+        }
+
+        return () => { };
+    }, []);
+    async function requestPermission() {
+        try {
+            check(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES)
+                .then((result) => {
+                    console.log("what is the camera permission");
+                    console.log(result);
+                    if (result != RESULTS.GRANTED) {
+                        request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES).then((finalResult) => {
+                            console.log("what is the request in image permissions");
+                            console.log(finalResult);
+                        });
+                    }
+
+                })
+                .catch((error) => {
+                    // …
+                });
+
+        } catch (err) {
+            console.log("what is the permission error");
+            console.log(err);
+
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.view_header}>

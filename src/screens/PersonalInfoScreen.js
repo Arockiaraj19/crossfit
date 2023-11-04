@@ -8,14 +8,15 @@ import { Query, graphql } from 'react-apollo';
 import { ActivityIndicator, Alert, Dimensions, FlatList, Image, KeyboardAvoidingView, Modal, PermissionsAndroid, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-date-picker';
+import DeviceInfo from 'react-native-device-info';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import * as ImagePicker from "react-native-image-picker";
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { AuthContext } from '../components/AuthContext';
 import Loading from '../components/Loading';
 import { colors, fonts, images } from '../core';
 import { getUserProfileImage } from '../helpers/AppManager';
 import uploadImageToStorage from '../helpers/uploadImage';
-
 const GETUSERDETAIL_QUERY = gql`
 query {
     getUserProfile{
@@ -654,8 +655,8 @@ const PersonalInfoScreen = ({ navigation }) => {
 
     const handleChooseCamera = async () => {
         const isCameraPermitted = await requestCameraPermission()
-        const isStoragePermitted = await requestExternalWritePermission()
-        if (isCameraPermitted && isStoragePermitted) {
+
+        if (isCameraPermitted) {
             ImagePicker.launchCamera(option, (res) => {
                 if (res.didCancel) {
 
@@ -1003,6 +1004,38 @@ const PersonalInfoScreen = ({ navigation }) => {
 
 
     }
+    useEffect(() => {
+        if (Platform.OS == "android" && DeviceInfo.getApiLevelSync() >= 33) {
+            requestPermission();
+        }
+
+        return () => { };
+    }, []);
+    async function requestPermission() {
+        try {
+            check(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES)
+                .then((result) => {
+                    console.log("what is the camera permission");
+                    console.log(result);
+                    if (result != RESULTS.GRANTED) {
+                        request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES).then((finalResult) => {
+                            console.log("what is the request in image permissions");
+                            console.log(finalResult);
+                        });
+                    }
+
+                })
+                .catch((error) => {
+                    // …
+                });
+
+        } catch (err) {
+            console.log("what is the permission error");
+            console.log(err);
+
+        }
+    }
+
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}>

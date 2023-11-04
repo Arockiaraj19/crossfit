@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -25,10 +26,12 @@
             <option value="$PROJECT_DIR$/../node_modules/@react-native-clipboard/clipboard/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-community/masked-view/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-firebase/app/android" />
+            <option value="$PROJECT_DIR$/../node_modules/@react-native-firebase/crashlytics/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-firebase/messaging/android" />
             <option value="$PROJECT_DIR$/../node_modules/@react-native-firebase/storage/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-compressor/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-date-picker/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-device-info/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-document-picker/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-encrypted-storage/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-firebase-push-notifications/android" />

@@ -4,14 +4,15 @@ import S3 from "aws-sdk/clients/s3";
 import gql from 'graphql-tag';
 import React, { useContext, useEffect, useState } from 'react';
 import { Alert, Image, KeyboardAvoidingView, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+
 import * as ImagePicker from "react-native-image-picker";
+import { PERMISSIONS, RESULTS, check,request } from 'react-native-permissions';
+import DeviceInfo from 'react-native-device-info';
 import { AuthContext } from '../components/AuthContext';
 import Loading from '../components/Loading';
 import { colors, fonts, images } from '../core';
 import uploadImageToStorage from '../helpers/uploadImage';
 import UUIDv4 from '../helpers/uuid';
-
 const UPDATEMANDIRATE_QUERY = gql`
 mutation ($fileName: String!, $filePath: String!,$title: String!){ 
     addMandiRates(fileName: $fileName , filePath: $filePath ,title: $title ) 
@@ -52,12 +53,7 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         cameraType: 'back'
     };
 
-    useEffect(() => {
-        if (Platform.OS == "android" && DeviceInfo.getApiLevelSync() >= 33) {
-            requestPermission();
-        }
-        return () => { };
-    }, []);
+  
 
     const onPressBack = () => {
         navigation.goBack();
@@ -112,6 +108,8 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                         message: 'App needs camera permission',
                     },
                 );
+                console.log("read camera persmission");
+                console.log(granted);
                 // If CAMERA Permission is granted
                 return granted === PermissionsAndroid.RESULTS.GRANTED;
             } catch (err) {
@@ -131,6 +129,8 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                         message: 'App needs write permission',
                     },
                 );
+                 console.log("write storage persmission");
+                                console.log(granted);
                 // If WRITE_EXTERNAL_STORAGE Permission is granted
                 return granted === PermissionsAndroid.RESULTS.GRANTED;
             } catch (err) {
@@ -142,9 +142,14 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
     };
     const handleCamera = async () => {
         let isCameraPermitted = await requestCameraPermission();
-        let isStoragePermitted = await requestExternalWritePermission();
-        if (isCameraPermitted && isStoragePermitted) {
+      //  let isStoragePermitted = await requestExternalWritePermission();
+        console.log(isCameraPermitted);
+      //  console.log(isStoragePermitted);
+        if (isCameraPermitted ) {
+        console.log("hadleCamera");
             ImagePicker.launchCamera(options, (res) => {
+            console.log(options);
+            console.log(res);
                 if (res.didCancel) {
                     console.log('User cancelled image picker');
                 } else if (res.error) {
@@ -172,19 +177,7 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         region: "ap-south-1", //"us-west-2"
         signatureVersion: "v4",
     });
-    const request = async () => {
-        const fileId = 'gt_image_' + UUIDv4() + '_' + fileExtension;
-        setUUID(fileId)
-        const signedUrlExpireSeconds = 60 * 15;
 
-        const url = await s3.getSignedUrlPromise("putObject", {
-            Bucket: "userprofileimagescropfit",
-            Key: `${fileId}`,
-            ContentType: fileType,
-            Expires: signedUrlExpireSeconds,
-        });
-        return url;
-    }
     const fetchUploadUrl = async (data, fileSelected) => {
         try {
             let res = await fetch(data, {
@@ -224,16 +217,7 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         else {
             setLoadingIndicator(true);
 
-            // var urlaws = await request();
-            // let image_file = await fetch(mandiImage)
-            //     .then((r) => r.blob())
-            //     .then(
-            //         (blobFile) =>
-            //             new File([blobFile], uuid, {
-            //                 type: fileType,
-            //             }),
-            //     );
-            // console.log('url -----------', image_file)
+
             const profileImage = await uploadImageToStorage(mandiImage);
             setTimeout(async () => {
 
@@ -267,22 +251,35 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                 console.log('errer ------------------', e.message);
             });
     }
-
+    useEffect(() => {
+        if (Platform.OS == "android" && DeviceInfo.getApiLevelSync() >= 33) {
+            requestPermission();
+        }
+   
+        return () => { };
+    }, []);
     async function requestPermission() {
         try {
-            await PermissionsAndroid.requestMultiple(
-                [
-                    PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                    PermissionsAndroid.PERMISSIONS.CAMERA,
-                ],
-                {
-                    title: "TEST",
-                    message: "permissions.locationPermissionMessage",
-                }
-            );
+            check(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES)
+                .then((result) => {
+                    console.log("what is the camera permission");
+                    console.log(result);
+                    if (result != RESULTS.GRANTED) {
+                        request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES).then((finalResult) => {
+                          console.log("what is the request in image permissions");
+                          console.log(finalResult);
+                        });
+                    }
+
+                })
+                .catch((error) => {
+                    // …
+                });
+
         } catch (err) {
-            console.error(err);
+            console.log("what is the permission error");
+            console.log(err);
+
         }
     }
 
