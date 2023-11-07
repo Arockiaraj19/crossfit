@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AppState, Image, ImageBackground, Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../../../components/AuthContext';
 import HeaderComponents from '../../../components/HeaderComponents';
-import Loading from '../../../components/Loading';
 import { colors, images } from '../../../core';
 
 import { graphql } from 'react-apollo';
@@ -717,7 +716,7 @@ const HomeScreen = ({ navigation, route }) => {
                         </View>
                     )}
                     <View style={styles.lotBox}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 40, marginTop: 20, }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 40, marginTop: 20, marginBottom: 20 }}>
                             <LinearGradient colors={['#d26477', '#cb1e53']} style={styles.linearGradient}>
                                 <Image style={{ width: 24, height: 24, }}
                                     source={images.VIDEOSICON}>
@@ -727,7 +726,7 @@ const HomeScreen = ({ navigation, route }) => {
                         </View>
                         <View style={{ alignItems: 'center', marginTop: 10, width: '100%', height: 200, }}>
                             {(state.listOfVideos.length > 0) && (
-                                <ImageBackground style={{ width: '90%', height: 200, borderRadius: 6, backgroundColor: colors.line_background }}
+                                <ImageBackground style={{ width: '100%', height: 200, borderRadius: 6, backgroundColor: colors.line_background }}
                                     source={{ uri: state.listOfVideos[0].ImageURL }}>
                                     <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: 200, }}
                                         onPress={() => {
@@ -741,13 +740,10 @@ const HomeScreen = ({ navigation, route }) => {
                                 </ImageBackground>
                             )}
                         </View>
-                        <View style={{ marginTop: 10, marginBottom: 20, width: '100%', height: 65, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity style={{ marginTop: 10, width: '88%', height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 20, borderWidth: 1, borderColor: colors.line_background }}>
-                                <Text style={styles.text_viewMore}>{viewMore}</Text>
-                            </TouchableOpacity>
-                        </View>
+
                     </View>
                 </View>
+                {/* <VersionComponent /> */}
             </ScrollView>
             {/* {loading && <Loading />} */}
         </View>

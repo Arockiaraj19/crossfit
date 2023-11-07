@@ -438,16 +438,18 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                             <Image style={styles.image_arrow}
                                 source={images.RIGHTARROWICON}></Image>
                         </TouchableOpacity>
-                        <View style={styles.view_line}></View>
-                        <TouchableOpacity style={styles.view_box}
-                            onPress={onPressDeleteAccount}>
-                            <Image style={styles.image_Icon}
-                                source={images.DELETEACCOUNT}
-                                resizeMode={'contain'}></Image>
-                            <Text style={styles.text_personal}>{deleteAccount}</Text>
-                            <Image style={styles.image_arrow}
-                                source={images.RIGHTARROWICON}></Image>
-                        </TouchableOpacity>
+                        {Platform.OS == 'android' ?? <View style={styles.view_line}></View>}
+                        {
+                            Platform.OS == 'android' ?? <TouchableOpacity style={styles.view_box}
+                                onPress={onPressDeleteAccount}>
+                                <Image style={styles.image_Icon}
+                                    source={images.DELETEACCOUNT}
+                                    resizeMode={'contain'}></Image>
+                                <Text style={styles.text_personal}>{deleteAccount}</Text>
+                                <Image style={styles.image_arrow}
+                                    source={images.RIGHTARROWICON}></Image>
+                            </TouchableOpacity>
+                        }
                         <View style={styles.view_line}></View>
 
                         <TouchableOpacity style={styles.view_box}

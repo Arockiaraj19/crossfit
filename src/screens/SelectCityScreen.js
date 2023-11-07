@@ -1,10 +1,10 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Image, Text, ScrollView, Platform, Alert, TouchableOpacity } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
+import React, { useContext, useEffect } from 'react';
+import { Alert, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../components/AuthContext';
 import DataFetchComponents from '../components/DataFetchComponents';
+import HeaderComponents from '../components/HeaderComponents';
 import Loading from '../components/Loading';
+import { colors, fonts } from '../core';
 
 const SelectCityScreen = ({ navigation, route }) => {
 
@@ -39,7 +39,7 @@ const SelectCityScreen = ({ navigation, route }) => {
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile =()=> {
+    const onPressProile = () => {
         navigation.navigate('ProfileDetailScreen')
     }
     const updateLoading = (isloading) => {
@@ -55,37 +55,26 @@ const SelectCityScreen = ({ navigation, route }) => {
             var tempInfo = typeInfo;
             tempInfo.isSelected = false;
             console.log("what is the item");
-                   console.log(tempInfo);
-            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
-                if(tempInfo.Name==route.params.data.Town){
+            console.log(tempInfo);
+            if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
+                if (tempInfo.Name == route.params.data.Taluk) {
                     console.log("what is the item");
-                   console.log(tempInfo);
+                    console.log(tempInfo);
                     tempInfo.isSelected = true;
                     setUserTownId(tempInfo.Id);
                     setUserTown(tempInfo.Name);
                 }
-                           
-                          
-                        
-                        }
+
+
+
+            }
             tyepTemp.push(tempInfo);
             tempArray.push(tempInfo.Taluks);
         })
         setArrayOfTown(tyepTemp);
 
     }
-    const onPressSelectTaluk = (item) => {
-        var templist = arrayOfTaluk;
-        var tyepTemp = [];
-        templist.map((typeInfo, i) => {
-            var tempInfo = typeInfo;
-            tempInfo.isSelected = (item.Id == tempInfo.Id) ? true : false;
-            tyepTemp.push(tempInfo)
-        })
-        setUserTalukId(item.Id);
-        setUserTaluk(item.Name);
-        setArrayOfTaluk(tyepTemp);
-    }
+
     const onPressSelectTown = (item) => {
         console.log('itemitemitem', item);
         var templist = arrayOfTown;
@@ -99,18 +88,11 @@ const SelectCityScreen = ({ navigation, route }) => {
         setUserTown(item.Name);
         setArrayOfTown(tyepTemp);
 
-        var tempArray = item.Taluks;
-        var talukTemp = [];
-        tempArray.map((typeInfo, i) => {
-            var tempInfo = typeInfo;
-            tempInfo.isSelected = false;
-            talukTemp.push(tempInfo)
-        })
-        setArrayOfTaluk(talukTemp);
+
 
     }
     const onPressNextAction = () => {
-        if(userTownId == ''){
+        if (userTownId == '') {
             Alert.alert('', placeholderTown, [{
                 text: 'OK', onPress: () => {
                     return;
@@ -118,20 +100,12 @@ const SelectCityScreen = ({ navigation, route }) => {
             },
             ]);
         }
-        else if(userTalukId == ''){
-            Alert.alert('', placeholderTaluk, [{
-                text: 'OK', onPress: () => {
-                    return;
-                },
-            },
-            ]);
-        }
+
         else {
             var params = route.params;
-            params.userTalukId = userTalukId;
-            params.userTaluk = userTaluk;
-            params.userTown = userTown;
-            params.userTownId = userTownId;
+            params.userTalukId =userTownId;
+            params.userTaluk = userTown;
+
             navigation.navigate('SelectAddressScreen', params);
         }
     }
@@ -205,7 +179,7 @@ const SelectCityScreen = ({ navigation, route }) => {
                             </View>
                         </View>
                     </View>
-                    {(arrayOfTaluk.length != 0) && (
+                    {/* {(arrayOfTaluk.length != 0) && (
                         <View style={{ marginTop: 25, width: '100%', }}>
                             <Text style={styles.text_typeTitle}>{taluk}</Text>
                             <View style={styles.view_type}>
@@ -224,7 +198,7 @@ const SelectCityScreen = ({ navigation, route }) => {
                                 </View>
                             </View>
                         </View>
-                    )}
+                    )} */}
                     <View style={{ width: '100%', height: 100, }}></View>
                 </ScrollView>
             </View>

@@ -1,10 +1,10 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Image, Text, ScrollView, Platform, Dimensions, TouchableOpacity, Alert } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
+import React, { useContext, useEffect } from 'react';
+import { Alert, Dimensions, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../components/AuthContext';
 import DataFetchComponents from '../components/DataFetchComponents';
+import HeaderComponents from '../components/HeaderComponents';
 import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 
 const SelectStateScreen = ({ navigation, route }) => {
 
@@ -31,7 +31,7 @@ const SelectStateScreen = ({ navigation, route }) => {
     const reload = React.useCallback(() => setKey((prevKey) => prevKey + 1), []);
     useEffect(() => {
         console.log("what is the params");
-console.log(route.params);
+        console.log(route.params);
 
         setLoadingIndicator(true);
         setboxWidth((deviceWidth - 100) / 3);
@@ -43,19 +43,19 @@ console.log(route.params);
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile =()=> {
+    const onPressProile = () => {
         navigation.navigate('ProfileDetailScreen')
     }
- 
+
     const updateLoading = (isloading) => {
-         setLoadingIndicator(false);
-        if(!isloading){
-                reload(1);
+        setLoadingIndicator(false);
+        if (!isloading) {
+            reload(1);
         }
-        console.log("updateLoading",isloading)
+        console.log("updateLoading", isloading)
     }
     const updateStateLoading = (isloading) => {
-        if(!isloading){
+        if (!isloading) {
             reload(1);
         }
     }
@@ -66,22 +66,22 @@ console.log(route.params);
         templist.map((typeInfo, i) => {
             var tempInfo = typeInfo;
             tempInfo.isSelected = false;
-            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
-    if(typeInfo.Name==route.params.data.AddressType){
-        console.log("what is the item");
-       
-        tempInfo.isSelected = true;
-        setAddressTypeId(typeInfo.Id);
-        setAddressType(typeInfo.Name);
-    }
-               
-              
-            
+            if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
+                if (typeInfo.Name == route.params.data.AddressType) {
+                    console.log("what is the item");
+
+                    tempInfo.isSelected = true;
+                    setAddressTypeId(typeInfo.Id);
+                    setAddressType(typeInfo.Name);
+                }
+
+
+
             }
             tyepTemp.push(tempInfo)
         });
 
-      
+
         setArrayOfType(tyepTemp);
     }
     const updateStateDate = (list) => {
@@ -92,18 +92,18 @@ console.log(route.params);
         templist.map((stateInfo, i) => {
             var tempInfo = stateInfo;
             tempInfo.isSelected = false;
-            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
-                if(tempInfo.Name==route.params.data.State){
+            if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
+                if (tempInfo.Name == route.params.data.State) {
                     console.log("what is the item");
-                   
+
                     tempInfo.isSelected = true;
                     setAddressStateId(tempInfo.Id);
                     setAddressState(tempInfo.Name);
                 }
-                           
-                          
-                        
-                        }
+
+
+
+            }
             stateTemp.push(tempInfo)
         })
         setArrayOfState(stateTemp);
@@ -155,8 +155,8 @@ console.log(route.params);
                 addressType: addressType,
                 addressState: addressState,
                 addressStateId: addressStateId,
-                isEdit:route.params.isEdit,
-                data:route.params.data
+                isEdit: route.params.isEdit,
+                data: route.params.data
             }
             navigation.navigate('SelectDistrictScreen', params)
         }
@@ -178,7 +178,7 @@ console.log(route.params);
                     updateLoading={updateLoading}
                     updateDate={updateDate} />
             )}
-            
+
             {(isFetchType == 'state') && (
                 <DataFetchComponents
                     selectedId={''}
@@ -188,7 +188,7 @@ console.log(route.params);
             )}
             <View style={{ marginTop: 25, width: '100%', height: 24, }}>
                 <View style={styles.view_pageCount}>
-                    <Text style={styles.text_pageCount}>{'1/3'}</Text>
+                    <Text style={styles.text_pageCount}>{'1/4'}</Text>
                 </View>
             </View>
             <View style={{ width: '100%', height: '75%' }}>
@@ -228,7 +228,7 @@ console.log(route.params);
                                                     onPressSelectState(data)
                                                 }>
                                                 <Image style={[styles.image_State, { width: boxWidth - 20, height: boxWidth - 20, borderRadius: (boxWidth - 20) / 2, backgroundColor: (data.isSelected) ? colors.white_color : '#d4d4d4' }]}
-                                                    source={{uri: data.ImageURL}}></Image>
+                                                    source={{ uri: data.ImageURL }}></Image>
                                                 <Text style={[styles.text_type, { color: (data.isSelected) ? colors.white_color : '#666666', marginTop: 10 }]}>{data.Name}</Text>
                                             </TouchableOpacity>
                                         )

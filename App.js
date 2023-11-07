@@ -61,6 +61,7 @@ import SelectCityScreen from './src/screens/SelectCityScreen';
 import SelectDistrictScreen from './src/screens/SelectDistrictScreen';
 import SelectStateScreen from './src/screens/SelectStateScreen';
 import SellerInfoListScreen from './src/screens/SellerInfoListScreen';
+import SplashScreen from './src/screens/SplashScreen';
 import UpdateBidsInfoScreen from './src/screens/UpdateBidsInfoScreen';
 import UpdateEnquiryScreen from './src/screens/UpdateEnquiryScreen';
 import UpdateLotInfoScreen from './src/screens/UpdateLotInfoScreen';
@@ -72,6 +73,7 @@ import ViewLotListScreen from './src/screens/ViewLotListScreen';
 import ViewMoreEnquiryListScreen from './src/screens/ViewMoreEnquiryListScreen';
 import ViewMoreLotsListScreen from './src/screens/ViewMoreLotsListScreen';
 import ViewResponseEnquiryScreen from './src/screens/ViewResponseEnquiryScreen';
+
 const lableQuery = gql`
 query getAppLabels($languageId: ID!) {
     getAppLabels(languageId: $languageId) 
@@ -125,7 +127,7 @@ const App = () => {
   const [gradePlaceholder, setGradePlaceholder] = useState('Select Grade');
   const [availableQuality, setAvailableQuality] = useState('Available Quantity');
   const [availableQualityPlaceholder, setAvailableQualityPlaceholdery] = useState('Enter Quantity');
-  const [weightPlaceholder, setWeightPlaceholder] = useState('Weight');
+  const [weightPlaceholder, setWeightPlaceholder] = useState('Unit of Measurement');
   const [acres, setAcres] = useState('Cultivated acres');
   const [acresPlaceholder, setAcresPlaceholder] = useState('Enter Cultivated acres');
   const [productPrice, setProductPrice] = useState('Asking Price');
@@ -835,10 +837,7 @@ const App = () => {
   }
   if (isLoading) {
     return (
-      <View style={styles.container}>
-        <Image style={styles.logo_image}
-          source={images.CROPFITWHITELOGO} />
-      </View>
+      <SplashScreen />
     );
   }
   const updateLableText = async (data) => {
@@ -1002,7 +1001,9 @@ const App = () => {
     setGradeText(sellScreenLabels.Grade)
     setGradePlaceholder(sellScreenLabels.SelectGrade)
     setAvailableQuality(sellScreenLabels.AvailableQuantity)
-    setAvailableQualityPlaceholdery(sellScreenLabels.SelectQuantity)
+    setAvailableQualityPlaceholdery(sellScreenLabels.SelectQuantity);
+    console.log("what is the weight value coming");
+    console.log(sellScreenLabels.Weight);
     setWeightPlaceholder(sellScreenLabels.Weight)
     setOrganic(sellScreenLabels.Organic)
     setPer(sellScreenLabels.Per)

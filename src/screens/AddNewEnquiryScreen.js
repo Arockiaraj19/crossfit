@@ -10,7 +10,6 @@ import DropDownTextComponent from '../components/DropDownTextComponent';
 import HeaderComponents from '../components/HeaderComponents';
 import { colors, fonts, images } from '../core';
 
-
 const ADDEDITENQUIRY_QUERY = gql`
 mutation ($enquiryId: ID!, $userAddressId: ID!, $gradeId: ID!, $commodityChildId: ID!, $quantity: Float!, $quantityUnit: ID!, $deliveryOn: String!){
     addEditEnquiry(enquiryId: $enquiryId , userAddressId: $userAddressId, gradeId: $gradeId, commodityChildId: $commodityChildId, quantity: $quantity, quantityUnit: $quantityUnit, deliveryOn: $deliveryOn) 
@@ -73,7 +72,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
     const [isDatePicker, setIsDatePicker] = React.useState(false);
     const [deliveryOnValue, setDeliveryOnValue] = React.useState('');
     const [dateOfDelivaty, setDateOfDelivaty] = React.useState('');
-
+    const [loadingState, setLoadingState] = React.useState(false);
     const dimensions = Dimensions.get('window');
     const [addEditEnquiry, { loading, error, data }] = useMutation(ADDEDITENQUIRY_QUERY);
 
@@ -153,6 +152,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
         setIsDatePicker(false);
     }
     const onPressSaveEnquiryInfo = () => {
+        console.log("i clicked");
         if (gradeId == '') {
             Alert.alert('', gradeAlert, [{
                 text: 'OK', onPress: () => {
@@ -170,7 +170,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
             ]);
         }
         else if (weightId == '') {
-            Alert.alert('', weightUnitAlert, [{
+            Alert.alert('', "Please Select Required Quantity Unit", [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -194,15 +194,16 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
             ]);
         }
         else {
-            if (loading) {
-                setLoadingIndicator(true)
-            }
+            // setLoadingIndicator(true);
+            setLoadingState(true);
+
             console.log({ enquiryId: (route.params.isEdit) ? route.params.enquiryInfo.Id : 0, userAddressId: (route.params.isEdit) ? parseInt(route?.params.enquiryInfo.UserAddressId) : parseInt(route?.params.addressId), gradeId: parseInt(gradeId), commodityChildId: ((route.params.isEdit) ? parseInt(route?.params.enquiryInfo.CommodityChildId) : parseInt(route?.params.productDetail.Id)), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), deliveryOn: dateOfDelivaty });
             addEditEnquiry({
                 variables: { enquiryId: (route.params.isEdit) ? route.params.enquiryInfo.Id : 0, userAddressId: (route.params.isEdit) ? parseInt(route?.params.enquiryInfo.UserAddressId) : parseInt(route?.params.addressId), gradeId: parseInt(gradeId), commodityChildId: ((route.params.isEdit) ? parseInt(route?.params.enquiryInfo.CommodityChildId) : parseInt(route?.params.productDetail.Id)), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), deliveryOn: dateOfDelivaty }
             })
                 .then(res => {
-                    setLoadingIndicator(false)
+                    setLoadingState(false);
+                    // setLoadingIndicator(false)
                     console.log('res ------------------', res);
                     if (route.params.isEdit) {
                         navigation.goBack();
@@ -212,7 +213,14 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                     }
                 })
                 .catch(e => {
-                    setLoadingIndicator(false)
+                    setLoadingState(false);
+                    // setLoadingIndicator(false);
+                    Alert.alert('Error', e.message, [{
+                        text: 'OK', onPress: () => {
+                            return;
+                        },
+                    },
+                    ]);
                     console.log('errer ------------------', e.message);
                 });
         }
@@ -327,12 +335,13 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                         <View style={styles.view_bottom}>
                             <TouchableOpacity style={styles.button_save}
                                 onPress={onPressSaveEnquiryInfo}>
-                                <Text style={styles.text_lot}>{(route?.params.isEdit) ? editEnquiry : placeEnquiry}</Text>
+                                {loadingState ? <ActivityIndicator size="small" color={colors.landing_background} /> : <Text style={styles.text_lot}>{(route?.params.isEdit) ? "Save" : placeEnquiry}</Text>}
                             </TouchableOpacity>
                         </View>
                         <View style={{ width: '100%', height: 20, }} />
                     </View>
                 </View>
+
             </ScrollView>
             {(isFetch) && (
                 <DataFetchComponents
@@ -503,7 +512,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '700',
         fontFamily: fonts.MONTSERRAT_MEDIUM,
-        color: colors.background_color,
+        color: colors.black_color,
     },
     view_List: {
         marginLeft: 5,

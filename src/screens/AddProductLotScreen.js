@@ -594,7 +594,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '700',
         fontFamily: fonts.MONTSERRAT_MEDIUM,
-        color: colors.background_color,
+        color: colors.black_color,
     },
     view_List: {
         marginLeft: 5,

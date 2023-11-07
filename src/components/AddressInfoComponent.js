@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, Image, Text, TouchableOpacity, } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { colors, fonts, images } from '../core';
 
 
@@ -19,24 +19,24 @@ const AddressInfoComponent = ({
                         source={images.LOCATIONICON} />
                     <View style={{ marginTop: 10, width: '66%', height: '90%', }}>
                         <Text style={styles.text_type}>{props.AddressType}</Text>
-                        <Text style={styles.text_address}>{props.AddressLine1 + ', ' + props.Village + ', '  + props.District + ', ' + props.State +" - "+props.PostalCode}</Text>
+                        <Text style={styles.text_address}>{props.AddressLine1 + ', ' + props.Village + ', ' + props.Taluk + ', ' + props.District + ', ' + props.State + " - " + props.PostalCode}</Text>
                     </View>
                     <TouchableOpacity style={styles.select_address}
                         onPress={() =>
                             onPressSelectAddress(props)}>
-                        <View style={{ width: 20, height: 20, backgroundColor: 'white', borderRadius: 10, borderWidth: 4, borderColor: (props.isSelected) ? colors.landing_background : 'lightgray'}}>
+                        <View style={{ width: 20, height: 20, backgroundColor: 'white', borderRadius: 10, borderWidth: 4, borderColor: (props.isSelected) ? colors.landing_background : 'lightgray' }}>
 
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.view_delete}>
                     <TouchableOpacity style={{ marginLeft: 60, minWidth: 100, height: 30, justifyContent: 'center', }}
-                        onPress={() => 
+                        onPress={() =>
                             onPressDeleteAddress(props)}>
                         <Text style={styles.text_delete}>{deleteAddress}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ marginLeft: 60, minWidth: 100, height: 30, justifyContent: 'center', }}
-                        onPress={() => 
+                        onPress={() =>
                             edit(props)}>
                         <Text style={styles.text_delete}>Edit</Text>
                     </TouchableOpacity>
@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 30,
         marginBottom: 10,
-        display:"flex",
-        flexDirection:"row",
-        justifyContent:"space-between"
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     text_type: {
         marginLeft: 5,

@@ -13,6 +13,7 @@ MERGED from [:react-native-firebase_storage] E:\bharath\cropfit\node_modules\@re
 MERGED from [:react-native-firebase_app] E:\bharath\cropfit\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-32:12
 MERGED from [com.google.firebase:firebase-messaging:23.3.1] C:\Users\punit\.gradle\caches\transforms-3\6579026f2a724393e403d751a3406e8f\transformed\jetified-firebase-messaging-23.3.1\AndroidManifest.xml:17:1-66:12
 MERGED from [:react-native-restart] E:\bharath\cropfit\node_modules\react-native-restart\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-permissions] E:\bharath\cropfit\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-camera-roll_camera-roll] E:\bharath\cropfit\node_modules\@react-native-camera-roll\camera-roll\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-clipboard_clipboard] E:\bharath\cropfit\node_modules\@react-native-clipboard\clipboard\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-community_masked-view] E:\bharath\cropfit\node_modules\@react-native-community\masked-view\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
@@ -25,7 +26,6 @@ MERGED from [:react-native-gesture-handler] E:\bharath\cropfit\node_modules\reac
 MERGED from [:react-native-get-location] E:\bharath\cropfit\node_modules\react-native-get-location\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-image-picker] E:\bharath\cropfit\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-21:12
 MERGED from [:react-native-linear-gradient] E:\bharath\cropfit\node_modules\react-native-linear-gradient\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
-MERGED from [:react-native-permissions] E:\bharath\cropfit\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-safe-area-context] E:\bharath\cropfit\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] E:\bharath\cropfit\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-share] E:\bharath\cropfit\node_modules\react-native-share\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-21:12
@@ -427,6 +427,8 @@ MERGED from [com.google.firebase:firebase-messaging:23.3.1] C:\Users\punit\.grad
 MERGED from [com.google.firebase:firebase-messaging:23.3.1] C:\Users\punit\.gradle\caches\transforms-3\6579026f2a724393e403d751a3406e8f\transformed\jetified-firebase-messaging-23.3.1\AndroidManifest.xml:20:5-44
 MERGED from [:react-native-restart] E:\bharath\cropfit\node_modules\react-native-restart\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-restart] E:\bharath\cropfit\node_modules\react-native-restart\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-permissions] E:\bharath\cropfit\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-permissions] E:\bharath\cropfit\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-camera-roll_camera-roll] E:\bharath\cropfit\node_modules\@react-native-camera-roll\camera-roll\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-camera-roll_camera-roll] E:\bharath\cropfit\node_modules\@react-native-camera-roll\camera-roll\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-clipboard_clipboard] E:\bharath\cropfit\node_modules\@react-native-clipboard\clipboard\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
@@ -451,8 +453,6 @@ MERGED from [:react-native-image-picker] E:\bharath\cropfit\node_modules\react-n
 MERGED from [:react-native-image-picker] E:\bharath\cropfit\node_modules\react-native-image-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-linear-gradient] E:\bharath\cropfit\node_modules\react-native-linear-gradient\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-linear-gradient] E:\bharath\cropfit\node_modules\react-native-linear-gradient\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-permissions] E:\bharath\cropfit\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-permissions] E:\bharath\cropfit\node_modules\react-native-permissions\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] E:\bharath\cropfit\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] E:\bharath\cropfit\node_modules\react-native-safe-area-context\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] E:\bharath\cropfit\node_modules\react-native-screens\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41

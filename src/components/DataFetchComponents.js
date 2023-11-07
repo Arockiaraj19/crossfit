@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import React, { useState } from 'react';
+import { Query, graphql } from 'react-apollo';
+import { StyleSheet, View } from 'react-native';
 
 const GETADDRESSTYPE_QUERY = gql`
 query { 
@@ -40,25 +39,13 @@ query districtsByState($stateId: ID!){
 `;
 
 const GETTOWN_QUERY = gql`
-query getTowns($districtId: ID!){
-    getTowns(districtId:$districtId) {
+query getTaluk($districtId: ID!) {
+    getTaluk(districtId: $districtId) {
         Id
-
         Name
-      
-        Code
-      
-        Taluks{
-      
-          Id
-      
-          Name
-      
-          Code
-      
-        }
-    }
-  }
+Code
+}
+}
 `;
 
 const GETGRADE_QUERY = gql`
@@ -324,18 +311,18 @@ const DataFetchComponents = ({
     const [isFetching, setIsFetching] = useState(true);
 
     const updateValue = (value) => {
-        if(value){
+        if (value) {
             updateLoading(true)
-         //   setIsFetching(false);
-        }else{
+            //   setIsFetching(false);
+        } else {
             updateLoading(false);
         }
-        
+
     }
     const GetAddressTypeComponent = graphql(GETADDRESSTYPE_QUERY)(props => {
         const { error, getAddressTypes, loading } = props.data;
-        { console.log('what is the type result',getAddressTypes) }
-        if (getAddressTypes !=undefined && getAddressTypes) {
+        { console.log('what is the type result', getAddressTypes) }
+        if (getAddressTypes != undefined && getAddressTypes) {
             setTimeout(async () => {
                 updateLoading(false);
                 updateDate(getAddressTypes)
@@ -347,21 +334,21 @@ const DataFetchComponents = ({
         }
         if (error) {
             console.log('what is the type error', error);
-             updateValue(false);
+            updateValue(false);
             return (
                 <View>
                 </View>
             );
         }
-        if(!error){
+        if (!error) {
             setTimeout(async () => {
                 updateValue(true);
             }, 500);
         }
-        
+
         return <View />;
     });
-  
+
 
     const GetGradeComponent = graphql(GETGRADE_QUERY)(props => {
         const { error, getGrades, loading } = props.data;
@@ -440,35 +427,35 @@ const DataFetchComponents = ({
 
     const GetNotificationComponent = graphql(GETVIEWNOTIFICATION_QUERY)(props => {
         const { error, data, loading } = props;
-        if(data.error) {
+        if (data.error) {
             updateLoading(false);
             return (
                 <View></View>
             )
         }
-        if(!data.loading){
-          if(data.getNotificationData != undefined){
-            setTimeout(async () => {
-                updateLoading(false);
-                updateDate(data?.getNotificationData)
-            }, 100);
-          }
-           else if(data.getNotificationData == null){
-            setTimeout(async () => {
-                updateLoading(false);
-                updateDate(data?.getNotificationData)
-            }, 100);
-        } 
-        else {
-            setTimeout(() => {
-                updateLoading(true);
-            }, 50);
+        if (!data.loading) {
+            if (data.getNotificationData != undefined) {
+                setTimeout(async () => {
+                    updateLoading(false);
+                    updateDate(data?.getNotificationData)
+                }, 100);
+            }
+            else if (data.getNotificationData == null) {
+                setTimeout(async () => {
+                    updateLoading(false);
+                    updateDate(data?.getNotificationData)
+                }, 100);
+            }
+            else {
+                setTimeout(() => {
+                    updateLoading(true);
+                }, 50);
+            }
+            return (
+                <View>
+                </View>
+            );
         }
-        return (
-            <View>
-            </View>
-        );
-        } 
         return (
             <View>
             </View>
@@ -476,15 +463,15 @@ const DataFetchComponents = ({
     })
     const GetViewMoreLotsComponent = graphql(GETVIEWMORELOTS_QUERY)(props => {
         const { error, data, loading } = props;
-        if(!loading){
+        if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getDashboardLotViewMore) }
-            if(props.data?.getDashboardLotViewMore != undefined){
+            if (props.data?.getDashboardLotViewMore != undefined) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
                 }, 500);
             }
-            else if(props.data?.getDashboardLotViewMore ==null){
+            else if (props.data?.getDashboardLotViewMore == null) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
@@ -518,15 +505,15 @@ const DataFetchComponents = ({
     });
     const GetViewMoreEnquiriesComponent = graphql(GETVIEWMOREENQUIRIES_QUERY)(props => {
         const { error, data, loading } = props;
-        if(!loading){
+        if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getDashboardEnquiryViewMore) }
-            if(props.data?.getDashboardEnquiryViewMore != undefined){
+            if (props.data?.getDashboardEnquiryViewMore != undefined) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
                 }, 500);
             }
-            else if(props.data?.getDashboardEnquiryViewMore ==null){
+            else if (props.data?.getDashboardEnquiryViewMore == null) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
@@ -560,15 +547,15 @@ const DataFetchComponents = ({
     });
     const GetLotsComponent = graphql(GETLOTS_QUERY)(props => {
         const { error, data, loading } = props;
-        if(!loading){
+        if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getLots) }
-            if(props.data?.getLots != undefined){
+            if (props.data?.getLots != undefined) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
                 }, 500);
             }
-            else if(props.data?.getLots ==null){
+            else if (props.data?.getLots == null) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
@@ -605,15 +592,15 @@ const DataFetchComponents = ({
         const { error, data, loading } = props;
         { console.log('propspropspropsprops', props) }
 
-        if(!loading){
+        if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getBids) }
-            if(props.data?.getBids != undefined){
+            if (props.data?.getBids != undefined) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
                 }, 500);
             }
-            else if(props.data?.getBids == null){
+            else if (props.data?.getBids == null) {
                 setTimeout(async () => {
                     updateLoading(false);
                     updateDate(props.data)
@@ -668,12 +655,12 @@ const DataFetchComponents = ({
                 </View>
             );
         }
-        if(!error){
+        if (!error) {
             setTimeout(async () => {
                 updateValue(true);
             }, 500);
         }
-        
+
         return <View />;
     });
     const GetRolesComponent = graphql(GETROLES_QUERY)(props => {
@@ -728,7 +715,7 @@ const DataFetchComponents = ({
                 </View>
             );
         }
-        if(loading){
+        if (loading) {
             setTimeout(async () => {
                 updateLoading(false);
                 updateValue(true);
@@ -765,20 +752,20 @@ const DataFetchComponents = ({
     });
     return (
         <View style={styles.container}>
-          
+
             {(isFetching && (isType == 'Type')) && (
                 <GetAddressTypeComponent />
             )}
             {(isFetching && (isType == 'State')) && (
                 <GetUserStateComponent />
             )}
-             {(isFetching && (isType == 'Grade')) && (
+            {(isFetching && (isType == 'Grade')) && (
                 <GetGradeComponent />
             )}
             {(isFetching && (isType == 'Weight')) && (
                 <GetWeightComponent />
             )}
-             {(isFetching && (isType == 'Lots')) && (
+            {(isFetching && (isType == 'Lots')) && (
                 <GetLotsComponent />
             )}
             {(isFetching && (isType == 'Bids')) && (
@@ -787,7 +774,7 @@ const DataFetchComponents = ({
             {(isFetching && (isType == 'Role')) && (
                 <GetRolesComponent />
             )}
-             {(isFetching && (isType == 'ViewMoreLots')) && (
+            {(isFetching && (isType == 'ViewMoreLots')) && (
                 <GetViewMoreLotsComponent />
             )}
             {(isFetching && (isType == 'Notification')) && (
@@ -818,7 +805,7 @@ const DataFetchComponents = ({
                             return <View />;
                         }
                         if (!data) {
-                            console.log('datadatadatadatadatadatadatadatadatadata',data)
+                            console.log('datadatadatadatadatadatadatadatadatadata', data)
                             setTimeout(async () => {
                                 updateLoading(false);
                             }, 100);
@@ -849,7 +836,7 @@ const DataFetchComponents = ({
                             return <View />;
                         }
                         if (!data) {
-                            console.log('datadatadatadatadatadatadatadatadatadata',data)
+                            console.log('datadatadatadatadatadatadatadatadatadata', data)
                             setTimeout(async () => {
                                 updateLoading(false);
                             }, 100);
@@ -880,7 +867,7 @@ const DataFetchComponents = ({
                             return <View />;
                         }
                         if (!data) {
-                            console.log('datadatadatadatadatadatadatadatadatadata',data)
+                            console.log('datadatadatadatadatadatadatadatadatadata', data)
                             setTimeout(async () => {
                                 updateLoading(false);
                             }, 100);
@@ -927,7 +914,7 @@ const DataFetchComponents = ({
             {(isFetching && (isType == 'Mandi')) && (
                 <GetMandiRatesComponent />
             )}
-            
+
             {(isFetching && (isType == 'Town')) && (
                 <Query query={GETTOWN_QUERY} variables={{ districtId: selectedId }}>
                     {({ loading, error, data }) => {
@@ -954,7 +941,7 @@ const DataFetchComponents = ({
                         setTimeout(async () => {
                             updateLoading(false);
                         }, 100);
-                        updateDate(data.getTowns)
+                        updateDate(data.getTaluk);
                         return <View />
                     }}
                 </Query>

@@ -1,15 +1,13 @@
-import React, { useEffect, useContext, useState, useCallback,useRef } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, FlatList, Platform, Alert,TextInput,AppState } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { AppState, FlatList, Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../components/AuthContext';
-import DataFetchComponents from '../components/DataFetchComponents';
-import Loading from '../components/Loading';
+import HeaderComponents from '../components/HeaderComponents';
 import InfoBoxComponents from '../components/InfoBoxComponents';
-import { useFocusEffect } from '@react-navigation/native';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
+import { filterItem } from '../helpers/AppManager';
 import { fetchDataFromServer } from '../helpers/QueryFetching';
 import { GETVIEWMORELOTSDATA_QUERY } from '../helpers/Schema';
-import { filterItem } from '../helpers/AppManager';
 
 
 const ViewMoreLotsListScreen = ({ navigation, route }) => {
@@ -26,48 +24,48 @@ const ViewMoreLotsListScreen = ({ navigation, route }) => {
     const [arrayOfLots, setArrayOfLots] = React.useState([]);
     const [isEmpty, setIsEmpty] = React.useState(false);
     const [searchText, setSearchText] = useState('')
-    const [duplicateLots,setDuplicateLots] = useState([])
-    const { getData : getLots, loading : lotLoading, error : lotError, data : lotData } = fetchDataFromServer(GETVIEWMORELOTSDATA_QUERY)
+    const [duplicateLots, setDuplicateLots] = useState([])
+    const { getData: getLots, loading: lotLoading, error: lotError, data: lotData } = fetchDataFromServer(GETVIEWMORELOTSDATA_QUERY)
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
-  
-
-useEffect(() => {
-    let isActive = true;
-    console.log("geLotsOne");
-    getLots()
-
-  return () => {
-    isActive = false;
-};
-}, [])
 
 
     useEffect(() => {
-        if(lotData){
+        let isActive = true;
+        console.log("geLotsOne");
+        getLots()
+
+        return () => {
+            isActive = false;
+        };
+    }, [])
+
+
+    useEffect(() => {
+        if (lotData) {
             console.log("rerendering");
-        updateDate(lotData)
+            updateDate(lotData)
         }
     }, [lotData])
 
-    useEffect(()=>{
+    useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
             if (
-              appState.current.match(/inactive|background/) &&
-              nextAppState === 'active'
+                appState.current.match(/inactive|background/) &&
+                nextAppState === 'active'
             ) {
-             getLots()
-              console.log('App has come to the foreground - viewmoreLotListScreen!');
+                getLots()
+                console.log('App has come to the foreground - viewmoreLotListScreen!');
             }
             appState.current = nextAppState;
             setAppStateVisible(appState.current);
-          });
-      
-          return () => {
+        });
+
+        return () => {
             subscription.remove();
-          };
-    },[])
+        };
+    }, [])
 
     const onPressBack = () => {
         if (route?.params?.isProfile) {
@@ -88,9 +86,9 @@ useEffect(() => {
         setLoadingIndicator(isloading);
     }
     const updateDate = (list) => {
-       
+
         var tempArray = list?.getDashboardLotViewMore;
-        if(tempArray?.length == 0){
+        if (tempArray?.length == 0) {
             setIsEmpty(true)
         }
         else {
@@ -99,24 +97,24 @@ useEffect(() => {
         setArrayOfLots(tempArray);
         setDuplicateLots(tempArray)
     }
-    const onPressSellerInfo =(item)=> {
+    const onPressSellerInfo = (item) => {
         setSearchText('')
         setArrayOfLots([])
-        navigation.navigate('SellerInfoListScreen', { details : item})
+        navigation.navigate('SellerInfoListScreen', { details: item })
     }
 
-    
+
 
     const handleSearch = useCallback((text) => {
         setSearchText(text)
         const lotList = [...duplicateLots]
-        if(searchText != ''){
-            const filterData = filterItem(lotList,text)
+        if (searchText != '') {
+            const filterData = filterItem(lotList, text)
             setArrayOfLots(filterData)
-        } else{
+        } else {
             setArrayOfLots(duplicateLots)
         }
-    },[searchText])
+    }, [searchText])
 
     const onPressRemoveSearch = () => {
         setSearchText('')
@@ -145,48 +143,48 @@ useEffect(() => {
                         returnKeyType='done'
                         placeholder={buySearchPlaceholder}
                         placeholderTextColor={colors.search_placeholder}
-                        // onSubmitEditing={() => handleSearch()}
-                        >
+                    // onSubmitEditing={() => handleSearch()}
+                    >
                     </TextInput>
-                     {(searchText != '') && (
-                        <TouchableOpacity style={{ marginLeft: 5, justifyContent: 'center', alignItems: 'center', width: 24, height: 24, borderRadius: 12, backgroundColor: 'lightgray'}}
+                    {(searchText != '') && (
+                        <TouchableOpacity style={{ marginLeft: 5, justifyContent: 'center', alignItems: 'center', width: 24, height: 24, borderRadius: 12, backgroundColor: 'lightgray' }}
                             onPress={onPressRemoveSearch}>
                             <Text>{'X'}</Text>
                         </TouchableOpacity>
-                    )} 
+                    )}
                 </View>
             </View>
-            <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(238, 238, 238, 0.3)'}}></View>
-             {!lotLoading ? (
-            <View style={styles.view_main}>
-                {(isEmpty) && (
-                    <Text style={styles.text_empty}>{noLods}</Text>
-                )}
-                <View style={styles.view_table}>
-                <FlatList
-                    style={{ marginTop: 10, flex: 1, marginBottom: 10, }}
-                    data={arrayOfLots}
-                    numColumns={2}
-                    keyExtractor={(x, i) => i}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <InfoBoxComponents
-                                props={item}
-                                index={index}
-                                isEnquiry={false}
-                                enquiries={enquiries}
-                                sellerText={sellerText}
-                                onPressSellerInfo={onPressSellerInfo}
-                            />
-                        )
-                    }}
-                />
-                </View>
-                
-            </View> )
-             : <Loading />
-                }
-                {/* {(!isFetch) && (
+            <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(238, 238, 238, 0.3)' }}></View>
+            {!lotLoading ? (
+                <View style={styles.view_main}>
+                    {(isEmpty) && (
+                        <Text style={styles.text_empty}>{noLods}</Text>
+                    )}
+                    <View style={styles.view_table}>
+                        <FlatList
+                            style={{ marginTop: 10, flex: 1, marginBottom: 10, }}
+                            data={arrayOfLots}
+                            numColumns={2}
+                            keyExtractor={(x, i) => i}
+                            renderItem={({ item, index }) => {
+                                return (
+                                    <InfoBoxComponents
+                                        props={item}
+                                        index={index}
+                                        isEnquiry={false}
+                                        enquiries={enquiries}
+                                        sellerText={sellerText}
+                                        onPressSellerInfo={onPressSellerInfo}
+                                    />
+                                )
+                            }}
+                        />
+                    </View>
+
+                </View>)
+                : <Loading />
+            }
+            {/* {(!isFetch) && (
                 <DataFetchComponents
                     selectedId={''}
                     isType={'ViewMoreLots'}
@@ -215,11 +213,11 @@ const styles = StyleSheet.create({
         height: '90%',
 
     },
-    view_table: { 
-        marginTop: 20, 
-        width: '90%', 
-        height: '93%', 
-        borderRadius: 5, 
+    view_table: {
+        marginTop: 20,
+        width: '90%',
+        height: '93%',
+        borderRadius: 5,
         backgroundColor: colors.white_color,
         shadowColor: 'lightgray',
         shadowOffset: {
@@ -304,7 +302,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '700',
         fontFamily: fonts.MONTSERRAT_MEDIUM,
-        color: colors.text_Color,
+        color: colors.black_color,
     },
     view_List: {
         marginLeft: 5,

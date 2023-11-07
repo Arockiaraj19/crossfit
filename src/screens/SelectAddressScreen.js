@@ -44,6 +44,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
         villageString,
         doorNo,
         pincode,
+
         placeholderDoorNo,
         placeholderPinCode,
         placeholderVillage,
@@ -138,14 +139,14 @@ const SelectAddressScreen = ({ navigation, route }) => {
             if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
                 console.log({ Id: route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: "", taluk: "", village: userVillage, postal: parseInt(userPincode) });
                 updateUserAddress({
-                    variables: { Id: route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: 1, village: userVillage, postal: parseInt(userPincode) }
+                    variables: { Id: route.params.data.AddressInfoId, addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: parseInt(route?.params.userTalukId), village: userVillage, postal: parseInt(userPincode) }
                 })
                     .then(res => {
                         setLoadingIndicator(false)
                         console.log('res ------------------', res);
                         Alert.alert('Success', "Address updated successfully", [{
                             text: 'OK', onPress: () => {
-                                return navigation.pop(3);
+                                return navigation.pop(4);
                             },
                         }]);
 
@@ -158,13 +159,13 @@ const SelectAddressScreen = ({ navigation, route }) => {
                 console.log("add adress");
                 console.log({ addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: 1, village: userVillage, postal: parseInt(userPincode) });
                 addUserAddress({
-                    variables: { addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: 1, village: userVillage, postal: parseInt(userPincode) }
+                    variables: { addressType: parseInt(route?.params.addressTypeId), addressLine1: userDoorNo, addressLine2: '', state: parseInt(route?.params.addressStateId), district: parseInt(route?.params.addressDistrictId), town: 1, taluk: parseInt(route?.params.userTalukId), village: userVillage, postal: parseInt(userPincode) }
                 })
                     .then(res => {
                         setLoadingIndicator(false)
                         Alert.alert('Success', "Address added successfully", [{
                             text: 'OK', onPress: () => {
-                                return navigation.pop(3);
+                                return navigation.pop(4);
                             },
                         }]);
                     })
@@ -234,25 +235,22 @@ const SelectAddressScreen = ({ navigation, route }) => {
                             </View>
                         </View>
                     </View>
-                    {/* <View style={{ marginTop: 3, width: '100%', height: 60, flexDirection: 'row', backgroundColor: '#fbe8e9' }}>
+                    <View style={{ marginTop: 3, width: '100%', height: 60, flexDirection: 'row', backgroundColor: '#fbe8e9' }}>
                         <View style={{ width: 50, height: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: '#ff9a9f' }}>
                             <Text style={styles.text_step}>{stepText}</Text>
                             <Text style={styles.text_step}>{'03'}</Text>
                         </View>
                         <View style={{ height: 60, justifyContent: 'center' }}>
                             <View style={{ flexDirection: 'row', marginLeft: 10, marginRight: 10, }}>
-                                <Text style={styles.text_title}>{taluk + '    : '}</Text>
+                                <Text style={styles.text_title}>{village + '    : '}</Text>
                                 <Text style={[styles.text_state, { color: '#e96b71' }]}>{route.params.userTaluk}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', marginTop: 5, marginLeft: 10, marginRight: 10, }}>
-                                <Text style={styles.text_title}>{village + '    : '}</Text>
-                                <Text style={[styles.text_state, { color: '#e96b71' }]}>{route.params.userTown}</Text>
-                            </View>
+
                         </View>
-                    </View> */}
+                    </View>
                     <View style={{ marginTop: 15, width: '100%', height: 24, }}>
                         <View style={styles.view_pageCount}>
-                            <Text style={styles.text_pageCount}>{'3/3'}</Text>
+                            <Text style={styles.text_pageCount}>{'4/4'}</Text>
                         </View>
                     </View>
                     <View style={{ width: '100%', height: '70%', }}>

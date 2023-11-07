@@ -1,10 +1,10 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Image, Text, ScrollView, Platform, Alert, TouchableOpacity } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
+import React, { useContext, useEffect } from 'react';
+import { Alert, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../components/AuthContext';
 import DataFetchComponents from '../components/DataFetchComponents';
+import HeaderComponents from '../components/HeaderComponents';
 import Loading from '../components/Loading';
+import { colors, fonts } from '../core';
 
 const SelectDistrictScreen = ({ navigation, route }) => {
 
@@ -33,7 +33,7 @@ const SelectDistrictScreen = ({ navigation, route }) => {
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile =()=> {
+    const onPressProile = () => {
         navigation.navigate('ProfileDetailScreen')
     }
     const updateLoading = (isloading) => {
@@ -46,18 +46,18 @@ const SelectDistrictScreen = ({ navigation, route }) => {
         templist.map((typeInfo, i) => {
             var tempInfo = typeInfo;
             tempInfo.isSelected = false;
-            if(route.params.isEdit!=null&&route.params.isEdit!=undefined&&route.params.isEdit==true){
-                if(tempInfo.Name==route.params.data.District){
+            if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
+                if (tempInfo.Name == route.params.data.District) {
                     console.log("what is the item");
-                   
+
                     tempInfo.isSelected = true;
                     setAddressDistrictId(tempInfo.Id);
                     setAddressDistrict(tempInfo.Name);
                 }
-                           
-                          
-                        
-                        }
+
+
+
+            }
             tyepTemp.push(tempInfo)
         })
         setArrayOfDistrict(tyepTemp);
@@ -87,7 +87,7 @@ const SelectDistrictScreen = ({ navigation, route }) => {
             var params = route.params;
             params.addressDistrict = addressDistrict;
             params.addressDistrictId = addressDistrictId;
-            navigation.navigate('SelectAddressScreen', params);
+            navigation.navigate('SelectCityScreen', params);
         }
     }
     return (
@@ -125,7 +125,7 @@ const SelectDistrictScreen = ({ navigation, route }) => {
             )}
             <View style={{ marginTop: 15, width: '100%', height: 24, }}>
                 <View style={styles.view_pageCount}>
-                    <Text style={styles.text_pageCount}>{'2/3'}</Text>
+                    <Text style={styles.text_pageCount}>{'2/4'}</Text>
                 </View>
             </View>
             <View style={{ width: '100%', height: '70%', }}>

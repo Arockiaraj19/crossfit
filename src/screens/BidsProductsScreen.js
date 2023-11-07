@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, Image, Text, FlatList, Platform, TouchableOpacity, Alert, Modal, Pressable, } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
-import HeaderComponents from '../components/HeaderComponents';
-import DataFetchComponents from '../components/DataFetchComponents';
-import Loading from '../components/Loading';
-import BidsListComponents from '../components/BidsListComponents';
-import { useFocusEffect } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Alert, FlatList, Image, Modal, Platform, Pressable, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import BidsListComponents from '../components/BidsListComponents';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
+import { showToastMessage } from '../helpers/AppManager';
 import { fetchDataFromServer } from '../helpers/QueryFetching';
 import { GETBIDS_QUERY } from '../helpers/Schema';
-import { showToastMessage } from '../helpers/AppManager';
 
 
 import gql from 'graphql-tag';
@@ -36,9 +35,9 @@ const BidsProductsScreen = ({ navigation, route }) => {
     const [statusTwo, setStatusTwo] = React.useState('');
     const [statusThree, setStatusThree] = React.useState('');
     const [statusFour, setStatusFour] = React.useState('');
-    const [isLoading,setLoading] = useState(false)
+    const [isLoading, setLoading] = useState(false)
 
-    const {getData: getbidDetails, loading: bidLoading, error: bidError, data: bidData} = fetchDataFromServer(GETBIDS_QUERY)
+    const { getData: getbidDetails, loading: bidLoading, error: bidError, data: bidData } = fetchDataFromServer(GETBIDS_QUERY)
 
     const {
         viewLot,
@@ -72,9 +71,9 @@ const BidsProductsScreen = ({ navigation, route }) => {
     );
 
     useEffect(() => {
-       if(bidData){
-        updateDate(bidData)
-       }
+        if (bidData) {
+            updateDate(bidData)
+        }
     }, [bidData])
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
@@ -88,7 +87,7 @@ const BidsProductsScreen = ({ navigation, route }) => {
     const updateDate = (list) => {
         console.log('listlistlistlist 321212121212 --- ', list);
         setLoadingIndicator(false);
-        if(list.getBids != undefined){
+        if (list.getBids != undefined) {
             setIsFetch(true)
             var tempArray = list.getBids;
             if (tempArray.length == 0) {
@@ -120,9 +119,9 @@ const BidsProductsScreen = ({ navigation, route }) => {
             })
             setArrayOfMain(arrayInfo);
             setArrayOfList(arrayInfo);
-    
+
             var tempStatusArray = list.getBidStatus;
-            console.log('tempStatusArraytempStatusArraytempStatusArraytempStatusArray',tempStatusArray)
+            console.log('tempStatusArraytempStatusArraytempStatusArraytempStatusArray', tempStatusArray)
             var arrayStatusInfo = []
             let param = {
                 'Id': '0',
@@ -174,7 +173,7 @@ const BidsProductsScreen = ({ navigation, route }) => {
                 })
                     .then(res => {
                         setLoading(false)
-                        showToastMessage('toastPopup',`${bidsInfo.CommodityChildName} ${res.data.deleteBid}`)
+                        showToastMessage('toastPopup', `${bidsInfo.CommodityChildName} ${res.data.deleteBid}`)
                         getbidDetails()
                         console.log('res - - - - - - - - -- - - - - ', res);
                     })
@@ -200,7 +199,7 @@ const BidsProductsScreen = ({ navigation, route }) => {
         setBitStatusText(item.Name)
         if (item.Name == 'All') {
             setArrayOfList(arrayOfMain)
-            if(arrayOfMain.length == 0){
+            if (arrayOfMain.length == 0) {
                 setIsEmpty(true)
             }
             else {
@@ -225,11 +224,11 @@ const BidsProductsScreen = ({ navigation, route }) => {
         setModalVisible(true)
         // setArrayOfList(arrayOfMain)
     }
-    const onPressViewLot =(info)=> {
+    const onPressViewLot = (info) => {
         var params = info;
         params.isAccept = false
-        console.log('BidProductScreen paramsparamsparamsparamsparams',params)
-        navigation.navigate('EditBidsInfoScreen', params );
+        console.log('BidProductScreen paramsparamsparamsparamsparams', params)
+        navigation.navigate('EditBidsInfoScreen', params);
     }
     return (
         <View style={styles.container}>
@@ -242,48 +241,48 @@ const BidsProductsScreen = ({ navigation, route }) => {
                     onPressShowLanguage={onPressShowLanguage}
                     otherIcons={true} />
             </View>
-            {!bidLoading ? 
-            <View style={styles.view_main}>
-                <View style={styles.view_status}>
-                    <Text style={styles.text_status}>{statusText}</Text>
-                    <TouchableOpacity style={styles.view_all}
-                        onPress={onPressShowStates}>
-                        <Text style={styles.text_statusAll}>{bitStatusText}</Text>
-                        <Image style={styles.image_dropdown}
-                            source={images.DROPDOWNARROWICON}></Image>
-                    </TouchableOpacity>
-                </View>
-                {(isEmpty) && (
-                    <Text style={styles.text_empty}>{noBids}</Text>
-                )}
-                <FlatList
-                    style={{ flex: 1, marginTop: 50, marginBottom: 20, }}
-                    data={arrayOfList}
-                    keyExtractor={(x, i) => i}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <BidsListComponents
-                                props={item}
-                                isBottom={true}
-                                isMyBid={true}
-                                StatuName = {(item.Status == '1') ? statusOne : ( (item.Status == '3') ? statusThree : ((item.Status == '4') ? statusFour : statusTwo))}
-                                biddedOn={biddedOn}
-                                productPrice={productPrice}
-                                bidPrice={bidPrice}
-                                pickup={pickup}
-                                editBits={editBits}
-                                deleteBits={deleteBits}
-                                viewLot={viewLot}
-                                onPressViewLot={onPressViewLot}
-                                onPressPlaceEdit={onPressPlaceEdit}
-                                onPressBitDelete={onPressBitDelete}
-                                editBidsInfo={editBidsInfo} />
-                        )
-                    }}
-                />
-            </View>:
-            <Loading />
-        }
+            {!bidLoading ?
+                <View style={styles.view_main}>
+                    <View style={styles.view_status}>
+                        <Text style={styles.text_status}>{statusText}</Text>
+                        <TouchableOpacity style={styles.view_all}
+                            onPress={onPressShowStates}>
+                            <Text style={styles.text_statusAll}>{bitStatusText}</Text>
+                            <Image style={styles.image_dropdown}
+                                source={images.DROPDOWNARROWICON}></Image>
+                        </TouchableOpacity>
+                    </View>
+                    {(isEmpty) && (
+                        <Text style={styles.text_empty}>{noBids}</Text>
+                    )}
+                    <FlatList
+                        style={{ flex: 1, marginTop: 50, marginBottom: 20, }}
+                        data={arrayOfList}
+                        keyExtractor={(x, i) => i}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <BidsListComponents
+                                    props={item}
+                                    isBottom={true}
+                                    isMyBid={true}
+                                    StatuName={(item.Status == '1') ? statusOne : ((item.Status == '3') ? statusThree : ((item.Status == '4') ? statusFour : statusTwo))}
+                                    biddedOn={biddedOn}
+                                    productPrice={productPrice}
+                                    bidPrice={bidPrice}
+                                    pickup={pickup}
+                                    editBits={editBits}
+                                    deleteBits={deleteBits}
+                                    viewLot={viewLot}
+                                    onPressViewLot={onPressViewLot}
+                                    onPressPlaceEdit={onPressPlaceEdit}
+                                    onPressBitDelete={onPressBitDelete}
+                                    editBidsInfo={editBidsInfo} />
+                            )
+                        }}
+                    />
+                </View> :
+                <Loading />
+            }
             {/* {(!isFetch) && (
                 <DataFetchComponents
                     selectedId={''}
@@ -395,7 +394,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         width: '90%',
-        height: '40%',
+        height: '55%',
         margin: 20,
         backgroundColor: colors.white_color,
         borderRadius: 20,
@@ -416,7 +415,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '700',
         fontFamily: fonts.MONTSERRAT_MEDIUM,
-        color: colors.text_Color,
+        color: colors.black_color,
     },
     view_List: {
         marginLeft: 5,

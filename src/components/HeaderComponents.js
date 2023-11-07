@@ -114,12 +114,8 @@ const HeaderComponents = ({
     const updateDate = (getNotificationData) => {
 
         console.log("getNotificationData", getNotificationData);
-        // if (!getNotificationData) setIsFetch(false)
-        if (Array.isArray(getNotificationData) && getNotificationData?.length) {
-            setNotificationLength(getNotificationData.length)
-        } else {
-            setNotificationLength(0)
-        }
+        if (!getNotificationData) setIsFetch(false)
+        setNotificationLength(getNotificationData.length);
     }
 
     return (
