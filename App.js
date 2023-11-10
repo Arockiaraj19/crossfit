@@ -702,7 +702,8 @@ const App = () => {
   console.log(loginToken);
   const client = new ApolloClient({
     link: new HttpLink({
-      uri: 'http://cropfitindia.org/',
+      uri: "https://cropfitindia.in/",
+      //  uri: 'http://cropfitindia.org/',
       headers: {
         authorization: loginToken,
       },
