@@ -48,7 +48,7 @@ const SplashScreen = () => {
                 fontSize: 12,
                 marginBottom: 10,
                 color: colors.white_color,
-            }}>© 2023 Thalavady Farmers Foundation - Dev</Text>
+            }}>© 2023 Thalavady Farmers Foundation - DevUrl</Text>
         </View>
     </View >
 
