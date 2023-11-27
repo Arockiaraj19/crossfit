@@ -91,15 +91,15 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
         setProductId((route?.params?.isEdit) ? route?.params.lotInfo.CommodityChildId : route?.params.productDetail.Id);
         setOrganicType((route?.params?.isEdit) ? ((route?.params.lotInfo.IsOrganic == 1) ? 'yes' : 'no') : 'yes')
         if (route?.params?.isEdit) {
-            setGradeValue(route?.params.lotInfo.GradeValue);
+            setGradeValue(route?.params.lotInfo.GradeValue.trim());
             setGradeId(route?.params.lotInfo.GradeId);
-            setWeightValue(route?.params.lotInfo.QuantityCode);
-            setWeightCode(route?.params.lotInfo.QuantityActualCode)
-            setWeightId(route?.params.lotInfo.QuantityUnit);
-            setAvailableValue(route?.params.lotInfo.UnitQuantity);
-            setAvailableAcre(route?.params.lotInfo.CultivatedArea);
-            setCultivatedUnit(route?.params.lotInfo.CultivatedAreaUnit);
-            setAskingPrice(route?.params.lotInfo.SellerPrice);
+            setWeightValue(route?.params.lotInfo.QuantityCode.trim());
+            setWeightCode(route?.params.lotInfo.QuantityActualCode.trim())
+            setWeightId(route?.params.lotInfo.QuantityUnit.trim());
+            setAvailableValue(route?.params.lotInfo.UnitQuantity.trim());
+            setAvailableAcre(route?.params.lotInfo.CultivatedArea.trim());
+            setCultivatedUnit(route?.params.lotInfo.CultivatedAreaUnit.trim());
+            setAskingPrice(route?.params.lotInfo.SellerPrice.trim());
             setLotId(route?.params.lotInfo.Id);
         }
     }, [])
@@ -147,7 +147,7 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
         }
         if (selectedType == 'Weight') {
             setWeightId(item.Id);
-            setWeightValue(item.Name);
+            setWeightValue(item.Name.trim());
             setWeightCode(item.Code);
         }
         setModalVisible(false);

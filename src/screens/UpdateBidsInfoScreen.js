@@ -1,13 +1,13 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Image, Text, TextInput, Platform, Alert, Pressable, KeyboardAvoidingView, ScrollView, TouchableOpacity, Modal, FlatList } from 'react-native';
-import { colors, fonts, images } from '../core';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import DataFetchComponents from '../components/DataFetchComponents';
-import InputBoxComponent from '../components/InputBoxComponent';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { weightConvertKilogram,currencyFormat } from '../helpers/AppManager';
+import React, { useContext, useEffect } from 'react';
+import { Alert, FlatList, Image, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts } from '../core';
+import { currencyFormat, weightConvertKilogram } from '../helpers/AppManager';
 
 const ADDEDITBID_QUERY = gql`
 mutation ($bidId: ID!, $userAddressId: ID!, $lotId: ID!, $quantity: Float!, $quantityUnit: ID!, $requestedPrice: Float!){
@@ -36,8 +36,8 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
         alertRequiredQuantity,
         updateBit,
         bidPricePlaceholder,
-        quantityAlert, 
-        priceAlert, 
+        quantityAlert,
+        priceAlert,
         weightUnitAlert,
         bidPrice,
         minAmountPerGvtAlert,
@@ -51,7 +51,7 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
     const [availableValue, setAvailableValue] = React.useState(0.00);
     const [arrayOfItems, setArrayOfItems] = React.useState([]);
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
-    const [addEditBid, {loading, error, data}] = useMutation(ADDEDITBID_QUERY);
+    const [addEditBid, { loading, error, data }] = useMutation(ADDEDITBID_QUERY);
 
     useEffect(() => {
         setWeightValue(route?.params.details.QuantityCode);
@@ -60,12 +60,12 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
         setWeightCode(route?.params.details.QuantityActualCode);
         setAvailableValue(route?.params.details.QuantityValue);
     }, [])
-   
+
 
     const onPressShowLanguage = () => {
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile =()=> {
+    const onPressProile = () => {
         navigation.navigate('ProfileDetailScreen')
     }
     const onPressBack = () => {
@@ -90,37 +90,37 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
     const updateDate = (list) => {
         setArrayOfItems(list);
     }
-    const onPressPlaceBit = async()=> {
+    const onPressPlaceBit = async () => {
         var trimAvailableValue = 0.00
         var trimAskingPrice = 0.00
 
-        var minRatePerQuintal=route?.params.details?.MSP ? parseInt(route?.params.details?.MSP) : 0;
-        var isValidAmountPerGvt=true;
-        var totalPrice=0;
-        if(weightCode.toLocaleLowerCase()=='kg'){
-            var minAmountPerKg=minRatePerQuintal/100;
-            totalPrice=minAmountPerKg*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
-        }else if (weightCode.toLocaleLowerCase()=='ton'){
-            var minAmountPerTon=minRatePerQuintal*10;
-            totalPrice=minAmountPerTon*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
-        }else if (weightCode.toLocaleLowerCase()=='qtl'){
-            totalPrice=minRatePerQuintal*1;
-            isValidAmountPerGvt=!(totalPrice>askingPrice);
+        var minRatePerQuintal = route?.params.details?.MSP ? parseInt(route?.params.details?.MSP) : 0;
+        var isValidAmountPerGvt = true;
+        var totalPrice = 0;
+        if (weightCode.toLocaleLowerCase() == 'kg') {
+            var minAmountPerKg = minRatePerQuintal / 100;
+            totalPrice = minAmountPerKg * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
+        } else if (weightCode.toLocaleLowerCase() == 'ton') {
+            var minAmountPerTon = minRatePerQuintal * 10;
+            totalPrice = minAmountPerTon * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
+        } else if (weightCode.toLocaleLowerCase() == 'qtl') {
+            totalPrice = minRatePerQuintal * 1;
+            isValidAmountPerGvt = !(totalPrice > askingPrice);
         }
 
 
         console.log('availableValue ----- ', route?.params)
         console.log('askingPrice ----- ', askingPrice)
 
-        if(availableValue > 0){
+        if (availableValue > 0) {
             trimAvailableValue = availableValue.replace(/\s/g, '');
         }
-        if(askingPrice > 0){
+        if (askingPrice > 0) {
             trimAskingPrice = askingPrice.replace(/\s/g, '');
         }
-        if(availableValue == ''){
+        if (availableValue == '') {
             Alert.alert('', alertRequiredQuantity, [{
                 text: 'OK', onPress: () => {
                     return;
@@ -128,7 +128,7 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
             },
             ]);
         }
-        else if(parseFloat(weightConvertKilogram( weightValue, parseFloat(route?.params.details.LotQuantityValue))) < weightConvertKilogram( weightValue, parseFloat(availableValue))){
+        else if (parseFloat(weightConvertKilogram(weightValue, parseFloat(route?.params.details.LotQuantityValue))) < weightConvertKilogram(weightValue, parseFloat(availableValue))) {
             Alert.alert('', 'Required quantity should be less than or equal to available quantity', [{
                 text: 'OK', onPress: () => {
                     return;
@@ -136,7 +136,7 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
             },
             ]);
         }
-        else if(weightId == ''){
+        else if (weightId == '') {
             Alert.alert('', weightUnitAlert, [{
                 text: 'OK', onPress: () => {
                     return;
@@ -144,15 +144,15 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
             },
             ]);
         }
-        else if(askingPrice == ''){
+        else if (askingPrice == '') {
             Alert.alert('', priceAlert, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
             },
             ]);
-        }else if(!isValidAmountPerGvt){
-            Alert.alert('', minAmountPerGvtAlert+" "+currencyFormat(totalPrice)+"/"+weightValue, [{
+        } else if (!isValidAmountPerGvt) {
+            Alert.alert('', minAmountPerGvtAlert + " " + currencyFormat(totalPrice) + "/" + weightValue, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -160,33 +160,37 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
             ]);
         }
         else {
-            if(loading){
-                setLoadingIndicator(true)
-            }
+            setLoadingIndicator(true);
             // console.log('route?.params', { bidId: parseInt(route?.params.details.Id), userAddressId: parseInt(route?.params.details.UserAddressId), lotId: parseInt(route?.params.details.Id), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), requestedPrice: parseFloat(askingPrice) });
             addEditBid({
                 variables: { bidId: parseInt(route?.params.details.Id), userAddressId: parseInt(route?.params.details.UserAddressId), lotId: parseInt(route?.params.details.Id), quantity: parseFloat(availableValue), quantityUnit: parseInt(weightId), requestedPrice: parseFloat(askingPrice) }
-              })
+            })
                 .then(res => {
                     setLoadingIndicator(false)
                     onPressViewBidInfo();
                 })
                 .catch(e => {
+                    Alert.alert('Error', e.message, [{
+                        text: 'OK', onPress: () => {
+                            return;
+                        },
+                    },
+                    ]);
                     setLoadingIndicator(false)
-            });
+                });
         }
     }
-    const onPressViewBidInfo=()=> {
-        navigation.navigate('BidsProductsScreen', { isProfile : false });
+    const onPressViewBidInfo = () => {
+        navigation.navigate('BidsProductsScreen', { isProfile: false });
     }
-    const onChangeAvailableText=(text) => {
+    const onChangeAvailableText = (text) => {
         const validated = text.match(/^\d+$/);
-         if (validated) {
-             setAvailableValue(text)
-         }else if(text==''){
-             setAvailableValue(text)
-          }
-     }
+        if (validated) {
+            setAvailableValue(text)
+        } else if (text == '') {
+            setAvailableValue(text)
+        }
+    }
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}>
@@ -224,13 +228,13 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
                     <View style={{ marginLeft: 10, marginTop: 6, }}>
                         <Text style={styles.text_ask}>{availableQuality}</Text>
                         <View style={styles.view_price}>
-                        <Text style={styles.text_weight}>{route?.params.details.LotQuantityValue + ' ' + route?.params.details.LotQuantityCode }</Text>
+                            <Text style={styles.text_weight}>{route?.params.details.LotQuantityValue + ' ' + route?.params.details.LotQuantityCode}</Text>
                         </View>
                     </View>
                     <View style={{ marginLeft: 10, marginTop: 6, }}>
                         <Text style={styles.text_ask}>{productPrice}</Text>
                         <View style={styles.view_price}>
-                        <Text style={styles.text_weight}>{'₹ ' + route?.params.details.AskingPrice}</Text>
+                            <Text style={styles.text_weight}>{'₹ ' + route?.params.details.AskingPrice}</Text>
                         </View>
                     </View>
                 </View>
@@ -254,7 +258,7 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
                                         placeholderTextColor={colors.text_Color}
                                         placeholder={availableQualityPlaceholder}>
                                     </TextInput>
-                                    <View style={{ marginLeft: 60, marginTop: -2, width: '35%', height: 30, flexDirection: 'row', alignItems: 'center',  }}>
+                                    <View style={{ marginLeft: 60, marginTop: -2, width: '35%', height: 30, flexDirection: 'row', alignItems: 'center', }}>
                                         {/* onPress={() => onPressShowList('Weight')}> */}
                                         <Text style={styles.text_weightValue}>{(weightValue == '') ? weightPlaceholder : weightValue}
                                         </Text>
@@ -263,15 +267,15 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
                                         <View style={[styles.view_line, { width: '100%' }]}></View>
                                     </View>
                                 </View>
-                                <View style={[styles.view_line ]}></View>
+                                <View style={[styles.view_line]}></View>
                             </View>
                         </View>
                         <View style={{ alignItems: 'center', width: '100%', height: 75, marginBottom: 10, }}>
-                        <View style={styles.view_inner}>
+                            <View style={styles.view_inner}>
                                 <Text style={styles.text_title}>{bidPrice}
                                 </Text>
                                 <View style={styles.view_enter}>
-                                    <TextInput style={[styles.search_Input, { width: '100%'}]}
+                                    <TextInput style={[styles.search_Input, { width: '100%' }]}
                                         value={askingPrice}
                                         onChangeText={setAskingPrice}
                                         autoCapitalize='none'
@@ -282,18 +286,19 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
                                         placeholder={bidPricePlaceholder}>
                                     </TextInput>
                                 </View>
-                                <View style={[styles.view_line, { width: '100%'}]}></View>
+                                <View style={[styles.view_line, { width: '100%' }]}></View>
                             </View>
                         </View>
 
-                         <View style={styles.view_PlcaeBitBottom}>
-                        <TouchableOpacity style={styles.button_placeBit}
-                            onPress={onPressPlaceBit}>
-                            <Text style={styles.text_placeBid}>{updateBit}</Text>
-                        </TouchableOpacity>
-                    </View>
+                        <View style={styles.view_PlcaeBitBottom}>
+                            <TouchableOpacity style={styles.button_placeBit}
+                                onPress={onPressPlaceBit}>
+                                <Text style={styles.text_placeBid}>{updateBit}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
+
             </ScrollView>
             {(modalVisible) && (
                 <Modal
@@ -331,7 +336,9 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
                     </Pressable>
                 </Modal>
             )}
+            {loadingIndicator && <Loading />}
         </KeyboardAvoidingView>
+
     );
 };
 
@@ -552,11 +559,11 @@ const styles = StyleSheet.create({
         color: colors.text_Color,
     },
     view_PlcaeBitBottom: {
-        marginTop: 30, 
-        width: '100%', 
-        height: 40, 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        marginTop: 30,
+        width: '100%',
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     button_placeBit: {
         height: 40,

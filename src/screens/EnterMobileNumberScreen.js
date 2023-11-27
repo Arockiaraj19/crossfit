@@ -783,7 +783,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
                     // setIsProfile(true)
                     // setIsDefaultPic(false)
                     setProfileImageUrl(response.assets[0].uri)
-                    uploadImage(Platform.OS === "android" ? ('file://' + response.assets[0].uri) : response.assets[0].uri);
+                    uploadImage(Platform.OS === "android" ? response.assets[0].uri : response.assets[0].uri);
                 }
             },
         )
