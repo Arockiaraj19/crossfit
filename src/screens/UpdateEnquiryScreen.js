@@ -84,7 +84,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
             setGradeId(route?.params.enquiryInfo.GradeId)
             setWeightValue(route?.params.enquiryInfo.QuantityCode)
             setWeightId(route?.params.enquiryInfo.QuantityUnit)
-            setAvailableValue(route?.params.enquiryInfo.UnitQuantity)
+            setAvailableValue(Math.floor(route?.params.enquiryInfo.UnitQuantity).toString())
             setDateOfDelivaty(moment(route?.params.enquiryInfo.DeliveryOn).format("YYYY-MM-DD"))
 
         }
@@ -234,12 +234,7 @@ const UpdateEnquiryScreen = ({ navigation, route }) => {
         setAvailableValue(value)
     }
     const onChangeAvailableText = (text) => {
-        const validated = text.match(/^\d+$/);
-        if (validated) {
-            setAvailableValue(text)
-        } else if (text == '') {
-            setAvailableValue(text)
-        }
+        setAvailableValue(text.replace(/[^0-9]/g, ''));
     }
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}

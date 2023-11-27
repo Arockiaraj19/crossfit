@@ -56,7 +56,7 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
     useEffect(() => {
         setWeightValue(route?.params.details.QuantityCode);
         setWeightId(route?.params.details.QuantityUnit);
-        setAskingPrice(route?.params.details.BidPrice);
+        setAskingPrice(Math.floor(route?.params.details.BidPrice).toString());
         setWeightCode(route?.params.details.QuantityActualCode);
         setAvailableValue(route?.params.details.QuantityValue);
     }, [])

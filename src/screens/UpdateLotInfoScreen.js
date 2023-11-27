@@ -97,9 +97,9 @@ const UpdateLotInfoScreen = ({ navigation, route }) => {
             setWeightCode(route?.params.lotInfo.QuantityActualCode.trim())
             setWeightId(route?.params.lotInfo.QuantityUnit.trim());
             setAvailableValue(route?.params.lotInfo.UnitQuantity.trim());
-            setAvailableAcre(route?.params.lotInfo.CultivatedArea.trim());
+            setAvailableAcre(Math.floor(route?.params.lotInfo.CultivatedArea).toString().trim());
             setCultivatedUnit(route?.params.lotInfo.CultivatedAreaUnit.trim());
-            setAskingPrice(route?.params.lotInfo.SellerPrice.trim());
+            setAskingPrice(Math.floor(route?.params.lotInfo.SellerPrice).toString().trim());
             setLotId(route?.params.lotInfo.Id);
         }
     }, [])
