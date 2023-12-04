@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet, TouchableOpacity , Image, Text, } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { colors, fonts } from '../core';
 
 const CommoditiesInfoComponent = ({
@@ -9,13 +9,14 @@ const CommoditiesInfoComponent = ({
 
     return (
         <TouchableOpacity style={styles.container}
-            onPress={()=> 
+            onPress={() =>
                 onPressSelectItem(props)}>
-                <View style={{ marginTop: 3, marginBottom: 3, width: 4, height: 84, borderTopRightRadius: 6, borderBottomRightRadius: 6, backgroundColor: (props.isSelected ) ? '#01a552' : 'transparent'}}/>
-            <View style={{ width: 86, height: 90, alignItems: 'center', justifyContent: 'center',}}>
-            <Image style={{ marginTop: 10, width: 36, height: 36, borderRadius: 18, backgroundColor: colors.white_color }}
-                source={{ uri: props.ImageURL}}/>
-            <Text style={[styles.text_title, {fontFamily:  (props.isSelected) ?  fonts.MONTSERRAT_SIMEBOLD : fonts.MONTSERRAT_REGULAR, color: (props.isSelected) ? '#01a552' : '#222222'}]}>{props.Name}</Text>
+            <View style={{ marginTop: 3, marginBottom: 3, width: 4, height: 84, borderTopRightRadius: 6, borderBottomRightRadius: 6, backgroundColor: (props.isSelected) ? '#01a552' : 'transparent' }} />
+            <View style={{ width: 86, height: 90, alignItems: 'center', justifyContent: 'center', }}>
+                <Image style={{ marginTop: 10, width: 36, height: 36, borderRadius: 18, backgroundColor: colors.white_color, }}
+
+                    source={{ uri: props.ImageURL }} />
+                <Text style={[styles.text_title, { fontFamily: (props.isSelected) ? fonts.MONTSERRAT_SIMEBOLD : fonts.MONTSERRAT_REGULAR, color: (props.isSelected) ? '#01a552' : '#222222' }]}>{props.Name}</Text>
             </View>
         </TouchableOpacity>
     );

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Cropfit</string>
+	<string>Farmfit</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -42,11 +42,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>CropFit app requires access to the camera so that player will record the video and sends it for coach review so that coach will assign corrective exercises and drills to improve mobility, strength and power.</string>
+	<string>Farmfit app requires access to the camera so that player will record the video and sends it for coach review so that coach will assign corrective exercises and drills to improve mobility, strength and power.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>CropFit app is developed to connect the farmers and buyers from different areas, so location is important for the business to happen for both parties.</string>
+	<string>Farmfit app is developed to connect the farmers and buyers from different areas, so location is important for the business to happen for both parties.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>CropFit app requires access to the photo library - Coaches to share the event location image, upload their profile picture for players.</string>
+	<string>Farmfit app requires access to the photo library - Coaches to share the event location image, upload their profile picture for players.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.ttf</string>

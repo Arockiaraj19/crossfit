@@ -795,7 +795,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(async () => {
       setLanguage();
-    }, 2000);
+    }, 0);
 
   }, [])
   const setLanguage = async () => {
@@ -842,7 +842,7 @@ const App = () => {
     );
   }
   const updateLableText = async (data) => {
-
+    setIsGetLanguageLabel(false);
 
     console.log('data ---------------------------', data.getAppLabels);
     var loginScreenLabels = data.getAppLabels.allLabels.LoginScreen;
@@ -1003,8 +1003,7 @@ const App = () => {
     setGradePlaceholder(sellScreenLabels.SelectGrade)
     setAvailableQuality(sellScreenLabels.AvailableQuantity)
     setAvailableQualityPlaceholdery(sellScreenLabels.SelectQuantity);
-    console.log("what is the weight value coming");
-    console.log(sellScreenLabels.Weight);
+
     setWeightPlaceholder(sellScreenLabels.Weight)
     setOrganic(sellScreenLabels.Organic)
     setPer(sellScreenLabels.Per)

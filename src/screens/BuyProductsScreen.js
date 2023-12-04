@@ -1,21 +1,16 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, TextInput, Platform, FlatList, BackHandler } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
+import { useNavigationState } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-import { Query } from 'react-apollo';
-import Loading from '../components/Loading';
-import HeaderComponents from '../components/HeaderComponents';
-import HeaderIconsComponents from '../components/HeaderComponents';
-import CommoditiesInfoComponent from '../components/CommoditiesInfoComponent';
-import CommoditiesGroupComponent from '../components/CommoditiesGroupComponent';
-import CommoditiesItemComponent from '../components/CommoditiesItemComponent';
+import React, { useContext, useEffect, useMemo } from 'react';
+import { Query, graphql } from 'react-apollo';
+import { BackHandler, FlatList, Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { AuthContext } from '../components/AuthContext';
+import CommoditiesGroupComponent from '../components/CommoditiesGroupComponent';
+import CommoditiesInfoComponent from '../components/CommoditiesInfoComponent';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 import { getIsBack } from '../helpers/AppManager';
-import { useMemo } from 'react';
-import { useNavigationState } from '@react-navigation/native'
 const COMMODITYTYPE_QUERY = gql`
 query {
 
@@ -90,66 +85,64 @@ const BuyProductsScreen = ({ navigation, route }) => {
         isBack: false,
     });
     const [backActions, setBackActions] = React.useState({
-        isClickCategory:false,
-        isClickSubCategory:false,
-        categoryId:0,
-        subCategoryId:0
+        isClickCategory: false,
+        isClickSubCategory: false,
+        categoryId: 0,
+        subCategoryId: 0
     });
 
     var categotyInfoList;
 
     const {
         buySearchPlaceholder,
-        loginToken,
-        setIsBackOption,
-        isBackOption,
-        comingSoon,
+
     } = useContext(AuthContext);
 
-   const reloadBuyScreen = async() => {
-    setState({
-        ...state,
-        isShowSubCategory: false,
-        getcommoditiesList: [],
-        commoditiesGroupList: [],
-        subCategoryList: [],
-        mainCommoditiesGroupList: [],
-        mainSubCategoryList: [],
-    });
-   }
-  
-        React.useCallback(() => {
-            let isActive = true;
-            reloadBuyScreen()
-            setIsFetchDate(true);
-            setLoading(true);  
-            setTimeout(async () => {
-                try {
-                    var backPage = await getIsBack()
-                    if(backPage != 'yes'){
-                        setState({
-                            ...state,
-                            isShowSubCategory: false,
-                            getcommoditiesList: [],
-                            commoditiesGroupList: [],
-                            subCategoryList: [],
-                            mainCommoditiesGroupList: [],
-                            mainSubCategoryList: [],
-                        });
-                        setIsFetchDate(true);
-                      //  setLoading(true);
-                    }
-                    updateBack();
-                } catch (e) {
-                    console.log(e);
+    const reloadBuyScreen = async () => {
+        setState({
+            ...state,
+            isShowSubCategory: false,
+            getcommoditiesList: [],
+            commoditiesGroupList: [],
+            subCategoryList: [],
+            mainCommoditiesGroupList: [],
+            mainSubCategoryList: [],
+        });
+    }
+
+    useEffect(() => {
+        console.log("first");
+        let isActive = true;
+        reloadBuyScreen()
+        setIsFetchDate(true);
+        setLoading(true);
+        setTimeout(async () => {
+            try {
+                var backPage = await getIsBack()
+                if (backPage != 'yes') {
+                    setState({
+                        ...state,
+                        isShowSubCategory: false,
+                        getcommoditiesList: [],
+                        commoditiesGroupList: [],
+                        subCategoryList: [],
+                        mainCommoditiesGroupList: [],
+                        mainSubCategoryList: [],
+                    });
+                    setIsFetchDate(true);
+                    //  setLoading(true);
                 }
-            }, 100);
-            return () => {
-                isActive = false;
-            };
-        }, [])
-    ;
-    const updateBack = async()=> {
+                updateBack();
+            } catch (e) {
+                console.log(e);
+            }
+        }, 0);
+        return () => {
+            isActive = false;
+        };
+    }, [])
+        ;
+    const updateBack = async () => {
         try {
             await EncryptedStorage.setItem('isBack', '');
         } catch (e) {
@@ -157,18 +150,19 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }
     }
     useEffect(() => {
-        console.log("use effect",backActions);
-        if(BackHandler){
+        console.log("use effect", backActions);
+        if (BackHandler) {
             BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
             return () => {
                 BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
             };
         }
-        
-            
-    },[backActions]);
-    
+
+
+    }, [backActions]);
+
     useEffect(() => {
+        console.log("secibd");
         // const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
         setState({
             ...state,
@@ -184,17 +178,17 @@ const BuyProductsScreen = ({ navigation, route }) => {
         // return () => backHandler.remove()
     }, [])
 
-    const handleBackButtonClick= () => {
-        debugger;
-        if(backActions.isClickSubCategory){
-                setIsShowCategory(true);
-                var curentDate={title: '',Id:backActions.categoryId};
-                 onPressSelectItem(curentDate);
-        }else{
+    const handleBackButtonClick = () => {
+
+        if (backActions.isClickSubCategory) {
+            setIsShowCategory(true);
+            var curentDate = { title: '', Id: backActions.categoryId };
+            onPressSelectItem(curentDate);
+        } else {
             navigation.navigate('HomeScreen')
         }
         return true;
-      }
+    }
 
     const onSearch = () => {
         console.log('state.isShowSubCategory', state.mainCommoditiesGroupList)
@@ -240,10 +234,11 @@ const BuyProductsScreen = ({ navigation, route }) => {
             return <View />;
         }
         if (!loading) {
+            console.log("rerendering");
             if (props.data?.getcommodities != undefined) {
                 setTimeout(async () => {
                     updateValue(props.data.getcommodities);
-                }, 500);
+                }, 0);
                 return <View />;
 
             }
@@ -273,12 +268,13 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }, 100);
     }
     const updateValue = (commoditiesList) => {
+
         setLoading(false)
         setIsFetchDate(false);
         setIsFetch(true);
-        EncryptedStorage.setItem('reloadBuy',"false")
+        EncryptedStorage.setItem('reloadBuy', "false")
         setIsShowCategory(true);
-        console.log('commoditiesListcommoditiesListcommoditiesList --- ',commoditiesList );
+
         var title = '';
         var templist = commoditiesList;
         var commoditiesListTemp = []
@@ -293,16 +289,16 @@ const BuyProductsScreen = ({ navigation, route }) => {
                     commoditiesGroupListTemp = tempInfo.Commoditygroups;
                 }
             });
-            if(templist && templist.length && templist.length >0){
+            if (templist && templist.length && templist.length > 0) {
                 setBackActions({
                     ...backActions,
-                    isClickCategory:true ,
-                    isClickSubCategory:false,
-                    categoryId:templist[0].Id   
+                    isClickCategory: true,
+                    isClickSubCategory: false,
+                    categoryId: templist[0].Id
                 });
             }
         }
-        
+
         setState({
             ...state,
             categortTitle: title,
@@ -337,9 +333,9 @@ const BuyProductsScreen = ({ navigation, route }) => {
         });
         setBackActions({
             ...backActions,
-            isClickCategory:true ,
-            isClickSubCategory:false,
-            categoryId:item.Id
+            isClickCategory: true,
+            isClickSubCategory: false,
+            categoryId: item.Id
         });
         console.log('categotyInfoListcategotyInfoList', categotyInfoList)
     }
@@ -354,11 +350,11 @@ const BuyProductsScreen = ({ navigation, route }) => {
         });
         setBackActions({
             ...backActions,
-            isClickCategory:false ,
-            isClickSubCategory:true
-            });
+            isClickCategory: false,
+            isClickSubCategory: true
+        });
     }
-    const onPressSubCategortDetail = async(item) => {
+    const onPressSubCategortDetail = async (item) => {
         setSearchText('')
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
@@ -367,7 +363,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }
         navigation.navigate('DeliveryAddressScreen', { details: item, isType: 'buy' });
     }
-    const onPressEnquireDetail = async(item)=> {
+    const onPressEnquireDetail = async (item) => {
         setSearchText('')
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
@@ -376,7 +372,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }
         navigation.navigate('DeliveryAddressScreen', { details: item, isType: 'enquire' });
     }
-    const onPressShowLanguage = async() => {
+    const onPressShowLanguage = async () => {
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
         } catch (e) {
@@ -384,7 +380,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile = async()=> {
+    const onPressProile = async () => {
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
         } catch (e) {
@@ -392,7 +388,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }
         navigation.navigate('ProfileDetailScreen')
     }
-    const onPressRemoveSearch =()=> {
+    const onPressRemoveSearch = () => {
         setSearchText('')
         if (state.isShowSubCategory) {
             setState({
@@ -409,7 +405,9 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }
     }
     return (
+
         <View style={styles.container}>
+            {console.log("screenRendering")}
             <View style={styles.view_header}>
                 <HeaderComponents
                     headerTitle={state.categortTitle}
@@ -432,7 +430,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
                         onSubmitEditing={() => onSearch()}>
                     </TextInput>
                     {(searchText != '') && (
-                        <TouchableOpacity style={{ marginLeft: 5, justifyContent: 'center', alignItems: 'center', width: 24, height: 24, borderRadius: 12, backgroundColor: 'lightgray'}}
+                        <TouchableOpacity style={{ marginLeft: 5, justifyContent: 'center', alignItems: 'center', width: 24, height: 24, borderRadius: 12, backgroundColor: 'lightgray' }}
                             onPress={onPressRemoveSearch}>
                             <Text>{'X'}</Text>
                         </TouchableOpacity>
