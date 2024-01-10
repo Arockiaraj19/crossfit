@@ -48,11 +48,12 @@ const SelectStateScreen = ({ navigation, route }) => {
     }
 
     const updateLoading = (isloading) => {
-        setLoadingIndicator(false);
+
         if (!isloading) {
             reload(1);
         }
         console.log("updateLoading", isloading)
+        // setLoadingIndicator(false);
     }
     const updateStateLoading = (isloading) => {
         if (!isloading) {
@@ -85,7 +86,7 @@ const SelectStateScreen = ({ navigation, route }) => {
         setArrayOfType(tyepTemp);
     }
     const updateStateDate = (list) => {
-        setLoadingIndicator(false);
+
         setIsFetchType('');
         var templist = list;
         var stateTemp = [];
@@ -107,6 +108,9 @@ const SelectStateScreen = ({ navigation, route }) => {
             stateTemp.push(tempInfo)
         })
         setArrayOfState(stateTemp);
+        setTimeout(() => {
+            setLoadingIndicator(false);
+        }, 1000);
     }
     const onPressSelectType = (item) => {
         var templist = arrayOfType;

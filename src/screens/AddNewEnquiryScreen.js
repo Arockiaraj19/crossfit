@@ -53,6 +53,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
         deliverOn,
         placeEnquiry,
         editEnquiry,
+        error,selectRequiredQuantity
     } = useContext(AuthContext);
 
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -74,7 +75,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
     const [dateOfDelivaty, setDateOfDelivaty] = React.useState('');
     const [loadingState, setLoadingState] = React.useState(false);
     const dimensions = Dimensions.get('window');
-    const [addEditEnquiry, { loading, error, data }] = useMutation(ADDEDITENQUIRY_QUERY);
+    const [addEditEnquiry, { loading, errorMessage, data }] = useMutation(ADDEDITENQUIRY_QUERY);
 
     useEffect(() => {
 
@@ -170,7 +171,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
             ]);
         }
         else if (weightId == '') {
-            Alert.alert('', "Please Select Required Quantity Unit", [{
+            Alert.alert('', selectRequiredQuantity, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -215,7 +216,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
                 .catch(e => {
                     setLoadingState(false);
                     // setLoadingIndicator(false);
-                    Alert.alert('Error', e.message, [{
+                    Alert.alert(error, e.message, [{
                         text: 'OK', onPress: () => {
                             return;
                         },
@@ -232,7 +233,7 @@ const AddNewEnquiryScreen = ({ navigation, route }) => {
     }
     const updatedeliverDateValue = () => {
         setDateOfDelivaty(moment(deliveryDate).format("YYYY-MM-DD"))
-        console.log('updatedeliverDateValue', moment(deliveryDate).format("YYYY-MM-DD"));
+      
         closePopup();
     }
     const closePopup = () => {

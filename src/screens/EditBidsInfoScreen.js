@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/react-hooks';
+import analytics from '@react-native-firebase/analytics';
 import gql from 'graphql-tag';
 import moment from "moment";
 import React, { useContext, useEffect, useState } from 'react';
@@ -10,7 +11,6 @@ import Loading from '../components/Loading';
 import { colors, fonts, images } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
 import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
-
 const GETLOTSBYCOMMODITY_QUERY = gql`
 query getLotById($lotId: ID!){
     getLotById(lotId:$lotId) {
@@ -107,6 +107,11 @@ const EditBidsInfoScreen = ({ navigation, route }) => {
 
 
     const onPressMakeCall = async () => {
+        analytics().logEvent(
+            "call", {
+            transactiontype: "Lot", transactionid: bidsDetails.Id, screen: "EditBidsInfoScreen", number: bidsDetails.MobileNo
+        }
+        );
         await handlePhoneCall(bidsDetails.MobileNo, navigation);
         return await getMobileView({ variables: { transactiontype: "Lot", transactionid: bidsDetails.Id } })
         // handlePhoneCall(bidsDetails.MobileNo,navigation)

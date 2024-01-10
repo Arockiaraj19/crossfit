@@ -1,7 +1,8 @@
 import { useMutation } from '@apollo/react-hooks';
+import remoteConfig from '@react-native-firebase/remote-config';
 import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef,useState } from 'react';
 import { Alert, BackHandler, Image, Linking, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DeviceInfo from 'react-native-device-info';
@@ -13,6 +14,7 @@ import Loading from '../components/Loading';
 import { colors, fonts, images } from '../core';
 import { getHelpLineNumber, getUserId, getUserName, getUserProfileImage } from '../helpers/AppManager';
 import uploadImageToStorage from '../helpers/uploadImage';
+import { adminUserIds } from '../constants/admin_static_data';
 //  import { ScrollView } from 'react-native-gesture-handler';
 
 const UPDATEPROFILEIMAGE_QUERY = gql`
@@ -41,7 +43,8 @@ const ProfileDetailScreen = ({ navigation, route }) => {
         areYouSure,
         helpLine,
         deleteAccount,
-        setEnableLogin
+        setEnableLogin,externalStoragePermission,appNeedWritePermission,camaraPermission,appNeedCamaraPermission,privacyPolicy,
+        terms
     } = useContext(AuthContext);
 
     const [updateUserProfilePic, { loading, error, data }] = useMutation(UPDATEPROFILEIMAGE_QUERY);
@@ -51,6 +54,7 @@ const ProfileDetailScreen = ({ navigation, route }) => {
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
     const [userId, setUserId] = React.useState('');
     const [helpLineNumber, setHelpLineNumber] = React.useState('');
+    const [showMandi, setShowMandi] = useState(false);
     let options = {
         storageOptions: {
             skipBackup: true,
@@ -59,6 +63,19 @@ const ProfileDetailScreen = ({ navigation, route }) => {
         quality: 0.3,
     };
 
+    useEffect(() => {
+        (async () => {
+            let id = await getUserId();
+            console.log("what is the user id");
+            console.log(id);
+            console.log(adminUserIds);
+            if (adminUserIds.some((e) => e === id.toString())) {
+console.log("inside");
+                setShowMandi(true);
+            }
+        })();
+
+    }, [])
     useFocusEffect(
         React.useCallback(() => {
             let isActive = true;
@@ -78,6 +95,10 @@ const ProfileDetailScreen = ({ navigation, route }) => {
         }, [])
     );
     useEffect(() => {
+        remoteConfig().fetchAndActivate().then((e) => {
+            console.log(e);
+            console.log("remote config fetched successfully");
+        });
         if (BackHandler) {
             BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
             return () => {
@@ -117,6 +138,15 @@ const ProfileDetailScreen = ({ navigation, route }) => {
         if (helpLineNumber) {
             Linking.openURL(`tel:${helpLineNumber}`)
         }
+    }
+    const onPressPrivacyPolicy = () => {
+        const privacyPolicy = remoteConfig().getValue('privacy_policy');
+        Linking.openURL(privacyPolicy._value);
+    }
+    const onPressTermsAndCondition = () => {
+        const termsAndCondition = remoteConfig().getValue('terms_and_condition');
+        console.log(termsAndCondition);
+        Linking.openURL(termsAndCondition._value);
     }
     const onPressLogout = () => {
         Alert.alert('', areYouSure, [{
@@ -192,8 +222,8 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.CAMERA,
                     {
-                        title: 'Camera Permission',
-                        message: 'App needs camera permission',
+                        title: camaraPermission,
+                        message: appNeedCamaraPermission,
                     },
                 );
                 // If CAMERA Permission is granted
@@ -211,8 +241,8 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
                     {
-                        title: 'External Storage Write Permission',
-                        message: 'App needs write permission',
+                        title: externalStoragePermission,
+                        message: appNeedWritePermission,
                     },
                 );
                 // If WRITE_EXTERNAL_STORAGE Permission is granted
@@ -419,7 +449,7 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                         source={images.RIGHTARROWICON}></Image>
                 </TouchableOpacity>
                 <View style={styles.view_line}></View> */}
-                        <TouchableOpacity style={styles.view_box}
+                        {showMandi && <TouchableOpacity style={styles.view_box}
                             onPress={onPressMandiRate}>
                             <Image style={styles.image_Icon}
                                 source={images.UPLOADMANDIICON}
@@ -427,8 +457,8 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                             <Text style={styles.text_personal}>{mandiRate}</Text>
                             <Image style={styles.image_arrow}
                                 source={images.RIGHTARROWICON}></Image>
-                        </TouchableOpacity>
-                        <View style={styles.view_line}></View>
+                        </TouchableOpacity>}
+                        {showMandi && <View style={styles.view_line}></View>}
                         <TouchableOpacity style={styles.view_box}
                             onPress={onPressHelpLine}>
                             <Image style={styles.image_Icon}
@@ -438,18 +468,37 @@ const ProfileDetailScreen = ({ navigation, route }) => {
                             <Image style={styles.image_arrow}
                                 source={images.RIGHTARROWICON}></Image>
                         </TouchableOpacity>
-                        {Platform.OS == 'android' ?? <View style={styles.view_line}></View>}
-                        {
-                            Platform.OS == 'android' ?? <TouchableOpacity style={styles.view_box}
-                                onPress={onPressDeleteAccount}>
-                                <Image style={styles.image_Icon}
-                                    source={images.DELETEACCOUNT}
-                                    resizeMode={'contain'}></Image>
-                                <Text style={styles.text_personal}>{deleteAccount}</Text>
-                                <Image style={styles.image_arrow}
-                                    source={images.RIGHTARROWICON}></Image>
-                            </TouchableOpacity>
-                        }
+                        <View style={styles.view_line}></View>
+                        <TouchableOpacity style={styles.view_box}
+                            onPress={onPressTermsAndCondition}>
+                            <Image style={styles.image_Icon}
+                                source={images.TERMSANDCONDITION}
+                                resizeMode={'contain'}></Image>
+                            <Text style={styles.text_personal}>{terms}</Text>
+                            <Image style={styles.image_arrow}
+                                source={images.RIGHTARROWICON}></Image>
+                        </TouchableOpacity>
+                        <View style={styles.view_line}></View>
+                        <TouchableOpacity style={styles.view_box}
+                            onPress={onPressPrivacyPolicy}>
+                            <Image style={styles.image_Icon}
+                                source={images.PRIVACY_POLICY}
+                                resizeMode={'contain'}></Image>
+                            <Text style={styles.text_personal}>{privacyPolicy}</Text>
+                            <Image style={styles.image_arrow}
+                                source={images.RIGHTARROWICON}></Image>
+                        </TouchableOpacity>
+                        <View style={styles.view_line}></View>
+                        <TouchableOpacity style={styles.view_box}
+                            onPress={onPressDeleteAccount}>
+                            <Image style={styles.image_Icon}
+                                source={images.DELETEACCOUNT}
+                                resizeMode={'contain'}></Image>
+                            <Text style={styles.text_personal}>{deleteAccount}</Text>
+                            <Image style={styles.image_arrow}
+                                source={images.RIGHTARROWICON}></Image>
+                        </TouchableOpacity>
+
                         <View style={styles.view_line}></View>
 
                         <TouchableOpacity style={styles.view_box}

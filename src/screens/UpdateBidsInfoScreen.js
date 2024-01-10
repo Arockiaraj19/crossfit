@@ -40,7 +40,8 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
         priceAlert,
         weightUnitAlert,
         bidPrice,
-        minAmountPerGvtAlert,
+        minAmountPerGvtAlert,error,validPrice,
+        validQuantity,checkQuantityAlert
     } = useContext(AuthContext);
 
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -51,7 +52,7 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
     const [availableValue, setAvailableValue] = React.useState(0.00);
     const [arrayOfItems, setArrayOfItems] = React.useState([]);
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
-    const [addEditBid, { loading, error, data }] = useMutation(ADDEDITBID_QUERY);
+    const [addEditBid, { loading, errorData, data }] = useMutation(ADDEDITBID_QUERY);
 
     useEffect(() => {
         setWeightValue(route?.params.details.QuantityCode);
@@ -129,13 +130,14 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
             ]);
         }
         else if (parseFloat(weightConvertKilogram(weightValue, parseFloat(route?.params.details.LotQuantityValue))) < weightConvertKilogram(weightValue, parseFloat(availableValue))) {
-            Alert.alert('', 'Required quantity should be less than or equal to available quantity', [{
+            Alert.alert('', checkQuantityAlert, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
             },
             ]);
         }
+
         else if (weightId == '') {
             Alert.alert('', weightUnitAlert, [{
                 text: 'OK', onPress: () => {
@@ -151,7 +153,24 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
                 },
             },
             ]);
-        } else if (!isValidAmountPerGvt) {
+
+        } else if (parseFloat(askingPrice) < 1) {
+            Alert.alert('', validPrice, [{
+                text: 'OK', onPress: () => {
+                    return;
+                },
+            },
+            ]);
+        }
+        else if (parseFloat(availableValue) < 1) {
+            Alert.alert('', validQuantity, [{
+                text: 'OK', onPress: () => {
+                    return;
+                },
+            },
+            ]);
+        }
+        else if (!isValidAmountPerGvt) {
             Alert.alert('', minAmountPerGvtAlert + " " + currencyFormat(totalPrice) + "/" + weightValue, [{
                 text: 'OK', onPress: () => {
                     return;
@@ -170,7 +189,7 @@ const UpdateBidsInfoScreen = ({ navigation, route }) => {
                     onPressViewBidInfo();
                 })
                 .catch(e => {
-                    Alert.alert('Error', e.message, [{
+                    Alert.alert(error, e.message, [{
                         text: 'OK', onPress: () => {
                             return;
                         },

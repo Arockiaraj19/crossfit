@@ -1,17 +1,16 @@
-import React, { useEffect, useContext, useState, createRef } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Platform, FlatList, Alert, Linking, } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { useFocusEffect } from '@react-navigation/native';
-import { AuthContext } from '../components/AuthContext';
-import Loading from '../components/Loading';
-import DataFetchComponents from '../components/DataFetchComponents';
-import SellerInfoCompnents from '../components/SellerInfoCompnents';
-import moment from 'moment';
 import { useMutation } from '@apollo/react-hooks';
+import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
+import moment from 'moment';
+import React, { createRef, useContext, useState } from 'react';
+import { Alert, FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import Loading from '../components/Loading';
+import SellerInfoCompnents from '../components/SellerInfoCompnents';
+import { colors, fonts, images } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
-import { fetchDataFromServer, sendDataToServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
+import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 
 
 const SHOWINTERESTENQUIRY_QUERY = gql`
@@ -37,7 +36,7 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
     const flatList = createRef();
     const [lotDetails, setLotDetails] = React.useState([]);
     const [enquiryInterest, { loading, error, data }] = useMutation(SHOWINTERESTENQUIRY_QUERY);
-    const [audit, { loading:auditLoding, error:auditError, data:auditData }] =useMutation(MOBILENUMBERAUDIT_QUERY);
+    const [audit, { loading: auditLoding, error: auditError, data: auditData }] = useMutation(MOBILENUMBERAUDIT_QUERY);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -71,7 +70,7 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
     }
     const updateDate = (list) => {
         setLoadingIndicator(false);
-        
+
         setIsFetch(true);
         setLoadingIndicator(false);
         var tempArray = list.getenquiriesByCommodityGroup;
@@ -90,9 +89,9 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
                     setLotDetails(bidInfo);
                 }
             })
-            if(bidsTemp.length > 1){
+            if (bidsTemp.length > 1) {
                 setArrayOfEnquiries(bidsTemp);
-            }  
+            }
         }
     }
     const dateConvert = (dateInfo) => {
@@ -101,18 +100,23 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
         return momentObj
     }
 
-    const onPressMakeCall = async() => {
+    const onPressMakeCall = async () => {
         try {
             console.log("onPressMakeCall");
-            console.log( { transactionType: "Enquiry", transactionId: lotDetails.Id });
+            console.log({ transactionType: "Enquiry", transactionId: lotDetails.Id });
+            analytics().logEvent(
+                "call", {
+                transactionType: "Enquiry", transactionId: lotDetails.Id, screen: "ViewEnqueryInfoScreen", number: lotDetails.MobileNo
+            }
+            );
             await handlePhoneCall(lotDetails.MobileNo, navigation);
             console.log(auditData);
-       await audit({ variables: { transactionType: "Enquiry", transactionId: lotDetails.Id }})
+            await audit({ variables: { transactionType: "Enquiry", transactionId: lotDetails.Id } })
         } catch (error) {
             console.log("onPressMakeCall Error");
             console.log(error);
         }
-    } 
+    }
 
     const onPressSelectBid = (item) => {
         setLotDetails(item)
@@ -127,18 +131,18 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
                 setLotDetails(bidInfo);
             }
         })
-        if(bidsTemp.length > 1){
+        if (bidsTemp.length > 1) {
             setArrayOfEnquiries(bidsTemp);
         }
     }
     const onPressShowInterest = () => {
         enquiryInterest({
-            variables: { enquiryId: lotDetails.Id}
+            variables: { enquiryId: lotDetails.Id }
         })
             .then(res => {
                 setLoadingIndicator(false)
                 console.log('res ------------------', res);
-                if(res.data?.enquiryInterest == 'Success'){
+                if (res.data?.enquiryInterest == 'Success') {
                     Alert.alert('', enquiryMessage, [{
                         text: 'OK', onPress: () => {
                             return;
@@ -160,20 +164,20 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
                         <View style={styles.view_circule}>
                             <View style={{ width: '25%', height: 130, marginLeft: '15%', marginTop: 10, }}>
                                 <Text style={[styles.text_ask, { top: 70 }]}>{expectedon}</Text>
-                                <Text style={[styles.text_price, { top: 90}]}>{dateConvert(lotDetails.DeliveryOn)}</Text>
+                                <Text style={[styles.text_price, { top: 90 }]}>{dateConvert(lotDetails.DeliveryOn)}</Text>
                             </View>
                         </View>
                     </View>
                     <View style={styles.view_Detailbox}>
                         <View style={{ width: '48%', height: '100%', }}>
-                            <Text style={styles.text_date}>{lotDetails.CommodityChild }</Text>
+                            <Text style={styles.text_date}>{lotDetails.CommodityChild}</Text>
                             <View style={styles.view_weight}>
-                                <Text style={styles.text_weight}>{lotDetails.UnitQuantity + ' ' + lotDetails.QuantityCode}</Text> 
+                                <Text style={styles.text_weight}>{lotDetails.UnitQuantity + ' ' + lotDetails.QuantityCode}</Text>
                             </View>
                         </View>
                     </View>
                     <View style={{ width: '100%', }}>
-                        <View style={{ width: '100%', flexDirection: 'row',}}>
+                        <View style={{ width: '100%', flexDirection: 'row', }}>
                             {(lotDetails.ProfilePicImageURL == '') && (
                                 <Image style={styles.profile_image}
                                     source={images.EMPTYPROFILEICON} />
@@ -193,8 +197,8 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
                                                 <Text style={styles.text_rating}>{(lotDetails.Rating == '') ? '0.0' : lotDetails.Rating}</Text>
                                             </View>
                                         </View>
-                                        </View>
-                                        {/* <TouchableOpacity style={{ marginHorizontal: 10, alignItems: "center", justifyContent: "center" }} >
+                                    </View>
+                                    {/* <TouchableOpacity style={{ marginHorizontal: 10, alignItems: "center", justifyContent: "center" }} >
                                             <Image style={{ width: 40, height: 40 }}
                                                 source={images.EMPTYBOOKMARKICON}>
                                             </Image>
@@ -210,7 +214,7 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <Text style={[styles.text_location, { marginLeft: 15, marginRight: 15, color: colors.text_Color, marginBottom: 10,}]}>{lotDetails.AddressInfo}</Text>
+                        <Text style={[styles.text_location, { marginLeft: 15, marginRight: 15, color: colors.text_Color, marginBottom: 10, }]}>{lotDetails.AddressInfo}</Text>
                     </View>
                     <View style={styles.view_headerBottom}>
                         <TouchableOpacity style={styles.button_placeBit}
@@ -251,11 +255,11 @@ const ViewEnquiryInfoScreen = ({ navigation, route }) => {
                         style={{ flex: 1, marginBottom: 10, }}
                         data={arrayOfEnquiries}
                         keyExtractor={(x, i) => i}
-                        ListHeaderComponent={arrayOfEnquiries.length <1 ? () => headerViewInfo() : ''}
+                        ListHeaderComponent={arrayOfEnquiries.length < 1 ? () => headerViewInfo() : ''}
                         renderItem={({ item, index }) => {
                             return (
                                 <SellerInfoCompnents
-                                key={index}
+                                    key={index}
                                     props={item}
                                     isLot={false}
                                     lotAddedOn={enquiryAddedOn}
@@ -496,7 +500,7 @@ const styles = StyleSheet.create({
         color: colors.white_color,
     },
     text_placeBid: {
-        marginLeft: 10, 
+        marginLeft: 10,
         marginRight: 10,
         fontFamily: fonts.MONTSERRAT_SIMEBOLD,
         fontSize: 14,

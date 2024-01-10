@@ -1,7 +1,7 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { colors, fonts } from '../core';
-
 const CommoditiesInfoComponent = ({
     props,
     onPressSelectItem
@@ -13,8 +13,8 @@ const CommoditiesInfoComponent = ({
                 onPressSelectItem(props)}>
             <View style={{ marginTop: 3, marginBottom: 3, width: 4, height: 84, borderTopRightRadius: 6, borderBottomRightRadius: 6, backgroundColor: (props.isSelected) ? '#01a552' : 'transparent' }} />
             <View style={{ width: 86, height: 90, alignItems: 'center', justifyContent: 'center', }}>
-                <Image style={{ marginTop: 10, width: 36, height: 36, borderRadius: 18, backgroundColor: colors.white_color, }}
-
+                <FastImage style={{ marginTop: 10, width: 36, height: 36, borderRadius: 18, backgroundColor: colors.white_color, }}
+                    resizeMode='cover'
                     source={{ uri: props.ImageURL }} />
                 <Text style={[styles.text_title, { fontFamily: (props.isSelected) ? fonts.MONTSERRAT_SIMEBOLD : fonts.MONTSERRAT_REGULAR, color: (props.isSelected) ? '#01a552' : '#222222' }]}>{props.Name}</Text>
             </View>
@@ -22,7 +22,7 @@ const CommoditiesInfoComponent = ({
     );
 };
 
-export default CommoditiesInfoComponent;
+export default React.memo(CommoditiesInfoComponent);
 
 const styles = StyleSheet.create({
     container: {

@@ -1,20 +1,15 @@
-import React, { useEffect, useContext } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, TextInput, FlatList, Platform, BackHandler, } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-import { Query } from 'react-apollo';
-import Loading from '../components/Loading';
-import HeaderComponents from '../components/HeaderComponents';
-import HeaderIconsComponents from '../components/HeaderComponents';
-import CommoditiesInfoComponent from '../components/CommoditiesInfoComponent';
-import CommoditiesGroupComponent from '../components/CommoditiesGroupComponent';
-import CommoditiesItemComponent from '../components/CommoditiesItemComponent';
+import React, { useContext, useEffect } from 'react';
+import { Query, graphql } from 'react-apollo';
+import { BackHandler, FlatList, Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { AuthContext } from '../components/AuthContext';
+import CommoditiesGroupComponent from '../components/CommoditiesGroupComponent';
+import CommoditiesInfoComponent from '../components/CommoditiesInfoComponent';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 import { getIsBack } from '../helpers/AppManager';
-import Share from 'react-native-share';
 
 const COMMODITYTYPE_QUERY = gql`
 query {
@@ -67,7 +62,7 @@ query commodityChildByGroup($groupId: ID!){
 `;
 
 const SellProductsScreen = ({ navigation, route }) => {
-
+    console.log("selle products screen");
     const [searchText, setSearchText] = React.useState('');
     const [isFetchDate, setIsFetchDate] = React.useState(false);
     const [isFetch, setIsFetch] = React.useState(false);
@@ -86,12 +81,12 @@ const SellProductsScreen = ({ navigation, route }) => {
     });
 
     const [backActions, setBackActions] = React.useState({
-        isClickCategory:false,
-        isClickSubCategory:false,
-        categoryId:0,
-        subCategoryId:0
+        isClickCategory: false,
+        isClickSubCategory: false,
+        categoryId: 0,
+        subCategoryId: 0
     });
-    
+
     const {
         buySearchPlaceholder,
         loginToken,
@@ -100,7 +95,7 @@ const SellProductsScreen = ({ navigation, route }) => {
 
 
 
-    const reloadSellScreen = async() => {
+    const reloadSellScreen = async () => {
         setState({
             ...state,
             isShowSubCategory: false,
@@ -115,40 +110,40 @@ const SellProductsScreen = ({ navigation, route }) => {
         //     setIsFetchDate(true);
         //     setLoading(true);
         //  }
-       }
- 
-        React.useCallback(() => {
-            let isActive = true;
-            reloadSellScreen()
-            setLoading(true);
-            setIsFetchDate(true);
-            setTimeout(async () => {
-                try {
-                    var backPage = await getIsBack()
-                    if(backPage != 'yes'){
-                        setState({
-                            ...state,
-                            isShowSubCategory: false,
-                            getcommoditiesList: [],
-                            commoditiesGroupList: [],
-                            subCategoryList: [],
-                            mainCommoditiesGroupList: [],
-                            mainSubCategoryList: [],
-                        });
-                        setIsFetchDate(true);
-                        setLoading(true);
-                    }
-                    updateBack();
-                } catch (e) {
-                    console.log(e);
+    }
+
+    React.useCallback(() => {
+        let isActive = true;
+        reloadSellScreen()
+        setLoading(true);
+        setIsFetchDate(true);
+        setTimeout(async () => {
+            try {
+                var backPage = await getIsBack()
+                if (backPage != 'yes') {
+                    setState({
+                        ...state,
+                        isShowSubCategory: false,
+                        getcommoditiesList: [],
+                        commoditiesGroupList: [],
+                        subCategoryList: [],
+                        mainCommoditiesGroupList: [],
+                        mainSubCategoryList: [],
+                    });
+                    setIsFetchDate(true);
+                    setLoading(true);
                 }
-            }, 100);
-            return () => {
-                isActive = false;
-            };
-        }, [])
- 
-    const updateBack = async()=> {
+                updateBack();
+            } catch (e) {
+                console.log(e);
+            }
+        }, 100);
+        return () => {
+            isActive = false;
+        };
+    }, [])
+
+    const updateBack = async () => {
         try {
             await EncryptedStorage.setItem('isBack', '');
         } catch (e) {
@@ -157,26 +152,26 @@ const SellProductsScreen = ({ navigation, route }) => {
     }
 
     useEffect(() => {
-        if(BackHandler){
+        if (BackHandler) {
             BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
             return () => {
                 BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
             };
         }
-            
-    },[backActions])
 
-    const handleBackButtonClick= () => {
+    }, [backActions])
+
+    const handleBackButtonClick = () => {
         debugger;
-        if(backActions.isClickSubCategory){
-                setIsShowCategory(true);
-                var curentDate={title: '',Id:backActions.categoryId};
-                 onPressSelectItem(curentDate);
-        }else{
+        if (backActions.isClickSubCategory) {
+            setIsShowCategory(true);
+            var curentDate = { title: '', Id: backActions.categoryId };
+            onPressSelectItem(curentDate);
+        } else {
             navigation.navigate('HomeScreen')
         }
         return true;
-      }
+    }
     useEffect(() => {
         setState({
             ...state,
@@ -192,8 +187,8 @@ const SellProductsScreen = ({ navigation, route }) => {
         // return () => backHandler.remove()
     }, [])
     const onSearch = () => {
-        if(state.isShowSubCategory){
-            if(searchText != ''){
+        if (state.isShowSubCategory) {
+            if (searchText != '') {
                 const filtered = state.mainSubCategoryList.filter(entry => Object.values(entry).some(val => typeof val === "string" && val.includes(searchText)));
                 setState({
                     ...state,
@@ -208,9 +203,9 @@ const SellProductsScreen = ({ navigation, route }) => {
             }
         }
         else {
-            if(searchText != ''){
+            if (searchText != '') {
                 const filtered = state.mainCommoditiesGroupList.filter(entry => Object.values(entry).some(val => typeof val === "string" && val.includes(searchText)));
-               console.log('filteredfilteredfiltered',state.mainCommoditiesGroupList)
+                console.log('filteredfilteredfiltered', state.mainCommoditiesGroupList)
                 setState({
                     ...state,
                     commoditiesGroupList: filtered,
@@ -232,15 +227,15 @@ const SellProductsScreen = ({ navigation, route }) => {
             { console.log('errorerrorerror', error) }
             return <View />;
         }
-        if(!loading){
-            if(props.data?.getcommodities != undefined){
+        if (!loading) {
+            if (props.data?.getcommodities != undefined) {
                 setTimeout(async () => {
                     updateValue(props.data.getcommodities);
                 }, 500);
-                return <View/>;
+                return <View />;
 
             }
-            return <View/>;
+            return <View />;
         }
         return <View />;
     });
@@ -253,8 +248,8 @@ const SellProductsScreen = ({ navigation, route }) => {
         }, 500);
     }
     const updateSubCategoryInfo = (data) => {
-        console.log('data.commodityChildByGroup',data.commodityChildByGroup);
-       setTimeout(async () => {
+        console.log('data.commodityChildByGroup', data.commodityChildByGroup);
+        setTimeout(async () => {
             setIsShowCategory(true);
             setState({
                 ...state,
@@ -270,13 +265,13 @@ const SellProductsScreen = ({ navigation, route }) => {
         setLoading(false)
         setIsFetchDate(false);
         setIsFetch(true);
-        EncryptedStorage.setItem('reloadSell',"false");
+        EncryptedStorage.setItem('reloadSell', "false");
         setIsShowCategory(true);
         var title = '';
         var templist = commoditiesList;
         var commoditiesListTemp = []
         var commoditiesGroupListTemp = []
-        if(templist != undefined){
+        if (templist != undefined) {
             templist.map((commoditiesInfo, i) => {
                 var tempInfo = commoditiesInfo;
                 tempInfo.isSelected = (i == 0) ? true : false
@@ -286,15 +281,15 @@ const SellProductsScreen = ({ navigation, route }) => {
                     commoditiesGroupListTemp = tempInfo.Commoditygroups;
                 }
             });
-            if(templist && templist.length && templist.length >0){
+            if (templist && templist.length && templist.length > 0) {
                 setBackActions({
                     ...backActions,
-                    isClickCategory:true ,
-                    isClickSubCategory:false,
-                    categoryId:templist[0].Id   
+                    isClickCategory: true,
+                    isClickSubCategory: false,
+                    categoryId: templist[0].Id
                 });
             }
-            
+
         }
         setState({
             ...state,
@@ -331,15 +326,15 @@ const SellProductsScreen = ({ navigation, route }) => {
         });
         setBackActions({
             ...backActions,
-            isClickCategory:true ,
-            isClickSubCategory:false,
-            categoryId:item.Id
+            isClickCategory: true,
+            isClickSubCategory: false,
+            categoryId: item.Id
         });
-        
+
     }
     const onPressSubCategortItem = (item) => {
         console.log("sub Category Called");
-       setSearchText('')
+        setSearchText('')
         setIsShowCategory(false);
         setState({
             ...state,
@@ -349,16 +344,16 @@ const SellProductsScreen = ({ navigation, route }) => {
         });
         setBackActions({
             ...backActions,
-            isClickCategory:false ,
-            isClickSubCategory:true
-            });
-      
-        console.log('sub category',backActions)
-        
+            isClickCategory: false,
+            isClickSubCategory: true
+        });
+
+        console.log('sub category', backActions)
+
     }
     const onPressSubCategortDetail = async (item) => {
-        
-console.log("onPressSubCategoryDetails");
+
+        console.log("onPressSubCategoryDetails");
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
             await EncryptedStorage.setItem('currentPage', 'deliveryAddress');
@@ -366,10 +361,10 @@ console.log("onPressSubCategoryDetails");
             console.log('error ---------------', e)
         }
         setSearchText('')
-        
-        navigation.navigate('DeliveryAddressScreen', { details : item, isType: 'sell' });
-    } 
-    const onPressShowLanguage=async()=> {
+
+        navigation.navigate('DeliveryAddressScreen', { details: item, isType: 'sell' });
+    }
+    const onPressShowLanguage = async () => {
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
         } catch (e) {
@@ -377,7 +372,7 @@ console.log("onPressSubCategoryDetails");
         }
         navigation.navigate('LanguageListScreen')
     }
-    const onPressProile =async()=> {
+    const onPressProile = async () => {
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
         } catch (e) {
@@ -385,7 +380,7 @@ console.log("onPressSubCategoryDetails");
         }
         navigation.navigate('ProfileDetailScreen')
     }
-    const onPressRemoveSearch =()=> {
+    const onPressRemoveSearch = () => {
         setSearchText('')
         if (state.isShowSubCategory) {
             setState({
@@ -425,7 +420,7 @@ console.log("onPressSubCategoryDetails");
                         onSubmitEditing={() => onSearch()}>
                     </TextInput>
                     {(searchText != '') && (
-                        <TouchableOpacity style={{ marginLeft: 5, justifyContent: 'center', alignItems: 'center', width: 24, height: 24, borderRadius: 12, backgroundColor: 'lightgray'}}
+                        <TouchableOpacity style={{ marginLeft: 5, justifyContent: 'center', alignItems: 'center', width: 24, height: 24, borderRadius: 12, backgroundColor: 'lightgray' }}
                             onPress={onPressRemoveSearch}>
                             <Text>{'X'}</Text>
                         </TouchableOpacity>
@@ -468,6 +463,7 @@ console.log("onPressSubCategoryDetails");
                             renderItem={({ item, index }) => {
                                 return (
                                     <CommoditiesInfoComponent
+                                        key={index.toString()}
                                         props={item}
                                         onPressSelectItem={onPressSelectItem} />
                                 )
@@ -559,5 +555,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SellProductsScreen;
+export default React.memo(SellProductsScreen);
 

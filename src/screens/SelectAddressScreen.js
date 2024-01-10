@@ -48,7 +48,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
         placeholderDoorNo,
         placeholderPinCode,
         placeholderVillage,
-        saveAddress,
+        saveAddress,addressAdded,addressUpdated
     } = useContext(AuthContext);
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
     const [userDoorNo, setUserDoorNo] = React.useState('');
@@ -60,8 +60,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         if (route.params.isEdit != null && route.params.isEdit != undefined && route.params.isEdit == true) {
-            console.log("this is one triggere or not");
-            console.log(route.params.data.AddressLine1);
+           
             setUserDoorNo(route.params.data.AddressLine1);
             setUserPincode(route.params.data.PostalCode);
             setUserVillage(route.params.data.Village);
@@ -144,7 +143,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
                     .then(res => {
                         setLoadingIndicator(false)
                         console.log('res ------------------', res);
-                        Alert.alert('Success', "Address updated successfully", [{
+                        Alert.alert('Success', addressUpdated, [{
                             text: 'OK', onPress: () => {
                                 return navigation.pop(4);
                             },
@@ -163,7 +162,7 @@ const SelectAddressScreen = ({ navigation, route }) => {
                 })
                     .then(res => {
                         setLoadingIndicator(false)
-                        Alert.alert('Success', "Address added successfully", [{
+                        Alert.alert('Success', addressAdded, [{
                             text: 'OK', onPress: () => {
                                 return navigation.pop(4);
                             },

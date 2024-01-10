@@ -21,7 +21,7 @@ mutation ($lotId: ID!){
 const MandiListDetailScreen = ({ navigation, route }) => {
     const {
         mandiRates,
-        noMandi,
+        noMandi,externalStoragePermission,appNeedWritePermission
     } = useContext(AuthContext);
 
     const [loadingIndicator, setLoadingIndicator] = useState(false);
@@ -79,27 +79,7 @@ const MandiListDetailScreen = ({ navigation, route }) => {
     }
     const onPressViewImage =(info)=> {
         Linking.openURL(info.FilePath)
-        // setIsShowImage(true)
-        // setImageUrl(info.FilePath)
-        // setLoadingIndicator(true)
-        // const url = info.FilePath;
-        //     const extension = getUrlExtension(url);
-        //     const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.${extension}`;
-
-        //     const options = {
-        //         fromUrl: url,
-        //         toFile: localFile,
-        //         };
-        //         RNFS.downloadFile(options)
-        //         .promise.then(() => FileViewer.open(localFile))
-        //         .then(() => {
-        //             // success
-        //             setLoadingIndicator(false)
-        //         })
-        //         .catch((error) => {
-        //             setLoadingIndicator(false)
-        //             // error
-        //         });
+ 
     }
     const onPressHideImage =()=>{
         setIsShowImage(false)
@@ -111,8 +91,8 @@ const MandiListDetailScreen = ({ navigation, route }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
                     {
-                        title: 'External Storage Write Permission',
-                        message: 'App needs write permission',
+                        title: externalStoragePermission,
+                        message: appNeedWritePermission,
                     },
                 );
                 // If WRITE_EXTERNAL_STORAGE Permission is granted

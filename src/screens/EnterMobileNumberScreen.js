@@ -15,6 +15,8 @@ import Loading from '../components/Loading';
 import { colors, fonts, images } from '../core';
 import { getPushToken } from '../helpers/AppManager';
 import uploadImageToStorage from '../helpers/uploadImage';
+import remoteConfig from '@react-native-firebase/remote-config';
+import { validateUserName } from '../helpers/validation';
 
 
 const CONTINENT_QUERY = gql`
@@ -85,7 +87,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
     const [isReferalApi, setIsReferalApi] = React.useState(false);
     const [checkBoxSelected, setCheckBoxSelected] = React.useState(false);
     const [isFetchPolicy, setIsFetchPolicy] = React.useState(false);
-    const [privacyPolicy, setPrivacyPolicy] = React.useState('');
+    const [termsLink, setTermsLink] = React.useState('');
     const [deviceToken, setDeviceToken] = React.useState('');
     const [shouldRunEffect, setShouldRunEffect] = useState(false);
     const [isToggleEnabled, setIsToggleEnabled] = useState(false);
@@ -301,7 +303,13 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         setActivity,
         setBidText,
         setEnquiryText,
-        setLoginLabel } = useContext(AuthContext);
+        setLoginLabel,agree,setAgree,terms,setTerms, internet, setInternet ,setValidMobileNumber,validMobileNumber,error,setExternalStoragePermission,externalStoragePermission,appNeedWritePermission, setAppNeedWritePermission,camaraPermission, setCamaraPermission, appNeedCamaraPermission, setAppNeedCamaraPermission,validEmail, setValidEmail,profileUpdated, setProfileUpdated,
+        addressAdded, setAddressAdded,addressUpdated, setAddressUpdated,selectRequiredQuantity, setSelectRequiredQuantity,
+        validPrice, setValidPrice,
+        validQuantity, setValidQuantity,
+        privacyPolicy, setPrivacyPolicy,
+     setError,validUserName,setValidUserName
+    } = useContext(AuthContext);
 
     const [generateOTP] = useMutation(CONTINENT_QUERY);
     let options = {
@@ -311,9 +319,12 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         },
         quality: 0.3,
     };
-
-
+ 
     useEffect(() => {
+        remoteConfig().fetchAndActivate().then((e) => {
+            console.log(e);
+            console.log("remote config fetched successfully");
+        });
         setTimeout(async () => {
             let token = await getPushToken()
             setDeviceToken(token)
@@ -390,7 +401,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         if (registerLoading) {
             return;
         }
-        console.log('mobileNumber.lengthmobileNumber.lengthmobileNumber.length', userMobileNumber.length)
+       
         if (userMobileNumber == '') {
             Alert.alert('', errorNumer, [{
                 text: 'OK', onPress: () => {
@@ -400,7 +411,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
             ]);
         }
         else if (userMobileNumber.length < 10) {
-            Alert.alert('', 'Please enter vaild mobile number', [{
+            Alert.alert('', validMobileNumber, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -431,6 +442,14 @@ const EnterMobileNumberScreen = ({ navigation }) => {
             },
             ]);
         }
+        else if (!validateUserName(userName)){
+            Alert.alert('', validUserName, [{
+                text: 'OK', onPress: () => {
+                    return;
+                },
+            },
+            ]);
+        }
         else if (!checkBoxSelected) {
             Alert.alert('', termsAndConditions, [{
                 text: 'OK', onPress: () => {
@@ -454,7 +473,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
                 .catch(e => {
                     setregisterLoading(false);
 
-                    Alert.alert('Error', e.message, [{
+                    Alert.alert(error, e.message, [{
                         text: 'OK', onPress: () => {
                             return;
                         },
@@ -469,12 +488,12 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         setLoadingIndicator(isLoading);
     }
     const updateReferalValues = (isLoading) => {
-        console.log('updateReferalValuesupdateReferalValuesupdateReferalValues ------------------');
+       // console.log('updateReferalValuesupdateReferalValuesupdateReferalValues ------------------');
         setIsReferalApi(false);
         setLoadingIndicator(isLoading);
     }
     const updateReferalText = (data) => {
-        console.log('updateReferalTextupdateReferalText ------------------', data);
+      //  console.log('updateReferalTextupdateReferalText ------------------', data);
         setIsReferalApi(false);
         if (data.MessageContent == 'Invalid Referal Code') {
             Alert.alert('', data.MessageContent, [{
@@ -503,7 +522,10 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         var enquiryScreenLabels = data.getAppLabels.allLabels.Enquiry;
         var footerScreenLabels = data.getAppLabels.allLabels.Footer;
         var dashboardScreenLabels = data.getAppLabels.allLabels.DashboardScreen;
-
+var general=data.getAppLabels.allLabels.General;
+var warning=data.getAppLabels.allLabels.Warnings;
+var permissions=data.getAppLabels.allLabels.Permissions;
+var others=data.getAppLabels.allLabels.Others;
         setDeleteAccount(profileScreenLabels.DeleteAccountLabel)
         setDeleteMessage1(profileScreenLabels.DeleteAccountMessage1)
         setDeleteMessage2(profileScreenLabels.DeleteAccountMessage2)
@@ -713,6 +735,25 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         setSell(footerScreenLabels.Sell)
         setBids(footerScreenLabels.Bids)
 
+        //new translation
+        setAgree(general.AgreeTandC);
+        setTerms(general.TnC);
+        setInternet(warning.NoInternet);
+        setValidMobileNumber(warning.InvalidMobile);
+        setError(general.Error);
+        setExternalStoragePermission(permissions.ExternalStorageWritePermission);
+        setAppNeedWritePermission(permissions.NeedExternalStorageWritePermission);
+        setCamaraPermission(permissions.CameraPermission);
+        setAppNeedCamaraPermission(permissions.NeedCameraPermission);
+        setValidEmail(warning.InvalidEmail);
+        setProfileUpdated(others.ProfileUpdatedSuccess);
+        setAddressAdded(others.AddressAddedSuccess);
+        setAddressUpdated(others.AddressUpdatedSuccess);
+        setSelectRequiredQuantity(others.EnterValidQuntity);
+        setValidPrice(others.EnterValidPrice);
+        setValidQuantity(others.EnterValidQuntity);
+        setPrivacyPolicy(general.PrivacyPolicy);
+        setValidUserName(warning.InvalidUsername);
     }
     const onPressSelectLanguage = () => {
         navigation.navigate('LanguageListScreen', {
@@ -794,8 +835,8 @@ const EnterMobileNumberScreen = ({ navigation }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.CAMERA,
                     {
-                        title: 'Camera Permission',
-                        message: 'App needs camera permission',
+                        title: camaraPermission,
+                        message: appNeedCamaraPermission,
                     },
                 );
                 // If CAMERA Permission is granted
@@ -813,8 +854,8 @@ const EnterMobileNumberScreen = ({ navigation }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
                     {
-                        title: 'External Storage Write Permission',
-                        message: 'App needs write permission',
+                        title: externalStoragePermission,
+                        message: appNeedWritePermission,
                     },
                 );
                 // If WRITE_EXTERNAL_STORAGE Permission is granted
@@ -882,17 +923,11 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         }, 100);
     }
     const onPressTerms = () => {
-        if (privacyPolicy != '') {
-            Linking.openURL(privacyPolicy)
-        }
+        const termsAndCondition = remoteConfig().getValue('terms_and_condition');
+        console.log(termsAndCondition);
+        Linking.openURL(termsAndCondition._value);
     }
-    const updatePolicyLoading = () => {
-        setIsFetchPolicy(false);
-    }
-    const updatePolicyDate = (privacyPolicyInfo) => {
-        setIsFetchPolicy(true);
-        setPrivacyPolicy(privacyPolicyInfo)
-    }
+  
 
     const navigateLoginScreen = () => {
         navigation.navigate('LoginScreen')
@@ -902,13 +937,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
     return (
         <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}>
-            {(!isFetchPolicy) && (
-                <DataFetchComponents
-                    selectedId={''}
-                    isType={'policy'}
-                    updateLoading={updatePolicyLoading}
-                    updateDate={updatePolicyDate} />
-            )}
+        
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 style={styles.scroll_view}>
@@ -1024,7 +1053,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
                         </View>
                     )}
                 </View>
-                <View style={{ flexDirection: 'row', marginVertical: 10, alignItems: 'center', }}>
+                <View style={{ flexDirection: 'row', marginVertical: 10, alignItems: 'center', width: '80%', }}>
                     <TouchableOpacity style={{ marginLeft: 35, marginRight: 5, width: 30, height: 30, }}
                         onPress={() =>
                             setCheckBoxSelected(!checkBoxSelected)}>
@@ -1034,15 +1063,17 @@ const EnterMobileNumberScreen = ({ navigation }) => {
                         </Image>
                     </TouchableOpacity>
 
-                    <View style={{ flexDirection: 'row', }}>
-                        <Text style={[styles.subTextStyle]}>
-                            I agree to the
-
-                        </Text>
-                        <TouchableOpacity style={{ justifyContent: 'center', }}
+                    <View style={{ flexDirection: 'row',flex:1 }}>
+                    <TouchableOpacity style={{ justifyContent: 'center', }}
                             onPress={onPressTerms}>
-                            <Text style={[styles.terms_text]}> {'Terms & conditions'}</Text>
+                        <Text style={[styles.subTextStyle]}>
+                           {agree}
+                        </Text>
                         </TouchableOpacity>
+                        {/* <TouchableOpacity style={{ justifyContent: 'center', }}
+                            onPress={onPressTerms}>
+                            <Text style={[styles.terms_text]}> {terms}</Text>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
                 {/* <View style={{flexDirection:"row"}}>
@@ -1210,6 +1241,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.MONTSERRAT_BOLD,
         fontSize: 20,
         color: colors.text_Color,
+        textAlign: 'center' 
     },
     view_line: {
         marginTop: 20,

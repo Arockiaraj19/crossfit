@@ -40,7 +40,7 @@ const OTPVerficationScreen = ({ navigation, route }) => {
         didntReceive,
         continueText,
         setLoginToken,
-        setEnableLogin
+        setEnableLogin,error
     } = useContext(AuthContext);
 
     useEffect(() => {
@@ -135,20 +135,19 @@ const OTPVerficationScreen = ({ navigation, route }) => {
             </View>
             {(isOTPVerify) && (
                 <Query query={CONTINENT_QUERY} variables={{ userId: route?.params?.userId, OTP: state.otpValue }}>
-                    {({ loading, error, data }) => {
-                        console.log(loading,error,data);
+                    {({ loading, errorr, data }) => {
+                      
                         if (loading) {
                             setContinueLoading(true);
                             updateValues(true);
                                
                             return null
                         };
-                        if (error) {
-                            console.log("error");
-                            console.log(error);
+                        if (errorr) {
+                         
                             setContinueLoading(false);
                             updateValues(false);
-                            Alert.alert('Error', error.message, [{
+                            Alert.alert(error, errorr.message, [{
                                 text: 'OK', onPress: () => {
                                     return;
                                 },

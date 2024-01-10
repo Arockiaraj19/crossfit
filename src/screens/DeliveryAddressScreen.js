@@ -1,18 +1,16 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { StyleSheet, View, Image, Text, Pressable, TouchableOpacity, Platform, FlatList, Alert, ScrollView, BackHandler } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { useFocusEffect } from '@react-navigation/native';
-import HeaderComponents from '../components/HeaderComponents';
-import { AuthContext } from '../components/AuthContext';
-import AddressInfoComponent from '../components/AddressInfoComponent';
-import { graphql } from 'react-apollo';
 import { useMutation } from '@apollo/react-hooks';
-import moment from 'moment';
-import { useQuery } from '@apollo/react-hooks';
+import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
+import React, { useContext, useEffect, useState } from 'react';
+import { graphql } from 'react-apollo';
+import { Alert, BackHandler, FlatList, Image, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import AddressInfoComponent from '../components/AddressInfoComponent';
+import { AuthContext } from '../components/AuthContext';
+import HeaderComponents from '../components/HeaderComponents';
 import Loading from '../components/Loading';
 import TagsView from '../components/TagsView';
-import EncryptedStorage from 'react-native-encrypted-storage';
+import { colors, fonts, images } from '../core';
 
 const DETELEADDRESSQUIRY_QUERY = gql`
 mutation ($Id: ID!){
@@ -112,7 +110,7 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
     const editAddress = (data) => {
         console.log('what is the data');
         console.log(data);
-  navigation.navigate('SelectStateScreen', { isType: '', isEdit: true, data: data });
+        navigation.navigate('SelectStateScreen', { isType: '', isEdit: true, data: data });
     }
     const updateValue = () => {
         setIsFetching(false);
@@ -121,11 +119,9 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
     // const [getAddress,deliveryData ] =useQuery(GETADDRESS_QUERY);
 
     const updateDate = (data, addressTypes) => {
-        { console.log('datadatadatadatadata', data) }
-        { console.log('addressTypesaddressTypesaddressTypes', addressTypes) }
+       
 
-        setIsFetching(false);
-        setLoadingIndicator(false);
+
         var templist = data;
         var addresses = []
         templist.map((addressInfo, i) => {
@@ -141,7 +137,7 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
                 "AddressLine1": addressInfo.AddressLine1,
                 "ImageURL": addressInfo.ImageURL,
                 "Village": addressInfo.Village,
-                "PostalCode":addressInfo.PostalCode,
+                "PostalCode": addressInfo.PostalCode,
                 isSelected: false
             }
             addresses.push(tempInfo)
@@ -149,18 +145,18 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
         setFullAddressList(addresses);
         setAddressList(addresses);
         setCetogoriesList(addressTypes);
+        setIsFetching(false);
+        setLoadingIndicator(false);
     }
 
 
 
     const GetUserAddress = graphql(GETADDRESS_QUERY)(props => {
         const { error, data, loading } = props.data;
-        { console.log('getUserAddress', props.data) }
+
         if (props.data && props.data.getUserAddress) {
-            setLoadingIndicator(false);
-            setTimeout(async () => {
-                updateDate(props.data.getUserAddress, props.data.getAddressTypes)
-            }, 1000);
+            updateDate(props.data.getUserAddress, props.data.getAddressTypes);
+
             return (
                 <View>
                 </View>
@@ -218,9 +214,9 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
                         Alert.alert('', res.data.deleteUserAddress, [{
                             text: 'Ok',
                             onPress: () => {
-                              setAddressList([]);
-                              setLoadingIndicator(true);
-                              setIsFetching(true);
+                                setAddressList([]);
+                                setLoadingIndicator(true);
+                                setIsFetching(true);
 
                                 return;
                             },
@@ -342,8 +338,8 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
                                     onPressDeleteAddress={() =>
                                         onPressDeleteAddress(item)
                                     }
-                                    edit={()=>editAddress(item)}
-                                    />
+                                    edit={() => editAddress(item)}
+                                />
                             )
                         }}
                     />

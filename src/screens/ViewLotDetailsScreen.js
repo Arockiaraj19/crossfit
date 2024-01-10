@@ -1,18 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, Image, Text, FlatList, Platform, TouchableOpacity, Alert,Linking } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
-import HeaderComponents from '../components/HeaderComponents';
-import Loading from '../components/Loading';
-import BidsListComponents from '../components/BidsListComponents';
+import { useMutation } from '@apollo/react-hooks';
+import analytics from '@react-native-firebase/analytics';
 import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
+import React, { useContext, useEffect, useState } from 'react';
 import { Query } from 'react-apollo';
-import { useMutation } from '@apollo/react-hooks';
+import { Alert, FlatList, Platform, StyleSheet, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import BidsListComponents from '../components/BidsListComponents';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
-import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
-
+import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 const GETBIDSBYLOT_QUERY = gql`
 query getBidsbyLotId($lotId: ID!){
     getBidsbyLotId(lotId:$lotId) {
@@ -125,11 +124,11 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const editBidsInfo = (info, isEdit) => {
-         var params = info;
-        console.log('View lot screen paramsparamsparamsparamsparams',info)
+        var params = info;
+        console.log('View lot screen paramsparamsparamsparamsparams', info)
         params.isEdit = isEdit;
         params.isAccept = true
-        navigation.navigate('EditBidsInfoScreen', params );
+        navigation.navigate('EditBidsInfoScreen', params);
     }
     const onPressBack = () => {
         navigation.goBack();
@@ -141,7 +140,7 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
         }, 500);
     }
     const updateBidsInfo = (data) => {
-        console.log('ViewLotDetailsScreen updateBidsInfo data',data)
+        console.log('ViewLotDetailsScreen updateBidsInfo data', data)
 
         if (data.getBidsbyLotId != null) {
             var templist = data.getBidsbyLotId;
@@ -158,15 +157,15 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
             setArrayOfList(data.getBidsbyLotId)
         }, 100);
     }
-    const onPressAccept=(info) => {
+    const onPressAccept = (info) => {
         Alert.alert('', areYouSureAccept, [{
             text: logoutCancel, onPress: () => { return; },
         },
         {
             text: logoutYes,
             onPress: () => {
-                console.log('viewlotdetail  infoinfoinfoinfoinfo',{ bidId: info.Id, statusId: 2,info})
-                if(parseFloat(info.QuantityValue)> parseFloat(info.CurrentLotQuantity)){
+                console.log('viewlotdetail  infoinfoinfoinfoinfo', { bidId: info.Id, statusId: 2, info })
+                if (parseFloat(info.QuantityValue) > parseFloat(info.CurrentLotQuantity)) {
                     Alert.alert('', approveErrorMsg, [{
                         text: 'Ok',
                         onPress: () => {
@@ -174,10 +173,10 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
                         },
                     },
                     ]);
-                }else{
-                
+                } else {
+
                     updateBidStatus({
-                        variables: { bidId: info.Id, statusId: 2,currentLotQuantity: parseFloat(info.CurrentLotQuantity)}
+                        variables: { bidId: info.Id, statusId: 2, currentLotQuantity: parseFloat(info.CurrentLotQuantity) }
                     })
                         .then(res => {
                             setLoadingIndicator(false)
@@ -202,9 +201,9 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
             },
         },
         ]);
-             
+
     }
-    
+
     // useEffect(() => {
     //     if (mobileViewData != undefined) {
     //         (async () => {
@@ -214,45 +213,50 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
     // }, [mobileViewData])
 
 
-    const onPressMakeCall = async() => {
+    const onPressMakeCall = async () => {
+        analytics().logEvent(
+            "call", {
+            transactiontype: "Bid", transactionid: bidsDetails.Id, screen: "ViewLotDetailsScreen", number: bidsDetails.MobileNo
+        }
+        );
         await handlePhoneCall(bidsDetails.MobileNo, navigation);
-         return await getMobileView({ variables: { transactiontype: "Bid", transactionid: bidsDetails.Id }})
+        return await getMobileView({ variables: { transactiontype: "Bid", transactionid: bidsDetails.Id } })
         // handlePhoneCall(bidsDetails.MobileNo,navigation)
     }
-    const onPressDecline=(info) => {
+    const onPressDecline = (info) => {
         Alert.alert('', areYouSureDecline, [{
             text: logoutCancel, onPress: () => { return; },
         },
         {
             text: logoutYes,
-            onPress: () => {  
-                console.log('viewlotdetail',info)
-                    updateBidStatus({
-                        variables: { bidId: info.Id, statusId: 3,currentLotQuantity: parseFloat(info.CurrentLotQuantity)}
-                    })
-                        .then(res => {
-                            setLoadingIndicator(false)
-                            console.log('res ------------------', res);
-                            if (res.data.updateBidStatus == 'Updated Successfully') {
-                                Alert.alert('', updateSuccess, [{
-                                    text: 'Ok',
-                                    onPress: () => {
-                                        onPressBack()
-                                        return;
-                                    },
+            onPress: () => {
+                console.log('viewlotdetail', info)
+                updateBidStatus({
+                    variables: { bidId: info.Id, statusId: 3, currentLotQuantity: parseFloat(info.CurrentLotQuantity) }
+                })
+                    .then(res => {
+                        setLoadingIndicator(false)
+                        console.log('res ------------------', res);
+                        if (res.data.updateBidStatus == 'Updated Successfully') {
+                            Alert.alert('', updateSuccess, [{
+                                text: 'Ok',
+                                onPress: () => {
+                                    onPressBack()
+                                    return;
                                 },
-                                ]);
-                            }
-                        })
-                        .catch(e => {
-                            setLoadingIndicator(false)
-                            console.log('errer ------------------', e.message);
-                        });
+                            },
+                            ]);
+                        }
+                    })
+                    .catch(e => {
+                        setLoadingIndicator(false)
+                        console.log('errer ------------------', e.message);
+                    });
                 return;
             },
         },
-        ]); 
-        
+        ]);
+
     }
     return (
         <View style={styles.container}>
@@ -295,25 +299,25 @@ const ViewLotDetailsScreen = ({ navigation, route }) => {
 
             </View>
             {(!isFetch) && (
-               <Query query={GETBIDSBYLOT_QUERY} variables={{ lotId: route.params.lotId }}>
-               {({ loading, error, data }) => {
-                   if (loading) {
-                       () =>
-                           updateSubValue(true);
-                       return <View />
-                   };
-                   if (error) {
-                       updateSubValue(false);
-                       return <View />;
-                   }
-                   if (!data) {
-                       updateSubValue(false);
-                       return <View />;
-                   }
-                   updateBidsInfo(data);
-                   return <View />
-               }}
-           </Query>
+                <Query query={GETBIDSBYLOT_QUERY} variables={{ lotId: route.params.lotId }}>
+                    {({ loading, error, data }) => {
+                        if (loading) {
+                            () =>
+                                updateSubValue(true);
+                            return <View />
+                        };
+                        if (error) {
+                            updateSubValue(false);
+                            return <View />;
+                        }
+                        if (!data) {
+                            updateSubValue(false);
+                            return <View />;
+                        }
+                        updateBidsInfo(data);
+                        return <View />
+                    }}
+                </Query>
             )}
             {loadingIndicator && <Loading />}
         </View>

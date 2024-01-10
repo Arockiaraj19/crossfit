@@ -175,7 +175,7 @@ const AddProductLotScreen = ({ navigation, route }) => {
             isValidAmountPerGvt = !(totalPrice > askingPrice);
         }
 
-        console.log("weightValue", weightCode, "isValidAmountPerGvt", isValidAmountPerGvt, "askingPrice", askingPrice, "totalprice", totalPrice)
+      
 
         if (gradeId == '') {
             Alert.alert('', gradeAlert, [{

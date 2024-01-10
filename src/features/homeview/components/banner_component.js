@@ -14,7 +14,7 @@ const BannerComponent = ({
     listOfCropfit, message, applink
 }) => {
     const { width, height } = Dimensions.get('window');
-    const title = 'Formfit';
+    const title = 'Farmfit';
     const [scrollPage, setScrollPage] = React.useState(0);
     const handleScrollEnd = (e) => {
         if (!e) {
@@ -51,18 +51,15 @@ const BannerComponent = ({
         Linking.openURL(urslString);
     }
     const RemoteImage = ({ uri, desiredHeight }) => {
-        const [desiredWeight, setDesiredWeight] = React.useState(0)
-        Image.getSize(uri, (width, height) => {
-            setDesiredWeight(desiredHeight / height * width)
-        })
+
         return (
             <Image
                 source={{ uri }}
                 style={{
                     marginLeft: 20,
                     marginBottom: 5,
-                    height: desiredHeight,
-                    width: desiredWeight,
+                    height: 90,
+                    width: 90,
                 }}
             />
         )

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet, TouchableOpacity, Image, Text, Pressable } from 'react-native';
-import { colors, fonts } from '../core';
+import React, { useContext } from 'react';
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../components/AuthContext';
+import { colors, fonts } from '../core';
 
 const SubCategoryComponent = ({
     props,
@@ -15,29 +15,26 @@ const SubCategoryComponent = ({
         enquireText,
     } = useContext(AuthContext);
     const RemoteImage = ({ uri, desiredHeight }) => {
-        const [desiredWeight, setDesiredWeight] = React.useState(0)
-        Image.getSize(uri, (width, height) => {
-            setDesiredWeight(desiredHeight / height * width)
-        })
+      
         return (
             <Image
                 source={{ uri }}
                 style={{
                     marginTop: 15,
-                    height: desiredHeight,
-                    width: desiredWeight,
+                    height: 70,
+                    width: 70,
 
                 }}
             />
         )
     }
-    const onPressDetail =(items)=> {
-        if(!isBuy){
+    const onPressDetail = (items) => {
+        if (!isBuy) {
             onPressSubCategortDetail(items)
         }
     }
     return (
-        <Pressable style={[styles.container, { height: (isBuy) ? 215 : 150}]}
+        <Pressable style={[styles.container, { height: (isBuy) ? 215 : 150 }]}
             onPress={() =>
                 onPressDetail(props)}>
             {(index == 0 || index == 1) && (
@@ -61,20 +58,20 @@ const SubCategoryComponent = ({
                     </TouchableOpacity>
                 )} */}
             </View>
-            {(isBuy &&  (props.IsLotAvailable == 1)) && (
-                    <TouchableOpacity style={[styles.toch_buy, { bottom : 45 }]}
-                        onPress={() =>
-                            onPressSubCategortDetail(props)}>
-                        <Text style={styles.text_buy}>{buyText}</Text>
-                    </TouchableOpacity>
-                )}
-                {(isBuy && (props.ShowEnquiry == 1)) && (
-                        <TouchableOpacity style={[styles.toch_buy, { bottom :  (isBuy &&  (props.IsLotAvailable == 1)) ?   0 :45 }]}
-                            onPress={() =>
-                                onPressEnquireDetail(props)}>
-                        <Text style={styles.text_buy}>{enquireText}</Text>
-                    </TouchableOpacity>
-                )}
+            {(isBuy && (props.IsLotAvailable == 1)) && (
+                <TouchableOpacity style={[styles.toch_buy, { bottom: 45 }]}
+                    onPress={() =>
+                        onPressSubCategortDetail(props)}>
+                    <Text style={styles.text_buy}>{buyText}</Text>
+                </TouchableOpacity>
+            )}
+            {(isBuy && (props.ShowEnquiry == 1)) && (
+                <TouchableOpacity style={[styles.toch_buy, { bottom: (isBuy && (props.IsLotAvailable == 1)) ? 0 : 45 }]}
+                    onPress={() =>
+                        onPressEnquireDetail(props)}>
+                    <Text style={styles.text_buy}>{enquireText}</Text>
+                </TouchableOpacity>
+            )}
             <Text style={styles.text_title}>{props.Name}</Text>
             <View style={{ width: '100%', height: 1, backgroundColor: '#dddddd', position: 'absolute', bottom: 0, opacity: 0.5 }}></View>
             <View style={{ width: 1, height: '100%', position: 'absolute', right: 0, top: 0, backgroundColor: '#dddddd', opacity: 0.5 }}></View>

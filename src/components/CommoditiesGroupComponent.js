@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, FlatList,Text } from 'react-native';
-import { colors, fonts } from '../core';
+import React from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import CommoditiesItemComponent from '../components/CommoditiesItemComponent';
 import SubCategoryComponent from '../components/SubCategoryComponent';
+import { colors, fonts } from '../core';
 
 const CommoditiesGroupComponent = ({
     props,
@@ -15,31 +15,33 @@ const CommoditiesGroupComponent = ({
 }) => {
     return (
         <View style={styles.container}>
-           {(props!=null && props.length>0) ?
-            <FlatList style={styles.list}
-                data={props}
-                numColumns={2}
-                keyExtractor={(x, i) => i}
-                renderItem={({ item, index }) => ((isGroup) ?
-                    <CommoditiesItemComponent
-                        props={item}
-                        isBuy={isBuy}
-                        index={index}
-                        onPressSelectItem={onPressSubCategortItem} /> :
-                    <SubCategoryComponent
-                        props={item}
-                        index={index}
-                        isBuy={isBuy}
-                        onPressSubCategortDetail={()=> 
-                            onPressSubCategortDetail(item)
-                        }
-                        onPressEnquireDetail={()=> 
-                            onPressEnquireDetail(item)
-                        } />
-                )}
-            /> : <Text style={styles.text_empty}>{comingSoon}</Text>
-           } 
-           
+            {(props != null && props.length > 0) ?
+                <FlatList style={styles.list}
+                    data={props}
+                    numColumns={2}
+                    keyExtractor={(x, i) => i}
+                    renderItem={({ item, index }) => ((isGroup) ?
+                        <CommoditiesItemComponent
+                            key={index}
+                            props={item}
+                            isBuy={isBuy}
+                            index={index}
+                            onPressSelectItem={onPressSubCategortItem} /> :
+                        <SubCategoryComponent
+                            key={index}
+                            props={item}
+                            index={index}
+                            isBuy={isBuy}
+                            onPressSubCategortDetail={() =>
+                                onPressSubCategortDetail(item)
+                            }
+                            onPressEnquireDetail={() =>
+                                onPressEnquireDetail(item)
+                            } />
+                    )}
+                /> : <Text style={styles.text_empty}>{comingSoon}</Text>
+            }
+
         </View>
     );
 };

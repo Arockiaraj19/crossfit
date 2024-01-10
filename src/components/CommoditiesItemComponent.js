@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet, TouchableOpacity, Image, Text, } from 'react-native';
-import { colors, fonts } from '../core';
+import React, { useContext } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { AuthContext } from '../components/AuthContext';
+import { colors, fonts } from '../core';
 
 const CommoditiesItemComponent = ({
     props,
@@ -16,24 +16,21 @@ const CommoditiesItemComponent = ({
     } = useContext(AuthContext);
 
     const RemoteImage = ({ uri, desiredHeight }) => {
-        const [desiredWeight, setDesiredWeight] = React.useState(0)
-        Image.getSize(uri, (width, height) => {
-            setDesiredWeight(desiredHeight / height * width)
-        })
+
         return (
             <Image
                 source={{ uri }}
                 style={{
                     marginTop: 15,
-                    height: desiredHeight,
-                    width: desiredWeight,
+                    height: 70,
+                    width: 70,
 
                 }}
             />
         )
     }
     return (
-        <TouchableOpacity style={[styles.container, { height: (isBuy) ? 140 : 170}]}
+        <TouchableOpacity style={[styles.container, { height: (isBuy) ? 140 : 170 }]}
             onPress={() =>
                 onPressSelectItem(props)}>
             {(index == 0 || index == 1) && (

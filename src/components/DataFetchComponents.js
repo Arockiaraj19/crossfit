@@ -323,10 +323,12 @@ const DataFetchComponents = ({
         const { error, getAddressTypes, loading } = props.data;
         { console.log('what is the type result', getAddressTypes) }
         if (getAddressTypes != undefined && getAddressTypes) {
+            updateDate(getAddressTypes);
             setTimeout(async () => {
                 updateLoading(false);
-                updateDate(getAddressTypes)
+
             }, 500);
+
             return (
                 <View>
                 </View>
@@ -354,10 +356,12 @@ const DataFetchComponents = ({
         const { error, getGrades, loading } = props.data;
         { console.log('propspropsprops', props) }
         if (getGrades) {
+            updateDate(getGrades);
             setTimeout(async () => {
                 updateLoading(false);
-                updateDate(getGrades)
+
             }, 500);
+
             return (
                 <View>
                 </View>
@@ -365,9 +369,7 @@ const DataFetchComponents = ({
         }
         if (error) {
             console.log('errorerrorerrorerror', error);
-            setTimeout(async () => {
-                updateLoading(false);
-            }, 500);
+            updateLoading(false);
             return (
                 <View>
                 </View>
@@ -375,18 +377,16 @@ const DataFetchComponents = ({
         }
         if (loading) {
             console.log('errorerrorerrorerror', error);
-            setTimeout(async () => {
-                updateLoading(true);
-            }, 500);
+            updateLoading(true);
             return (
                 <View>
                 </View>
             );
         }
-        setTimeout(async () => {
-            updateLoading(false);
-            updateValue(true);
-        }, 500);
+        // setTimeout(async () => {
+        //     updateLoading(false);
+        //     updateValue(true);
+        // }, 500);
         return <View />;
     });
 
@@ -394,9 +394,10 @@ const DataFetchComponents = ({
         const { error, getWeight, loading } = props.data;
         { console.log('propspropsprops', props) }
         if (getWeight) {
+            updateDate(getWeight);
             setTimeout(async () => {
                 updateLoading(false);
-                updateDate(getWeight)
+
             }, 500);
             return (
                 <View>
@@ -436,14 +437,15 @@ const DataFetchComponents = ({
         if (!data.loading) {
             if (data.getNotificationData != undefined) {
                 setTimeout(async () => {
+                    updateDate(data?.getNotificationData);
                     updateLoading(false);
-                    updateDate(data?.getNotificationData)
+
                 }, 100);
             }
             else if (data.getNotificationData == null) {
                 setTimeout(async () => {
                     updateLoading(false);
-                    updateDate(data?.getNotificationData)
+                    updateDate(data?.getNotificationData);
                 }, 100);
             }
             else {
@@ -466,9 +468,10 @@ const DataFetchComponents = ({
         if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getDashboardLotViewMore) }
             if (props.data?.getDashboardLotViewMore != undefined) {
+                updateDate(props.data);
                 setTimeout(async () => {
                     updateLoading(false);
-                    updateDate(props.data)
+
                 }, 500);
             }
             else if (props.data?.getDashboardLotViewMore == null) {
@@ -508,9 +511,10 @@ const DataFetchComponents = ({
         if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getDashboardEnquiryViewMore) }
             if (props.data?.getDashboardEnquiryViewMore != undefined) {
+                updateDate(props.data);
                 setTimeout(async () => {
                     updateLoading(false);
-                    updateDate(props.data)
+
                 }, 500);
             }
             else if (props.data?.getDashboardEnquiryViewMore == null) {
@@ -550,9 +554,10 @@ const DataFetchComponents = ({
         if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getLots) }
             if (props.data?.getLots != undefined) {
+                updateDate(props.data);
                 setTimeout(async () => {
                     updateLoading(false);
-                    updateDate(props.data)
+
                 }, 500);
             }
             else if (props.data?.getLots == null) {
@@ -595,9 +600,10 @@ const DataFetchComponents = ({
         if (!loading) {
             { console.log('loadingloadingloadingloading', props.data?.getBids) }
             if (props.data?.getBids != undefined) {
+                updateDate(props.data);
                 setTimeout(async () => {
                     updateLoading(false);
-                    updateDate(props.data)
+
                 }, 500);
             }
             else if (props.data?.getBids == null) {
@@ -638,9 +644,10 @@ const DataFetchComponents = ({
         const { error, getStates, loading } = props.data;
         { console.log('what is the state data', getStates) }
         if (getStates != undefined && getStates) {
+            updateDate(getStates);
             setTimeout(async () => {
                 updateLoading(false);
-                updateDate(getStates)
+
             }, 500);
             return (
                 <View>
@@ -667,9 +674,10 @@ const DataFetchComponents = ({
         const { error, getRoles, loading } = props.data;
         { console.log('propspropsprops ---- ', props) }
         if (getRoles) {
+            updateDate(getRoles);
             setTimeout(async () => {
                 updateLoading(false);
-                updateDate(getRoles)
+
             }, 500);
             return (
                 <View>
@@ -696,9 +704,10 @@ const DataFetchComponents = ({
         const { error, getMandiRates, loading } = props.data;
         { console.log('propspropsprops111111 ---- ', props) }
         if (getMandiRates) {
+            updateDate(getMandiRates);
             setTimeout(async () => {
                 updateLoading(false);
-                updateDate(getMandiRates)
+
             }, 500);
             return (
                 <View>
@@ -729,9 +738,10 @@ const DataFetchComponents = ({
         const { error, getPrivacyPolicyInfo, loading } = props.data;
         { console.log('propspropsprops ------------------', props) }
         if (getPrivacyPolicyInfo) {
+            updateDate(getPrivacyPolicyInfo);
             setTimeout(async () => {
                 updateLoading(false);
-                updateDate(getPrivacyPolicyInfo)
+
             }, 500);
             return (
                 <View>
@@ -811,10 +821,11 @@ const DataFetchComponents = ({
                             }, 100);
                             return <View />;
                         }
+                        updateDate(data);
                         setTimeout(async () => {
                             updateLoading(false);
                         }, 100);
-                        updateDate(data)
+
                         return <View />
                     }}
                 </Query>
@@ -842,10 +853,11 @@ const DataFetchComponents = ({
                             }, 100);
                             return <View />;
                         }
+                        updateDate(data)
                         setTimeout(async () => {
                             updateLoading(false);
                         }, 100);
-                        updateDate(data)
+
                         return <View />
                     }}
                 </Query>
@@ -873,10 +885,11 @@ const DataFetchComponents = ({
                             }, 100);
                             return <View />;
                         }
+                        updateDate(data)
                         setTimeout(async () => {
                             updateLoading(false);
                         }, 100);
-                        updateDate(data)
+
                         return <View />
                     }}
                 </Query>
@@ -903,10 +916,11 @@ const DataFetchComponents = ({
                             }, 100);
                             return <View />;
                         }
+                        updateDate(data.districtsByState)
                         setTimeout(async () => {
                             updateLoading(false);
                         }, 100);
-                        updateDate(data.districtsByState)
+
                         return <View />
                     }}
                 </Query>
@@ -938,10 +952,11 @@ const DataFetchComponents = ({
                             }, 100);
                             return <View />;
                         }
+                        updateDate(data.getTaluk);
                         setTimeout(async () => {
                             updateLoading(false);
                         }, 100);
-                        updateDate(data.getTaluk);
+
                         return <View />
                     }}
                 </Query>

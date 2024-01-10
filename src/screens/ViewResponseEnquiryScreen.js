@@ -1,18 +1,16 @@
-import React, { useEffect, useContext, useState, createRef } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Platform, FlatList, Alert, Linking, } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { useFocusEffect } from '@react-navigation/native';
-import { AuthContext } from '../components/AuthContext';
-import Loading from '../components/Loading';
-import DataFetchComponents from '../components/DataFetchComponents';
-import SellerInfoCompnents from '../components/SellerInfoCompnents';
-import moment from 'moment';
 import { useMutation } from '@apollo/react-hooks';
+import analytics from '@react-native-firebase/analytics';
+import { useFocusEffect } from '@react-navigation/native';
 import gql from 'graphql-tag';
+import moment from 'moment';
+import React, { createRef, useContext, useEffect, useState } from 'react';
+import { FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
-import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
-
+import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 const SHOWINTERESTENQUIRY_QUERY = gql`
 mutation ($enquiryId: ID!){
     enquiryInterest(enquiryId: $enquiryId) 
@@ -38,8 +36,8 @@ const ViewResponseEnquiryScreen = ({ navigation, route }) => {
     const flatList = createRef();
     const [enquiryInterest, { loading, error, data }] = useMutation(SHOWINTERESTENQUIRY_QUERY);
     const [NotificationStatus, { }] = useMutation(NOTIFICATIONSTATUS_QUERY);
-    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = useMutation (MOBILENUMBERAUDIT_QUERY)
-    const [item,setItem] = useState(null)
+    const { getData: getMobileView, loading: mobileViewLoading, error: mobileViewErr, data: mobileViewData } = useMutation(MOBILENUMBERAUDIT_QUERY)
+    const [item, setItem] = useState(null)
 
     useFocusEffect(
         React.useCallback(() => {
@@ -107,10 +105,15 @@ const ViewResponseEnquiryScreen = ({ navigation, route }) => {
     //     }
     // }, [mobileViewData])
 
-    const onPressMakeCall = async(item) => {
+    const onPressMakeCall = async (item) => {
         setItem(item);
+        analytics().logEvent(
+            "call", {
+            transactiontype: "Enquiry", transactionid: item.Id, screen: "ViewResponseEnquiryScreen", number: item.MobileNo
+        }
+        );
         await handlePhoneCall(item.MobileNo, navigation);
-        return await getMobileView({ variables: { transactiontype: "Enquiry", transactionid: item.Id }})
+        return await getMobileView({ variables: { transactiontype: "Enquiry", transactionid: item.Id } })
         // handlePhoneCall(item.MobileNo,navigation)
     }
     return (

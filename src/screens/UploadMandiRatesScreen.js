@@ -30,7 +30,7 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
         mandiratesSuccess,
         enterLocation,
         mandiTitle,
-        enterMandiTitle
+        enterMandiTitle,externalStoragePermission,appNeedWritePermission,camaraPermission,appNeedCamaraPermission
     } = useContext(AuthContext);
 
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
@@ -104,10 +104,10 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.CAMERA,
                     {
-                        title: 'Camera Permission',
-                        message: 'App needs camera permission',
+                        title: camaraPermission,
+                        message: appNeedCamaraPermission,
                     },
-                );
+            );
                 console.log("read camera persmission");
                 console.log(granted);
                 // If CAMERA Permission is granted
@@ -125,8 +125,8 @@ const UploadMandiRatesScreen = ({ navigation, route }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
                     {
-                        title: 'External Storage Write Permission',
-                        message: 'App needs write permission',
+                        title: externalStoragePermission,
+                        message: appNeedWritePermission,
                     },
                 );
                  console.log("write storage persmission");

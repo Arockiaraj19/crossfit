@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState, createRef } from 'react';
-import { StyleSheet, View, Image, Text, FlatList, Platform, TouchableOpacity, Linking, Alert } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { AuthContext } from '../components/AuthContext';
-import HeaderComponents from '../components/HeaderComponents';
+import analytics from '@react-native-firebase/analytics';
 import gql from 'graphql-tag';
-import { Query, useMutation } from 'react-apollo';
-import BidsInfoComponents from '../components/BidsInfoComponents';
-import Loading from '../components/Loading';
 import moment from "moment";
+import React, { createRef, useContext, useState } from 'react';
+import { Query, useMutation } from 'react-apollo';
+import { FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import BidsInfoComponents from '../components/BidsInfoComponents';
+import HeaderComponents from '../components/HeaderComponents';
+import Loading from '../components/Loading';
+import { colors, fonts, images } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
-import { fetchDataFromServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY,MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
-
+import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 const GETLOTSBYCOMMODITY_QUERY = gql`
 query getLotsByCommodityChild($commodityChildId: ID!){
     getLotsByCommodityChild(commodityChildId:$commodityChildId) {
@@ -65,7 +64,7 @@ const BidsDetailListScreen = ({ navigation, route }) => {
         }, 500);
     }
     const updateBidsInfo = (data) => {
-        console.log('bidDetailListscreen',data)
+        console.log('bidDetailListscreen', data)
         if (data.getLotsByCommodityChild != null) {
             var templist = data.getLotsByCommodityChild;
             var bidsTemp = [];
@@ -106,18 +105,17 @@ const BidsDetailListScreen = ({ navigation, route }) => {
         setArrayOfList(bidsTemp);
     }
 
-    // useEffect(() => {
-    //     if (mobileViewData != undefined) {
-    //         (async () => {
-    //             await handlePhoneCall(bidsDetails.MobileNo, navigation, mobileViewData.allowtoViewMobileNo)
-    //         })()
-    //     }
-    // }, [mobileViewData])
+   
 
-    const onPressMakeCall = async() => {
+    const onPressMakeCall = async () => {
+        analytics().logEvent(
+            "call", {
+            transactiontype: "Lot", transactionid: bidsDetails.Id, screen: "BidsDetailsListScreen", number: bidsDetails.MobileNo
+        }
+        );
         await handlePhoneCall(bidsDetails.MobileNo, navigation);
-        return await getMobileView({ variables: { transactiontype: "Lot", transactionid: bidsDetails.Id }})
-    } 
+        return await getMobileView({ variables: { transactiontype: "Lot", transactionid: bidsDetails.Id } })
+    }
 
     const onPressPlaceBit = () => {
         navigation.navigate('PlaceBitInfoScreen', { details: route?.params.details, bidsDetails: bidsDetails, addressId: route?.params.addressId, isEdit: false })
@@ -150,7 +148,7 @@ const BidsDetailListScreen = ({ navigation, route }) => {
                     <View style={styles.view_Detailbox}>
                         <View style={{ width: '48%', height: '100%', }}>
                             <Text style={styles.text_date}>{dateConvert(bidsDetails.CreatedOn)}</Text>
-                            <Text style={styles.text_grade}>{gradeText + ' : ' + bidsDetails.GradeValue }</Text>
+                            <Text style={styles.text_grade}>{gradeText + ' : ' + bidsDetails.GradeValue}</Text>
                             {(bidsDetails.IsOrganic == 1) && (
                                 <View style={{ marginLeft: 10, marginTop: 5, borderRadius: 10, justifyContent: 'center', alignItems: 'center', width: 70, height: 20, backgroundColor: '#d2f2e2' }}>
                                     <Text style={styles.text_organic}>{organic}</Text>
@@ -159,7 +157,7 @@ const BidsDetailListScreen = ({ navigation, route }) => {
                         </View>
                     </View>
                     <View style={{ width: '100%', }}>
-                        <View style={{ width: '100%', flexDirection: 'row',}}>
+                        <View style={{ width: '100%', flexDirection: 'row', }}>
                             {(bidsDetails.ProfilePicImageURL == '') && (
                                 <Image style={styles.profile_image}
                                     source={images.EMPTYPROFILEICON} />
@@ -187,14 +185,14 @@ const BidsDetailListScreen = ({ navigation, route }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <Text style={[styles.text_location, { marginLeft: 15, marginRight: 15, color: colors.text_Color, marginBottom: 10,}]}>{bidsDetails.AddressInfo}</Text>
-                    
+                        <Text style={[styles.text_location, { marginLeft: 15, marginRight: 15, color: colors.text_Color, marginBottom: 10, }]}>{bidsDetails.AddressInfo}</Text>
+
                         <View style={styles.view_headerBottom}>
-                        <TouchableOpacity style={styles.button_placeBit}
-                            onPress={onPressPlaceBit}>
-                            <Text style={styles.text_placeBid}>{placeBit}</Text>
-                        </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity style={styles.button_placeBit}
+                                onPress={onPressPlaceBit}>
+                                <Text style={styles.text_placeBid}>{placeBit}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -228,7 +226,7 @@ const BidsDetailListScreen = ({ navigation, route }) => {
                             style={{ flex: 1, marginBottom: 10, }}
                             data={arrayOfList}
                             keyExtractor={(x, i) => i}
-                            ListHeaderComponent={arrayOfList.length < 1 ?  () => headerViewInfo() : ''}
+                            ListHeaderComponent={arrayOfList.length < 1 ? () => headerViewInfo() : ''}
                             renderItem={({ item, index }) => {
                                 return (
                                     <BidsInfoComponents
@@ -358,7 +356,7 @@ const styles = StyleSheet.create({
         color: colors.white_color,
     },
     text_placeBid: {
-        marginLeft: 10, 
+        marginLeft: 10,
         marginRight: 10,
         fontFamily: fonts.MONTSERRAT_SIMEBOLD,
         fontSize: 14,

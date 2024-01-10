@@ -1,17 +1,16 @@
-import React, { useEffect, useContext, useState, createRef } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Platform, FlatList, Alert, Linking, } from 'react-native';
-import { colors, fonts, images } from '../core';
-import { useFocusEffect } from '@react-navigation/native';
-import { AuthContext } from '../components/AuthContext';
-import Loading from '../components/Loading';
-import DataFetchComponents from '../components/DataFetchComponents';
-import SellerInfoCompnents from '../components/SellerInfoCompnents';
-import moment from 'moment';
 import { useMutation } from '@apollo/react-hooks';
+import analytics from '@react-native-firebase/analytics';
+import { useFocusEffect } from '@react-navigation/native';
+import moment from 'moment';
+import React, { createRef, useContext, useState } from 'react';
+import { FlatList, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import DataFetchComponents from '../components/DataFetchComponents';
+import Loading from '../components/Loading';
+import SellerInfoCompnents from '../components/SellerInfoCompnents';
+import { colors, fonts, images } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
-import { fetchDataFromServer, sendDataToServer } from '../helpers/QueryFetching';
-import { ALLOWMOBILENUMVIEW_QUERY, MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
-
+import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
 const SellerInfoListScreen = ({ navigation, route }) => {
     const {
         sellerList,
@@ -28,7 +27,7 @@ const SellerInfoListScreen = ({ navigation, route }) => {
     const [isEmpty, setIsEmpty] = React.useState(false);
     const flatList = createRef();
     const [lotDetails, setLotDetails] = React.useState([]);
-    const [audit, { loading:auditLoding, error:auditError, data:auditData }] =useMutation(MOBILENUMBERAUDIT_QUERY);
+    const [audit, { loading: auditLoding, error: auditError, data: auditData }] = useMutation(MOBILENUMBERAUDIT_QUERY);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -44,7 +43,7 @@ const SellerInfoListScreen = ({ navigation, route }) => {
     // useEffect(() => {
     //     if (mobileViewData != undefined) {
     //         (async () => {
-                
+
     //         })()
     //     }
     // }, [mobileViewData])
@@ -90,15 +89,20 @@ const SellerInfoListScreen = ({ navigation, route }) => {
     const onPressMakeCall = async () => {
         try {
             console.log("onPressMakeCall");
-            console.log( { transactionType: "Lot", transactionId: lotDetails.Id });
+            analytics().logEvent(
+                "call", {
+                transactionType: "Lot", transactionId: lotDetails.Id, screen: "SellerInfoListScreen", number: lotDetails.MobileNo
+            }
+            );
+            console.log({ transactionType: "Lot", transactionId: lotDetails.Id });
             await handlePhoneCall(lotDetails.MobileNo, navigation);
             console.log(auditData);
-       await audit({ variables: { transactionType: "Lot", transactionId: lotDetails.Id }})
+            await audit({ variables: { transactionType: "Lot", transactionId: lotDetails.Id } })
         } catch (error) {
             console.log("onPressMakeCall Error");
             console.log(error);
         }
-  
+
     }
     const onPressSelectBid = (item) => {
         setLotDetails(item)

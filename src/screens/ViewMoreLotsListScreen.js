@@ -1,3 +1,4 @@
+import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { AppState, FlatList, Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../components/AuthContext';
@@ -8,7 +9,6 @@ import { colors, fonts, images } from '../core';
 import { filterItem } from '../helpers/AppManager';
 import { fetchDataFromServer } from '../helpers/QueryFetching';
 import { GETVIEWMORELOTSDATA_QUERY } from '../helpers/Schema';
-
 
 const ViewMoreLotsListScreen = ({ navigation, route }) => {
     const {
@@ -29,17 +29,20 @@ const ViewMoreLotsListScreen = ({ navigation, route }) => {
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
+    useFocusEffect(
+        React.useCallback(() => {
+            let isActive = true;
+
+            getLots()
+
+            return () => {
+                isActive = false;
+            };
+        }, [])
+    );
 
 
-    useEffect(() => {
-        let isActive = true;
-        console.log("geLotsOne");
-        getLots()
 
-        return () => {
-            isActive = false;
-        };
-    }, [])
 
 
     useEffect(() => {

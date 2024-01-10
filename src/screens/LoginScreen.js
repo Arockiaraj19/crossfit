@@ -1,11 +1,11 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View, Platform, TextInput, TouchableOpacity, Alert,ActivityIndicator } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
-import { colors, fonts } from "../core"
-import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../components/AuthContext';
 import { useMutation } from '@apollo/react-hooks';
+import { useNavigation } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import { getPushToken } from '../helpers/AppManager';
+import React, { useContext, useState } from 'react';
+import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { AuthContext } from '../components/AuthContext';
+import { colors, fonts } from "../core";
+import { validatePhone } from '../helpers/validation';
 
 const LOGIN_QUERY = gql`
   mutation ($mobileNo : String!,$deviceToken : String!){
@@ -23,54 +23,51 @@ const LOGIN_QUERY = gql`
 const LoginScreen = () => {
     const navigation = useNavigation();
     const [mobileNumber, setUserMobileNumber] = useState('')
-    const [error, setErr] = useState({ mobileNumErr: '' })
+ const [errorMessage, setErr] = useState({ mobileNumErr: '' })
     const [token, setToken] = useState('')
     const [loading, setLoading] = React.useState(false);
-    const { enterPhoneNumebr, pushDeviceToken,continueText,welcomeText,loginandSignup,errorNumer,dontHaveAccountText,singUpText,setIsShowLanguage,userNotExist } = useContext(AuthContext)
+    const {validMobileNumber, enterPhoneNumebr, pushDeviceToken, continueText, welcomeText, loginandSignup, errorNumer, dontHaveAccountText, singUpText, setIsShowLanguage, userNotExist,error } = useContext(AuthContext)
     const [userLogin, { }] = useMutation(LOGIN_QUERY)
 
 
 
     function handleLogin() {
-        if(loading){
+        if (loading) {
             return;
         }
-        if (mobileNumber === '') {
-            setErr((pre) => ({
-                ...pre,
-                mobileNumErr: errorNumer
-            }))
-            return;
-        } else if (mobileNumber.length < 10) {
-            setErr((pre) => ({
-                ...pre,
-                mobileNumErr: "Please enter vaild mobile number"
-            }))
-            return;
+      
+         
+      if (validatePhone(mobileNumber) == false) {
+            Alert.alert('',validMobileNumber, [{
+                text: 'OK', onPress: () => {
+                    return;
+                },
+            },
+            ]);
+        return;
         }
-        setErr({ mobileNumErr: '' })
+       
         return (async () => {
             try {
                 setLoading(true);
-                console.log("what is the login parameter");
-                console.log({ mobileNo: mobileNumber,deviceToken: pushDeviceToken} );
-                const otp = await userLogin({ variables: { mobileNo: mobileNumber,deviceToken: pushDeviceToken} })
+
+                const otp = await userLogin({ variables: { mobileNo: mobileNumber, deviceToken: pushDeviceToken } })
                 setLoading(false);
-                if(!otp.data.signInUser.error){
-                    navigation.navigate('OTPVerficationScreen', { mobileNo: mobileNumber,userId: otp.data.signInUser.userId })
-                } else { 
-                   if(otp?.data?.signInUser.Msg === 'User not registered'){
-                    Alert.alert('', userNotExist, [{
-                        text: 'OK', onPress: () => {
-                            return;
+                if (!otp.data.signInUser.error) {
+                    navigation.navigate('OTPVerficationScreen', { mobileNo: mobileNumber, userId: otp.data.signInUser.userId })
+                } else {
+                    if (otp?.data?.signInUser.Msg === 'User not registered') {
+                        Alert.alert('', userNotExist, [{
+                            text: 'OK', onPress: () => {
+                                return;
+                            },
                         },
-                    },
-                    ]);
-                   }
-                } 
+                        ]);
+                    }
+                }
             } catch (err) {
                 setLoading(false);
-                Alert.alert('Error', err.toString(), [{
+                Alert.alert(error, err.toString(), [{
                     text: 'OK', onPress: () => {
                         return;
                     },
@@ -81,18 +78,11 @@ const LoginScreen = () => {
         })()
     }
 
-    const renderError = () => {
-        if (error.mobileNumErr) {
-            return <View style={{ marginTop: 10, width: "80%", alignItems: 'flex-start' }}>
-                <Text style={{ color: "red" }}>{error.mobileNumErr}</Text>
-            </View>
-        }
-        return;
-    }
-     const navigateSignUpScreen = () => {
-        setIsShowLanguage((pre)=>!pre)
+    
+    const navigateSignUpScreen = () => {
+        setIsShowLanguage((pre) => !pre)
         navigation.navigate('EnterMobileNumberScreen')
-     }
+    }
     return (
         <KeyboardAvoidingView
             enabled
@@ -102,10 +92,10 @@ const LoginScreen = () => {
             <View style={[styles.view, { justifyContent: 'center', alignItems: 'center' }]}>
                 <Text style={styles.text_welcome}>{welcomeText}</Text>
                 <View style={styles.view_line}>
-                        <View style={[styles.line_view, { marginRight: 10, }]}></View>
-                        <Text style={styles.text_login}>{loginandSignup}</Text>
-                        <View style={[styles.line_view, { marginLeft: 10, }]}></View>
-                    </View>
+                    <View style={[styles.line_view, { marginRight: 10, }]}></View>
+                    <Text style={styles.text_login}>{loginandSignup}</Text>
+                    <View style={[styles.line_view, { marginLeft: 10, }]}></View>
+                </View>
                 <View style={styles.Input}>
                     <Text style={styles.text_code}>{' + 91'}</Text>
                     <TextInput style={[styles.textInput_view, { width: '80%', }]}
@@ -118,11 +108,11 @@ const LoginScreen = () => {
                     />
                 </View>
             </View>
-            {renderError()}
+            
             <View style={{ marginTop: 20, width: '100%', height: 45, alignItems: 'center' }}>
                 <TouchableOpacity style={styles.continue_touch}
                     onPress={() => handleLogin()}  >
-                     {loading?   <ActivityIndicator size="small" color={colors.white_color} />:<Text style={styles.continue_text}>{continueText}</Text>}      
+                    {loading ? <ActivityIndicator size="small" color={colors.white_color} /> : <Text style={styles.continue_text}>{continueText}</Text>}
                 </TouchableOpacity>
             </View>
 
@@ -171,6 +161,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.MONTSERRAT_BOLD,
         fontSize: 20,
         color: colors.text_Color,
+        textAlign: 'center' 
     },
     textInput_view: {
         marginLeft: 10,

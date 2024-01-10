@@ -82,7 +82,7 @@ const BidsProductsScreen = ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const updateLoading = (isloading) => {
-        console.log('updateLoadingupdateLoadingupdateLoadingupdateLoading --- ');
+       // console.log('updateLoadingupdateLoadingupdateLoadingupdateLoading --- ');
     }
     const updateDate = (list) => {
         console.log('listlistlistlist 321212121212 --- ', list);
@@ -121,7 +121,7 @@ const BidsProductsScreen = ({ navigation, route }) => {
             setArrayOfList(arrayInfo);
 
             var tempStatusArray = list.getBidStatus;
-            console.log('tempStatusArraytempStatusArraytempStatusArraytempStatusArray', tempStatusArray)
+         //   console.log('tempStatusArraytempStatusArraytempStatusArraytempStatusArray', tempStatusArray)
             var arrayStatusInfo = []
             let param = {
                 'Id': '0',
@@ -175,12 +175,12 @@ const BidsProductsScreen = ({ navigation, route }) => {
                         setLoading(false)
                         showToastMessage('toastPopup', `${bidsInfo.CommodityChildName} ${res.data.deleteBid}`)
                         getbidDetails()
-                        console.log('res - - - - - - - - -- - - - - ', res);
+                       // console.log('res - - - - - - - - -- - - - - ', res);
                     })
                     .catch(e => {
                         setLoading(false)
                         setLoadingIndicator(false)
-                        console.log('errer ------------------', e.message);
+                       // console.log('errer ------------------', e.message);
                     });
                 return;
             },
@@ -210,11 +210,11 @@ const BidsProductsScreen = ({ navigation, route }) => {
             const filtered = arrayOfMain.filter(entry => Object.values(entry).some(val => typeof val === "string" && val.includes(item.Name)));
             setArrayOfList(filtered)
             if (filtered.length == 0) {
-                console.log('filtered 111 ', filtered);
+             //   console.log('filtered 111 ', filtered);
                 setIsEmpty(true)
             }
             else {
-                console.log('filtered 22222 ', filtered);
+              //  console.log('filtered 22222 ', filtered);
                 setIsEmpty(false)
             }
         }
@@ -227,7 +227,7 @@ const BidsProductsScreen = ({ navigation, route }) => {
     const onPressViewLot = (info) => {
         var params = info;
         params.isAccept = false
-        console.log('BidProductScreen paramsparamsparamsparamsparams', params)
+      //  console.log('BidProductScreen paramsparamsparamsparamsparams', params)
         navigation.navigate('EditBidsInfoScreen', params);
     }
     return (

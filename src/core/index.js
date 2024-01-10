@@ -91,5 +91,8 @@ export const images = {
     ACTIVITYSELL: require('../assets/images/viewbuy.png'),
     ACTIVITYENQUIRY: require('../assets/images/enquiry.png'),
     ACTIVITYLOTICON: require('../assets/images/myactivity-loticon.png'),
-    MYACTIVITYLOTIMAGE: require('../assets/images/loticon.png')
+    MYACTIVITYLOTIMAGE: require('../assets/images/loticon.png'),
+    PRIVACY_POLICY: require('../assets/images/privacy_policy.png'),
+TERMSANDCONDITION: require('../assets/images/term_and_condition.png'),
+
 };

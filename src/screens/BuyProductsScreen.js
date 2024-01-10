@@ -1,6 +1,6 @@
 import { useNavigationState } from '@react-navigation/native';
 import gql from 'graphql-tag';
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Query, graphql } from 'react-apollo';
 import { BackHandler, FlatList, Image, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -65,7 +65,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
     console.log("Buy product Screen");
     const navigationState = useNavigationState(state => state);
 
-    const memoizedNavigationState = useMemo(() => navigationState, [navigationState]);
+
 
     const [searchText, setSearchText] = React.useState('');
     const [isFetchDate, setIsFetchDate] = React.useState(false);
@@ -99,6 +99,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
     } = useContext(AuthContext);
 
     const reloadBuyScreen = async () => {
+        console.log("reloadByuScren");
         setState({
             ...state,
             isShowSubCategory: false,
@@ -110,7 +111,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         });
     }
 
-    useEffect(() => {
+    React.useCallback(() => {
         console.log("first");
         let isActive = true;
         reloadBuyScreen()
@@ -136,13 +137,14 @@ const BuyProductsScreen = ({ navigation, route }) => {
             } catch (e) {
                 console.log(e);
             }
-        }, 0);
+        }, 100);
         return () => {
             isActive = false;
         };
     }, [])
         ;
     const updateBack = async () => {
+        console.log("update back");
         try {
             await EncryptedStorage.setItem('isBack', '');
         } catch (e) {
@@ -174,12 +176,12 @@ const BuyProductsScreen = ({ navigation, route }) => {
             mainSubCategoryList: [],
         });
         setIsFetchDate(true);
-        setLoading(true);
+        //   setLoading(true);
         // return () => backHandler.remove()
     }, [])
 
     const handleBackButtonClick = () => {
-
+        console.log("handleBackButtonClick");
         if (backActions.isClickSubCategory) {
             setIsShowCategory(true);
             var curentDate = { title: '', Id: backActions.categoryId };
@@ -191,7 +193,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
     }
 
     const onSearch = () => {
-        console.log('state.isShowSubCategory', state.mainCommoditiesGroupList)
+      //  console.log('state.isShowSubCategory', state.mainCommoditiesGroupList)
         if (state.isShowSubCategory) {
             if (searchText != '') {
                 const filtered = state.mainSubCategoryList.filter(entry => Object.values(entry).some(val => typeof val === "string" && val.includes(searchText)));
@@ -227,6 +229,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
     }
 
     const GetCommodityTypeComponent = graphql(COMMODITYTYPE_QUERY)(props => {
+        console.log("getCommodity Type component");
         const { error, data, loading } = props.data;
         if (error) {
             setIsFetchDate(false);
@@ -247,12 +250,12 @@ const BuyProductsScreen = ({ navigation, route }) => {
         return <View />;
     });
     const updateSubValue = () => {
-        setTimeout(async () => {
-            setState({
-                ...state,
-                isSubcategory: false,
-            });
-        }, 500);
+
+        console.log("update sub valuie");
+        setState({
+            ...state,
+            isSubcategory: false,
+        });
     }
     const updateSubCategoryInfo = (data) => {
         console.log('data.commodityChildByGroup', data.commodityChildByGroup);
@@ -268,8 +271,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         }, 100);
     }
     const updateValue = (commoditiesList) => {
-
-        setLoading(false)
+        console.log("updateValue");
         setIsFetchDate(false);
         setIsFetch(true);
         EncryptedStorage.setItem('reloadBuy', "false")
@@ -306,8 +308,11 @@ const BuyProductsScreen = ({ navigation, route }) => {
             commoditiesGroupList: commoditiesGroupListTemp,
             mainCommoditiesGroupList: commoditiesGroupListTemp,
         });
+
+        setLoading(false);
     }
     const onPressSelectItem = (item) => {
+        console.log("onPressSelectionItem");
         setSearchText('')
         var templist = state.getcommoditiesList;
         var commoditiesListTemp = []
@@ -340,6 +345,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         console.log('categotyInfoListcategotyInfoList', categotyInfoList)
     }
     const onPressSubCategortItem = (item) => {
+        console.log("onPressSubCategortItem");
         setSearchText('')
         setIsShowCategory(false);
         setState({
@@ -355,6 +361,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         });
     }
     const onPressSubCategortDetail = async (item) => {
+        console.log("onPressSubCategortDetail");
         setSearchText('')
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
@@ -364,6 +371,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         navigation.navigate('DeliveryAddressScreen', { details: item, isType: 'buy' });
     }
     const onPressEnquireDetail = async (item) => {
+        console.log(" onPressEnquireDetail");
         setSearchText('')
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
@@ -373,6 +381,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         navigation.navigate('DeliveryAddressScreen', { details: item, isType: 'enquire' });
     }
     const onPressShowLanguage = async () => {
+        console.log("onPressShowLanguage");
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
         } catch (e) {
@@ -381,6 +390,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         navigation.navigate('LanguageListScreen')
     }
     const onPressProile = async () => {
+        console.log("onPressProile");
         try {
             await EncryptedStorage.setItem('isBack', 'yes');
         } catch (e) {
@@ -389,6 +399,7 @@ const BuyProductsScreen = ({ navigation, route }) => {
         navigation.navigate('ProfileDetailScreen')
     }
     const onPressRemoveSearch = () => {
+        console.log("onPressRemoveSearch");
         setSearchText('')
         if (state.isShowSubCategory) {
             setState({
@@ -404,10 +415,12 @@ const BuyProductsScreen = ({ navigation, route }) => {
             });
         }
     }
+
+
     return (
 
         <View style={styles.container}>
-            {console.log("screenRendering")}
+
             <View style={styles.view_header}>
                 <HeaderComponents
                     headerTitle={state.categortTitle}
@@ -470,12 +483,15 @@ const BuyProductsScreen = ({ navigation, route }) => {
                             style={{
                                 flex: 1,
                             }}
-                            showsVerticalScrollIndicator={false}
+
                             data={state.getcommoditiesList}
-                            keyExtractor={(x, i) => i}
+
+                            keyExtractor={(x, i) => `itemsocial${x.Id}`}
                             renderItem={({ item, index }) => {
+
                                 return (
                                     <CommoditiesInfoComponent
+                                        key={item.Id}
                                         props={item}
                                         onPressSelectItem={onPressSelectItem} />
                                 )
@@ -571,5 +587,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BuyProductsScreen;
+export default React.memo(BuyProductsScreen);
 

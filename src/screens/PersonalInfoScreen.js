@@ -17,6 +17,8 @@ import Loading from '../components/Loading';
 import { colors, fonts, images } from '../core';
 import { getUserProfileImage } from '../helpers/AppManager';
 import uploadImageToStorage from '../helpers/uploadImage';
+import { validateUserName } from '../helpers/validation';
+
 const GETUSERDETAIL_QUERY = gql`
 query {
     getUserProfile{
@@ -341,238 +343,10 @@ const PersonalInfoScreen = ({ navigation }) => {
         setBidText,
         setEnquiryText,
         setLoginLabel
-
+        
     } = useContext(AuthContext);
 
-    // const updateLableText = async (data) => {
-    //     setIsGetLables(false)
-    //     console.log('data ------------------', data);
-    //     var loginScreenLabels = data.getAppLabels.allLabels.LoginScreen;
-    //     var sortScreenLabels = data.getAppLabels.allLabels.Sort;
-    //     var profileScreenLabels = data.getAppLabels.allLabels.ProfileDetails;
-    //     var personalDetailsScreenLabels = data.getAppLabels.allLabels.PersonalDetails;
-    //     var farmDetailsScreenLabels = data.getAppLabels.allLabels.FarmDetails;
-    //     var locationScreenLabels = data.getAppLabels.allLabels.MyLocation;
-    //     var sellScreenLabels = data.getAppLabels.allLabels.Sell;
-    //     var buyScreenLabels = data.getAppLabels.allLabels.Buy;
-    //     var enquiryScreenLabels = data.getAppLabels.allLabels.Enquiry;
-    //     var footerScreenLabels = data.getAppLabels.allLabels.Footer;
-    //     var dashboardScreenLabels = data.getAppLabels.allLabels.DashboardScreen;
-
-    //     setDeleteAccount(profileScreenLabels.DeleteAccountLabel)
-    //     setDeleteMessage1(profileScreenLabels.DeleteAccountMessage1)
-    //     setDeleteMessage2(profileScreenLabels.DeleteAccountMessage2)
-    //     setDeleteMessage3(profileScreenLabels.DeleteAccountMessage3)
-    //     setDeleteMessage4(profileScreenLabels.DeleteAccountMessage4)
-
-    //     setEnterLocation(personalDetailsScreenLabels.MandiratesLocationValidation)
-    //     setNoEnquiry(enquiryScreenLabels.NoEnquiry)
-    //     setQuickSearch(dashboardScreenLabels.QuickSearch)
-    //     setCheckRate(personalDetailsScreenLabels.CheckRates)
-    //     setAreYouSure(profileScreenLabels.LogoutMsg)
-    //     setViewMore(dashboardScreenLabels.ViewMore)
-    //     setMandiratesSuccess(personalDetailsScreenLabels.MandiratesSuccess)
-    //     setEnquiries(enquiryScreenLabels.Enquiries)
-    //     setSellerList(sellScreenLabels.SellerList)
-    //     setLotAddedOn(enquiryScreenLabels.Lotaddedon)
-    //     setExpectedon(enquiryScreenLabels.Expectedon)
-    //     setShowInterest(enquiryScreenLabels.ShowInterest)
-    //     setEnquiryAddedOn(enquiryScreenLabels.Enquiryaddedon)
-    //     setViewEnquiries(enquiryScreenLabels.ViewEnquiries)
-    //     setEditEnquiry(enquiryScreenLabels.EditEnquiry)
-    //     setDeleteEnquiryText(enquiryScreenLabels.DeleteEnquiry)
-    //     setViewResponses(enquiryScreenLabels.ViewResponses)
-    //     setDeleteEnquiryAlert(enquiryScreenLabels.DeleteEnquiryAlert)
-    //     setUpdateSuccess(buyScreenLabels.BidSuccessMsg)
-    //     setEnquiryMessage(enquiryScreenLabels.EnquirySuccessMsg)
-
-    //     setSellerText(dashboardScreenLabels.Seller)
-    //     setEmptyNotification(dashboardScreenLabels.NotificationNotAvailableLabel)
-    //     setNotificationTitle(dashboardScreenLabels.NotificationLabel)
-    //     setActivity(dashboardScreenLabels.MyActivityLabel)
-    //     setEnquiryText(dashboardScreenLabels.EnquiryLabel)
-
-    //     setNoMandi(personalDetailsScreenLabels.NoMandiRates)
-    //     setDeleteAddress(locationScreenLabels.DeleteAddress)
-    //     setLogoutYes(locationScreenLabels.YesButton)
-    //     setLogoutCancel(locationScreenLabels.CancelButton)
-    //     setNoLods(sellScreenLabels.NoLot)
-    //     setNoBids(buyScreenLabels.NoBids)
-
-    //     setWatchVideo(dashboardScreenLabels.WatchVideo)
-
-    //     setGetStart(loginScreenLabels.GetStarted)
-    //     setWelcomeText(loginScreenLabels.Header);
-    //     setContinueText(loginScreenLabels.Continue);
-    //     setEnterPhoneNumebr(loginScreenLabels.MobilePlaceholder)
-    //     setEnterYourName(loginScreenLabels.NamePlaceholder)
-    //     setErrorNumer(loginScreenLabels.MobileValidation)
-    //     setErrorName(loginScreenLabels.NameValidation)
-    //     setLoginandSignup(loginScreenLabels.SignUp);
-    //     setContinueText(loginScreenLabels.Continue)
-    //     setChooseLanguage(loginScreenLabels.Language);
-    //     setOtpVerification(loginScreenLabels.OTPHeader);
-    //     setEnterOtp(loginScreenLabels.OTPEnter);
-    //     setDidntReceive(loginScreenLabels.OTPRetry);
-    //     setApplyText(loginScreenLabels.Apply);
-    //     setReferenceText(loginScreenLabels.EnterReferenceCode);
-    //     setAppliedReference(loginScreenLabels.AppliedYourReferenceCode);
-    //     setRoleAlert(loginScreenLabels.RolePlaceholder)
-    //     setSelectRole(loginScreenLabels.RolePlaceholder);
-    //     setLoginLabel(loginScreenLabels.LogIn)
-
-    //     setSortBy(sortScreenLabels.Sortby)
-
-    //     setProfileText(profileScreenLabels.Profile)
-    //     setEditProfileText(profileScreenLabels.EditProfile)
-    //     setPersonalInformation(profileScreenLabels.PersonalInfo)
-    //     setLocationDetail(profileScreenLabels.LocationDetails)
-    //     setFarmDetails(profileScreenLabels.FarmDetails)
-    //     setLogout(profileScreenLabels.Logout)
-    //     setNext(profileScreenLabels.Next)
-    //     setHelpLine(profileScreenLabels.HelpLine)
-
-    //     setNameText(personalDetailsScreenLabels.Name)
-    //     setGender(personalDetailsScreenLabels.Gender)
-    //     setDateOfBirth(personalDetailsScreenLabels.DateOfBirth)
-    //     setMobileNumber(personalDetailsScreenLabels.MobileNumber)
-    //     setEmailId(personalDetailsScreenLabels.Email)
-    //     setPreferredRole(personalDetailsScreenLabels.PreferredRole)
-    //     setNameAlert(personalDetailsScreenLabels.NameMandatory)
-    //     setGenderAlert(personalDetailsScreenLabels.GenderMandatory)
-    //     setDobAlert(personalDetailsScreenLabels.DOBMandatory)
-    //     setMobileAlert(personalDetailsScreenLabels.MobileNumberMandatory)
-    //     setEmailAlert(personalDetailsScreenLabels.EmailMandatory)
-    //     setLanguageAlert(personalDetailsScreenLabels.LanguageMandatory)
-    //     setMaleText(personalDetailsScreenLabels.Male)
-    //     setFemaleText(personalDetailsScreenLabels.Female)
-    //     setOtherText(personalDetailsScreenLabels.Other)
-    //     setPreferredLanguage(personalDetailsScreenLabels.PreferredLanguage)
-    //     setMandiRate(personalDetailsScreenLabels.UploadMandiRates)
-    //     setProfileImage(personalDetailsScreenLabels.ProfileImage)
-    //     setBrowseFile(personalDetailsScreenLabels.BrowseFile)
-    //     setUseCamera(personalDetailsScreenLabels.UseCamera)
-    //     setLocationMandi(personalDetailsScreenLabels.Location)
-    //     setUploaDMandi(personalDetailsScreenLabels.Upload)
-    //     setMandiRates(personalDetailsScreenLabels.MandiRates)
-    //     setRealmandiRates(personalDetailsScreenLabels.Getrealtimemandirates)
-    //     setChangeProfile(personalDetailsScreenLabels.ChangeProfile)
-
-    //     setCultivableText(farmDetailsScreenLabels.CultivableLand)
-    //     setIrrigationText(farmDetailsScreenLabels.Irrigation)
-    //     setGroundWaterText(farmDetailsScreenLabels.Groundwater)
-    //     setSprinklerText(farmDetailsScreenLabels.Sprinkler)
-    //     setBorewellText(farmDetailsScreenLabels.Borewell)
-    //     setOrganicText(farmDetailsScreenLabels.OrganicFarm)
-    //     setToolsText(farmDetailsScreenLabels.ToolsAvailableforRent)
-    //     setLivestockText(farmDetailsScreenLabels.Livestock)
-    //     setExpertText(farmDetailsScreenLabels.ExpertAdviceNeeded)
-
-
-    //     setUserState(locationScreenLabels.State)
-    //     setDistrict(locationScreenLabels.District)
-    //     setTaluk(locationScreenLabels.Taluk)
-    //     setVillage(locationScreenLabels.Village)
-    //     setDoorNo(locationScreenLabels.Door)
-    //     setPincode(locationScreenLabels.Pincode)
-    //     setPlaceholderState(locationScreenLabels.StateMandatory)
-    //     setPlaceholderDistrict(locationScreenLabels.DistrictMandatory)
-    //     setPlaceholderTaluk(locationScreenLabels.TalukMandatory)
-    //     setPlaceholderTown(locationScreenLabels.TownMandatory)
-    //     setPlaceholderVillage(locationScreenLabels.VillageMandatory)
-    //     setPlaceholderDoorNo(locationScreenLabels.DoorMandatory)
-    //     setPlaceholderPinCode(locationScreenLabels.PinMandatory)
-    //     setSelectAddress(locationScreenLabels.DeliveryAddressMandatory)
-    //     setDeleteAddresAlert(locationScreenLabels.DeleteAddressConfirm)
-
-    //     setDeliverAddress(sellScreenLabels.ProductLocation)
-    //     setAddNewAddress(sellScreenLabels.AddNewAddress)
-    //     setNoAddress(sellScreenLabels.AddNotAvailable)
-    //     setMyAddress(sellScreenLabels.MyAddress)
-    //     setType(sellScreenLabels.Type)
-    //     setPlaceholderType(sellScreenLabels.SelectType)
-    //     setListMyProduct(sellScreenLabels.ListProduct)
-    //     setGradeText(sellScreenLabels.Grade)
-    //     setGradePlaceholder(sellScreenLabels.SelectGrade)
-    //     setAvailableQuality(sellScreenLabels.AvailableQuantity)
-    //     setAvailableQualityPlaceholdery(sellScreenLabels.SelectQuantity)
-    //     setWeightPlaceholder(sellScreenLabels.Weight)
-    //     setOrganic(sellScreenLabels.Organic)
-    //     setPer(sellScreenLabels.Per)
-    //     setAcres(sellScreenLabels.CultivatedArea)
-    //     setAcresPlaceholder(sellScreenLabels.SelectCultivatedArea)
-    //     setProductPrice(sellScreenLabels.AskingPrice)
-    //     setLots(sellScreenLabels.Lots)
-    //     setQuantityText(sellScreenLabels.Quantity)
-    //     setMinAmountPerGvtAlert(sellScreenLabels.MSPValidationMessage)
-    //     setPickupAddress(sellScreenLabels.PickupLocation)
-
-    //     setProductPricePlaceholder(sellScreenLabels.SelectAskingPrice)
-    //     setSaveLot(sellScreenLabels.SaveLot)
-    //     setGradeAlert(sellScreenLabels.GradeMandatory)
-    //     setQuantityAlert(sellScreenLabels.AvailableQuantityMandatory)
-    //     setWeightAlert(sellScreenLabels.WeightMandatory)
-    //     setWeightUnitAlert(sellScreenLabels.AvailableQuantityUnitMandatory)
-    //     setAcreAlert(sellScreenLabels.CultivatedAreaMandatory)
-    //     setPriceAlert(sellScreenLabels.AskingPriceMandatory)
-    //     setSuccessText(sellScreenLabels.Success)
-    //     setSuccessLot(sellScreenLabels.SuccessMsg)
-    //     setViewLot(sellScreenLabels.ViewLot)
-    //     setBackHome(sellScreenLabels.BacktoHome)
-    //     setStatusText(sellScreenLabels.Status)
-    //     setPlaceBit(sellScreenLabels.PlaceBid)
-    //     setEditLot(sellScreenLabels.EditLot)
-    //     setDeleteLotInfo(sellScreenLabels.DeleteLot)
-    //     setDeleteLotAlert(sellScreenLabels.DeleteLotConfirmation)
-    //     setComingSoon(sellScreenLabels.NoCategory)
-
-    //     setBitsText(buyScreenLabels.BidProduct)
-    //     setSuccessBid(buyScreenLabels.BidSuccess)
-    //     setRequiredQuantity(buyScreenLabels.RequiredQuantity)
-    //     setBidPrice(buyScreenLabels.BidPrice)
-    //     setBidView(buyScreenLabels.ViewBid)
-    //     setStepText(buyScreenLabels.STEP)
-    //     setSaveAddresst(buyScreenLabels.Save)
-    //     setVillageString(buyScreenLabels.Village)
-    //     setBitsTitle(buyScreenLabels.Bids)
-    //     setEditBits(buyScreenLabels.EditBid)
-    //     setDeleteBits(buyScreenLabels.DeleteBid)
-    //     setBidPricePlaceholder(buyScreenLabels.BidPriceMandatory)
-    //     setUpdateon(buyScreenLabels.Updatedon)
-    //     setUpdateLot(buyScreenLabels.UpdateLot)
-    //     setUpdateBit(buyScreenLabels.UpdateBid)
-    //     setDeleteBidAlert(buyScreenLabels.DeleteBidConfirmation)
-    //     setBids(buyScreenLabels.Bids)
-    //     setCheckQuantityAlert(buyScreenLabels.CheckQuantityAlert)
-    //     setApproveErrorMsg(buyScreenLabels.ApproveErrorMsg)
-    //     setAreYouSureAccept(buyScreenLabels.ApproveConfirmMsg)
-    //     setAreYouSureDecline(buyScreenLabels.DeclineConfirmMsg)
-    //     setBidText(buyScreenLabels.Bids)
-
-    //     setEnquireText(enquiryScreenLabels.EnquireNow)
-    //     setBuyText(enquiryScreenLabels.BuyNow)
-    //     setSellText(enquiryScreenLabels.SellNow)
-    //     setNewEnquriyText(enquiryScreenLabels.NewEnquiry)
-    //     setDeliverOn(enquiryScreenLabels.DeliverOn)
-    //     setPlaceEnquiry(enquiryScreenLabels.PlaceEnquiry)
-    //     setDeliverOnAlert(enquiryScreenLabels.DeliveryDateMandatory)
-    //     setEnquirySuccess(enquiryScreenLabels.SuccessEnquiry)
-    //     setViewExpert(enquiryScreenLabels.ViewEnquiry)
-    //     setMyExpert(enquiryScreenLabels.MyEnquiry)
-    //     setAlertRequiredQuantity(enquiryScreenLabels.RequiredQuantityMandatory)
-    //     setBiddedOn(enquiryScreenLabels.Biddedon)
-    //     setPickup(enquiryScreenLabels.PickUpAddress)
-
-    //     setHome(footerScreenLabels.Home)
-    //     setBuy(footerScreenLabels.Buy)
-    //     setSell(footerScreenLabels.Sell)
-    //     setBids(footerScreenLabels.Bids)
-
-    //     await EncryptedStorage.setItem('languageId', userLanguageId);
-
-
-
-    // }
+   
     const {
 
         nameText,
@@ -593,6 +367,7 @@ const PersonalInfoScreen = ({ navigation }) => {
         roleAlert,
 
         selectRole,
+        validMobileNumber,  externalStoragePermission,appNeedWritePermission,camaraPermission,appNeedCamaraPermission,validEmail,profileUpdated,validUserName
     } = useContext(AuthContext);
     const [updateloading, setUpdateLoading] = React.useState(false);
     const [loadingIndicator, setLoadingIndicator] = React.useState(false);
@@ -679,8 +454,8 @@ const PersonalInfoScreen = ({ navigation }) => {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
                     {
-                        title: 'External Storage Write Permission',
-                        message: 'App needs write permission',
+                        title: externalStoragePermission,
+                        message: appNeedWritePermission,
                     },
                 );
                 return granted === PermissionsAndroid.RESULTS.GRANTED;
@@ -698,8 +473,8 @@ const PersonalInfoScreen = ({ navigation }) => {
                 const isGranted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.CAMERA,
                     {
-                        title: 'Camera Permission',
-                        message: 'App needs camera permission',
+                        title: camaraPermission,
+                        message: appNeedCamaraPermission,
                     },
                 );
                 return isGranted === PermissionsAndroid.RESULTS.GRANTED;
@@ -731,18 +506,9 @@ const PersonalInfoScreen = ({ navigation }) => {
     const uploadImage = async (imageUrl) => {
         setLoadingIndicator(true)
         const profileImage = await uploadImageToStorage(imageUrl);
-        // var urlaws = await request();
-        // let image_file = await fetch(imageUrl)
-        //     .then((r) => r.blob())
-        //     .then(
-        //         (blobFile) =>
-        //             new File([blobFile], uuid, {
-        //                 type: 'image/jpg',
-        //             }),
-        //     );
+      
         setTimeout(async () => {
-            // const res = await fetchUploadUrl(urlaws, image_file);
-            // let profileImage = res.url.split('?')[0];
+         
             updateUserProfileImage({
                 variables: { Id: userId, ProfilePicPath: profileImage }
             })
@@ -788,6 +554,7 @@ const PersonalInfoScreen = ({ navigation }) => {
         var re = /^\d{10}$/;
         return re.test(number);
     }
+   
     const onPressSaveProfile = async () => {
         if (userName == '') {
             Alert.alert('', nameAlert, [{
@@ -822,7 +589,14 @@ const PersonalInfoScreen = ({ navigation }) => {
             ]);
         }
         else if (validatePhone(userMobile) == false) {
-            Alert.alert('', "Please enter valid mobile number", [{
+            Alert.alert('', validMobileNumber, [{
+                text: 'OK', onPress: () => {
+                    return;
+                },
+            },
+            ]);
+        }else if (!validateUserName(userName)){
+            Alert.alert('', validUserName, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -830,7 +604,7 @@ const PersonalInfoScreen = ({ navigation }) => {
             ]);
         }
         else if (userEmail != '' && validateEmail(userEmail) == false) {
-            Alert.alert('', "Please enter valid email", [{
+            Alert.alert('',validEmail, [{
                 text: 'OK', onPress: () => {
                     return;
                 },
@@ -860,7 +634,7 @@ const PersonalInfoScreen = ({ navigation }) => {
             if (loading) {
                 setLoadingIndicator(true)
             }
-            console.log('updateUserProfile', { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) })
+          //  console.log('updateUserProfile', { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) })
             updateUserProfile({
                 variables: { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) }
             })
@@ -871,7 +645,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                     await EncryptedStorage.setItem('userName', userName);
 
                     await EncryptedStorage.setItem("languageId", userLanguageId);
-                    Alert.alert('Success', "Profile updated successfully", [{
+                    Alert.alert('Success', profileUpdated, [{
                         text: 'OK', onPress: () => {
 
                             navigation.goBack();
@@ -896,9 +670,7 @@ const PersonalInfoScreen = ({ navigation }) => {
     }
     const GetUserProfileInfo = graphql(GETUSERDETAIL_QUERY)(props => {
         const { error, loading } = props.data;
-        console.log(props.data);
-        console.log(loading, error, props.data?.getUserProfile, "what is the user Data");
-
+      
         if (error) {
 
             setIsFetch(false);
@@ -909,7 +681,7 @@ const PersonalInfoScreen = ({ navigation }) => {
         if (!loading) {
             // 
             if (props.data?.getUserProfile != undefined) {
-                console.log('propspropspropspropspropsprops', props.data.getUserProfile)
+             //   console.log('propspropspropspropspropsprops', props.data.getUserProfile)
                 setTimeout(async () => {
                     updateValue(props.data.getUserProfile);
                 }, 500);
@@ -1015,12 +787,10 @@ const PersonalInfoScreen = ({ navigation }) => {
         try {
             check(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES)
                 .then((result) => {
-                    console.log("what is the camera permission");
-                    console.log(result);
+                  
                     if (result != RESULTS.GRANTED) {
                         request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES).then((finalResult) => {
-                            console.log("what is the request in image permissions");
-                            console.log(finalResult);
+                          
                         });
                     }
 
@@ -1030,8 +800,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                 });
 
         } catch (err) {
-            console.log("what is the permission error");
-            console.log(err);
+          
 
         }
     }
@@ -1287,36 +1056,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                     handleSelectActionSheet(index)
                 }
             />
-            {/* {(isGetLables) && (
-                <Query query={lableQuery} variables={{ languageId: userLanguageId }}>
-                    {({ loading, error, data }) => {
-                        if (loading) {
-                            () =>
-                                updateValues(true);
-                            return null
-                        };
-                        if (error) {
-                            Alert.alert('Error', error.message, [{
-                                text: 'OK', onPress: () => {
-
-
-                                    return;
-                                },
-                            },
-                            ]);
-                            setUpdateLoading(false);
-                            updateValues(false);
-                            return null;
-                        }
-                        if (!data) {
-                            updateValues(false);
-                            return null;
-                        }
-                        updateLableText(data);
-                        return null;
-                    }}
-                </Query>
-            )} */}
+           
         </KeyboardAvoidingView>
     );
 };

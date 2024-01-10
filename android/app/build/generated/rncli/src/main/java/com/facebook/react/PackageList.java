@@ -17,12 +17,18 @@ import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import com.reactnativecommunity.clipboard.ClipboardPackage;
 // @react-native-community/masked-view
 import org.reactnative.maskedview.RNCMaskedViewPackage;
+// @react-native-community/netinfo
+import com.reactnativecommunity.netinfo.NetInfoPackage;
+// @react-native-firebase/analytics
+import io.invertase.firebase.analytics.ReactNativeFirebaseAnalyticsPackage;
 // @react-native-firebase/app
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 // @react-native-firebase/crashlytics
 import io.invertase.firebase.crashlytics.ReactNativeFirebaseCrashlyticsPackage;
 // @react-native-firebase/messaging
 import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
+// @react-native-firebase/remote-config
+import io.invertase.firebase.config.ReactNativeFirebaseConfigPackage;
 // @react-native-firebase/storage
 import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
 // react-native-compressor
@@ -35,6 +41,8 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.reactnativedocumentpicker.DocumentPickerPackage;
 // react-native-encrypted-storage
 import com.emeraldsanto.encryptedstorage.RNEncryptedStoragePackage;
+// react-native-fast-image
+import com.dylanvann.fastimage.FastImageViewPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-get-location
@@ -45,8 +53,6 @@ import com.imagepicker.ImagePickerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 // react-native-permissions
 import com.zoontek.rnpermissions.RNPermissionsPackage;
-// react-native-reanimated
-import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-restart
 import com.reactnativerestart.RestartPackage;
 // react-native-safe-area-context
@@ -105,21 +111,24 @@ public class PackageList {
       new CameraRollPackage(),
       new ClipboardPackage(),
       new RNCMaskedViewPackage(),
+      new NetInfoPackage(),
+      new ReactNativeFirebaseAnalyticsPackage(),
       new ReactNativeFirebaseAppPackage(),
       new ReactNativeFirebaseCrashlyticsPackage(),
       new ReactNativeFirebaseMessagingPackage(),
+      new ReactNativeFirebaseConfigPackage(),
       new ReactNativeFirebaseStoragePackage(),
       new CompressorPackage(),
       new DatePickerPackage(),
       new RNDeviceInfo(),
       new DocumentPickerPackage(),
       new RNEncryptedStoragePackage(),
+      new FastImageViewPackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeGetLocationPackage(),
       new ImagePickerPackage(),
       new LinearGradientPackage(),
       new RNPermissionsPackage(),
-      new ReanimatedPackage(),
       new RestartPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

@@ -7,7 +7,8 @@
  */
 
 import {
-  NavigationContainer
+  NavigationContainer,
+  useNavigationContainerRef
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
@@ -31,6 +32,7 @@ import Root from './src/navigation/routes';
 import TabNavigator from './src/screens/TabNavigator';
 
 
+import analytics from '@react-native-firebase/analytics';
 import messaging from '@react-native-firebase/messaging';
 import Modal from "react-native-modal";
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
@@ -73,7 +75,6 @@ import ViewLotListScreen from './src/screens/ViewLotListScreen';
 import ViewMoreEnquiryListScreen from './src/screens/ViewMoreEnquiryListScreen';
 import ViewMoreLotsListScreen from './src/screens/ViewMoreLotsListScreen';
 import ViewResponseEnquiryScreen from './src/screens/ViewResponseEnquiryScreen';
-
 const lableQuery = gql`
 query getAppLabels($languageId: ID!) {
     getAppLabels(languageId: $languageId) 
@@ -84,6 +85,8 @@ const Stack = createNativeStackNavigator();
 
 export const TasksDispatchContext = createContext(null);
 const App = () => {
+  const routeNameRef = React.useRef();
+  const navigationRef = useNavigationContainerRef();
   const [isLoading, setIsLoading] = useState(true);
   const [loginToken, setLoginToken] = useState('');
   const [getStart, setGetStart] = useState('Get Started');
@@ -310,6 +313,32 @@ const App = () => {
   const [userNotExist, setuserNotExist] = useState('User not registered')
   const [homeReload, setHomeFetch] = useState(false)
   const [referralCode, setReferralCode] = useState('Have Referral Code')
+
+
+  //arockia added things
+  const [agree, setAgree] = useState('I agree to the');//done
+  const [terms, setTerms] = useState('Terms & conditions');//done
+  const [internet, setInternet] = useState('No internet connection Please check your internet available');//done
+  const [validMobileNumber, setValidMobileNumber] = useState('Please enter vaild mobile number');//done
+  const [validUserName,setValidUserName]=useState('Please enter a valid Username');
+  const [error, setError] = useState('Error');//done
+  const [externalStoragePermission, setExternalStoragePermission] = useState('External Storage Write Permission');//done
+  const [appNeedWritePermission, setAppNeedWritePermission] = useState('App needs write permission');//done
+  const [camaraPermission, setCamaraPermission] = useState('Camera Permission');//done
+  const [appNeedCamaraPermission, setAppNeedCamaraPermission] = useState('App needs camera permission');//done
+  const [validEmail, setValidEmail] = useState('Please enter valid email');
+  const [profileUpdated, setProfileUpdated] = useState('Profile updated successfully');
+
+  const [addressAdded, setAddressAdded] = useState("Address added successfully");
+  const [addressUpdated, setAddressUpdated] = useState("Address updated successfully");
+  const [selectRequiredQuantity, setSelectRequiredQuantity] = useState("Please Select Required Quantity Unit");
+  const [ok, setOk] = useState("ok");
+  const [cancel, setCancel] = useState('cancel')
+  const [yes, setYes] = useState('Yes');
+  const [validPrice, setValidPrice] = useState('Please enter valid price');
+  const [validQuantity, setValidQuantity] = useState('Please enter valid quantity');
+  const [requiredQuantityMessage, setRequiredQuantityMessage] = useState('Required quantity should be less than or equal to available quantity');
+  const [privacyPolicy, setPrivacyPolicy] = useState('Privacy Policy');
 
   const store = {
     mandiTitle,
@@ -653,6 +682,27 @@ const App = () => {
     userNotExist, setuserNotExist,
     homeReload, setHomeFetch,
     referralCode, setReferralCode,
+
+
+    //arockia translation keys
+    agree,setAgree,
+    terms,setTerms,
+    internet, setInternet,
+    validMobileNumber, setValidMobileNumber,
+    error, setError,
+    externalStoragePermission, setExternalStoragePermission,
+    appNeedWritePermission, setAppNeedWritePermission,
+    camaraPermission, setCamaraPermission,
+    appNeedCamaraPermission, setAppNeedCamaraPermission,
+    validEmail, setValidEmail,
+    profileUpdated, setProfileUpdated,
+    addressAdded, setAddressAdded,
+    addressUpdated, setAddressUpdated,
+    selectRequiredQuantity, setSelectRequiredQuantity,
+    validPrice, setValidPrice,
+    validQuantity, setValidQuantity,
+    privacyPolicy, setPrivacyPolicy,
+    validUserName,setValidUserName
   };
 
 
@@ -856,6 +906,11 @@ const App = () => {
     var enquiryScreenLabels = data.getAppLabels.allLabels.Enquiry;
     var footerScreenLabels = data.getAppLabels.allLabels.Footer;
     var dashboardScreenLabels = data.getAppLabels.allLabels.DashboardScreen;
+    var general=data.getAppLabels.allLabels.General;
+    var warning=data.getAppLabels.allLabels.Warnings;
+    var permissions=data.getAppLabels.allLabels.Permissions;
+    var others=data.getAppLabels.allLabels.Others;
+    
     // const res = await EncryptedStorage.getItem('isProfile');
     // if (res != null || res != undefined) {
     //   return;
@@ -1078,6 +1133,26 @@ const App = () => {
     setSell(footerScreenLabels.Sell)
     setBids(footerScreenLabels.Bids)
 
+
+//new transalations
+
+setAgree(general.AgreeTandC);
+setTerms(general.TnC);
+ setInternet(warning.NoInternet);
+ setValidMobileNumber(warning.InvalidMobile);
+  setError(general.Error);
+  setExternalStoragePermission(permissions.ExternalStorageWritePermission);
+ setAppNeedWritePermission(permissions.NeedExternalStorageWritePermission);
+  setCamaraPermission(permissions.CameraPermission);
+   setAppNeedCamaraPermission(permissions.NeedCameraPermission);
+   setValidEmail(warning.InvalidEmail);
+   setProfileUpdated(others.ProfileUpdatedSuccess);
+  setAddressAdded(others.AddressAddedSuccess);
+setSelectRequiredQuantity(others.EnterValidQuntity);
+setValidPrice(others.EnterValidPrice);
+setValidQuantity(others.EnterValidQuntity);
+setPrivacyPolicy(general.PrivacyPolicy);
+setValidUserName(warning.InvalidUsername);
   }
 
   const toastConfig = {
@@ -1133,9 +1208,23 @@ const App = () => {
         <AuthContext.Provider value={store} >
           <TasksDispatchContext.Provider value={dispatch}>
             {!isModalVisible ? <NavigationContainer
-              onStateChange={(state) => {
-                if (!state) return;
+              ref={navigationRef}
+              onReady={() => {
 
+                routeNameRef.current = navigationRef.getCurrentRoute().name;
+              }}
+              onStateChange={async () => {
+
+                const previousRouteName = routeNameRef.current;
+                const currentRouteName = navigationRef.getCurrentRoute().name;
+
+                if (previousRouteName !== currentRouteName) {
+                  await analytics().logScreenView({
+                    screen_name: currentRouteName,
+                    screen_class: currentRouteName,
+                  });
+                }
+                routeNameRef.current = currentRouteName;
               }}>
               {(loginToken !== (Platform.OS === 'ios' ? undefined : null) && loginToken !== '') ?
                 <Stack.Navigator>

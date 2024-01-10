@@ -107,7 +107,7 @@ const AddNewAddressScreen = ({ navigation, route }) => {
             setArrayOfItems(item.Taluks);
         }
         else if (selectedType == 'Taluk') {
-            console.log('itemitemitemitemitemitemitemitemitem',item);
+           
             setUserTalukId(item.Id);
             setUserTaluk(item.Name);
         }

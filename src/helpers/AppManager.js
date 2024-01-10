@@ -115,6 +115,7 @@ export const showToastMessage = (type, text1, text2, handleToastClick = () => { 
 
 
 export const handlePhoneCall = async(phoneNum,navigation) => {
+    
     if (phoneNum != '') {
         Linking.openURL(`tel:${phoneNum}`)
     }

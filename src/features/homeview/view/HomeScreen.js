@@ -1,41 +1,38 @@
+import { useMutation } from '@apollo/react-hooks';
+import analytics from '@react-native-firebase/analytics';
+import messaging from '@react-native-firebase/messaging';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { AppState, Image, ImageBackground, Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { graphql } from 'react-apollo';
+import { ActivityIndicator, AppState, Image, ImageBackground, Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import LinearGradient from 'react-native-linear-gradient';
+import Toast from 'react-native-toast-message';
 import { AuthContext } from '../../../components/AuthContext';
 import HeaderComponents from '../../../components/HeaderComponents';
+import { adminUserIds } from '../../../constants/admin_static_data';
 import { colors, images } from '../../../core';
-
-import { graphql } from 'react-apollo';
-
-import LinearGradient from 'react-native-linear-gradient';
-
-import { useMutation } from '@apollo/react-hooks';
-import messaging from '@react-native-firebase/messaging';
-import EncryptedStorage from 'react-native-encrypted-storage';
-import Toast from 'react-native-toast-message';
-import { getUserName } from '../../../helpers/AppManager';
+import { getUserId, getUserName } from '../../../helpers/AppManager';
 import { sendDataToServer } from '../../../helpers/QueryFetching';
 import { USERINFORMATIONLOG_QUERY } from '../../../helpers/Schema';
 import BannerComponent from '../components/banner_component';
+import EnquiryComponent from '../components/enquiry_component';
+import LotComponent from '../components/lot_component';
 import { GET_ENQUIRY_QUERY, HOMEPAGEDETAIL_QUERY } from '../query/home_screen_query';
 import styles from '../style/home_screen_style';
-
-
-
 
 
 const HomeScreen = ({ navigation, route }) => {
     const {
         watchVideo,
-        enquiries,
-        lots,
+
         mandiRates,
         realmandiRates,
         checkRate,
-        viewMore,
-        sellerText,
+
+
         mandiRate,
-        welcome,
+
         myActivity,
         bidText,
         enquiryText,
@@ -51,6 +48,7 @@ const HomeScreen = ({ navigation, route }) => {
     const [userName, setUserName] = useState('');
     const [notification, setNotification] = useState()
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
+    const [showMandi, setShowMandi] = useState(false);
     const [state, setState] = React.useState({
         listOfCropfit: [],
         listOfLots: [],
@@ -86,8 +84,7 @@ const HomeScreen = ({ navigation, route }) => {
                 appState.current.match(/inactive|background/) &&
                 nextAppState === 'active'
             ) {
-                setIsFetch(true)
-                // setBackgroundFetch(true)
+                setIsFetch(true);
                 console.log('App has come to the foreground- homescreen!');
             }
             appState.current = nextAppState;
@@ -118,12 +115,24 @@ const HomeScreen = ({ navigation, route }) => {
 
     }, [notification])
 
-    const getName = () => {
+    const getName = async () => {
         setTimeout(async () => {
             let name = await getUserName()
             console.log(name);
             setUserName(name)
         }, 200);
+
+        let id = await getUserId();
+        console.log("what is the user id");
+        console.log(id);
+        console.log(adminUserIds);
+        if (adminUserIds.some((e) => e === id.toString())) {
+
+            setShowMandi(true);
+        }
+        analytics().setUserId(id);
+        analytics().logAppOpen();
+        crashlytics().setUserId(id);
     }
     //-------------------Notification listener------------
     onNotificationListeners = () => {
@@ -259,66 +268,8 @@ const HomeScreen = ({ navigation, route }) => {
     }
 
 
-    const LocalImageSize = ({ uri, desiredHeight }) => {
-        const [desiredWeight, setDesiredWeight] = React.useState(0)
-        Image.getSize(uri, (width, height) => {
-            setDesiredWeight(desiredHeight / height * width)
-        })
-        return (
-            <Image
-                source={images.BANNERREFERFRIEND}
-                style={{
-                    marginLeft: 20,
-                    marginBottom: 5,
-                    height: desiredHeight,
-                    width: desiredWeight,
-                }}
-            />
-        )
-    }
-    const RemoteBidsImage = ({ uri, desiredHeight }) => {
-        const [desiredWeight, setDesiredWeight] = React.useState(0)
-        Image.getSize(uri, (width, height) => {
-            setDesiredWeight(desiredHeight / height * width)
-        })
-        return (
-            <Image
-                source={{ uri }}
-                style={{
-                    height: desiredHeight,
-                    width: desiredWeight,
-                }}
-            />
-        )
-    }
-    const onPressViewMoreLots = () => {
-        navigation.navigate('ViewMoreLotsListScreen')
-    }
-    const onPressViewMoreEnquiries = () => {
-        navigation.navigate('ViewMoreEnquiryListScreen')
-    }
-    const ResizeImage = ({ uri, desiredHeight }) => {
-        const [desiredWeight, setDesiredWeight] = React.useState(0)
-        Image.getSize(uri, (width, height) => {
-            setDesiredWeight(desiredHeight / height * width)
-        })
-        return (
-            <Image
-                source={{ uri }}
-                style={{
-                    backgroundColor: 'transparent',
-                    height: desiredHeight,
-                    width: desiredWeight,
-                }}
-            />
-        )
-    }
-    const onPressLotDetails = (item) => {
-        navigation.navigate('SellerInfoListScreen', { details: item })
-    }
-    const onPressEnquiryDetails = (item) => {
-        navigation.navigate('ViewEnquiryInfoScreen', { details: item })
-    }
+
+
     const onPressMakeCall = (mobileNumber) => {
         if (mobileNumber != '') {
             Linking.openURL(`tel:${mobileNumber}`)
@@ -341,7 +292,7 @@ const HomeScreen = ({ navigation, route }) => {
         <View style={styles.container}>
             <View style={styles.view_header}>
                 <HeaderComponents
-                    headerTitle={`${welcome} ${userName}`}
+                    headerTitle={`${userName}`}
                     isHome={true}
                     isBackButton={false}
                     onPressProile={onPressProile}
@@ -357,7 +308,6 @@ const HomeScreen = ({ navigation, route }) => {
                 showsVerticalScrollIndicator={false}>
                 <View style={{ width: '100%', marginBottom: 50, alignItems: 'center' }}>
 
-                    <BannerComponent listOfCropfit={state.listOfCropfit} message={state.message} applink={state.applink} />
 
 
                     <View style={[styles.myActivity, { flexDirection: "column", padding: 20 }]}>
@@ -439,235 +389,51 @@ const HomeScreen = ({ navigation, route }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 120, marginTop: 25, overflow: 'hidden', }}>
-                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#b8fcd9', '#01a552']} style={{ width: '100%', height: 120, flexDirection: 'row', alignItems: 'center', backgroundColor: '#e2f3f0' }}>
-                            <Image style={{ marginLeft: 15, width: 40, height: 40, }}
-                                source={images.RUPEESICON}>
-                            </Image>
-                            <View style={{ marginLeft: 15, width: '40%', height: '100%', justifyContent: 'center', }}>
-                                <Text style={styles.text_MandiRate}>{mandiRates}</Text>
-                                <Text style={styles.text_real}>{realmandiRates}</Text>
-                            </View>
-                            <View style={{ marginLeft: 15, marginRight: 5, width: 150, height: '100%', justifyContent: 'center', }}>
-                                <View style={{ width: 150, height: 50, justifyContent: 'center', }}>
-                                    <TouchableOpacity style={styles.view_checkRate}
-                                        onPress={() => {
-                                            onPressMondiDetail()
-                                        }}>
-                                        <Text style={styles.text_checkRate}>{checkRate}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ width: 150, height: 50, justifyContent: 'center', }}>
-                                    <TouchableOpacity style={styles.view_checkRate}
-                                        onPress={() => {
-                                            onPressUploadMondi()
-                                        }}>
-                                        <Text style={styles.text_checkRate}>{mandiRate}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </LinearGradient>
-                    </View>
-                    <View style={styles.lotBox}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 40, marginTop: 20, }}>
-                            <LinearGradient colors={['#f3e0b9', '#ecaa25']} style={styles.linearGradient}>
-                                <Image style={{ width: 15, height: 24, }}
-                                    source={images.LOTSICON}>
+                    {
+                        loading ? <View style={{ width: '100%', height: 500, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size="large" />
+                        </View> : <LotComponent lotList={state.listOfLots} />
+                    }
+
+                    {
+                        loading ? null : <EnquiryComponent enquiryList={state.listOfEnquiry} />
+                    }
+                    {
+                        loading ? <View style={{ width: '100%', height: 250, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size="large" />
+                        </View> : <BannerComponent listOfCropfit={state.listOfCropfit} message={state.message} applink={state.applink} />
+                    }
+                    {
+                        showMandi && <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 120, marginTop: 25, overflow: 'hidden', }}>
+                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#b8fcd9', '#01a552']} style={{ width: '100%', height: 120, flexDirection: 'row', alignItems: 'center', backgroundColor: '#e2f3f0' }}>
+                                <Image style={{ marginLeft: 15, width: 40, height: 40, }}
+                                    source={images.RUPEESICON}>
                                 </Image>
+                                <View style={{ marginLeft: 15, width: '40%', height: '100%', justifyContent: 'center', }}>
+                                    <Text style={styles.text_MandiRate}>{mandiRates}</Text>
+                                    <Text style={styles.text_real}>{realmandiRates}</Text>
+                                </View>
+                                <View style={{ marginLeft: 15, marginRight: 5, width: 150, height: '100%', justifyContent: 'center', }}>
+                                    <View style={{ width: 150, height: 50, justifyContent: 'center', }}>
+                                        <TouchableOpacity style={styles.view_checkRate}
+                                            onPress={() => {
+                                                onPressMondiDetail()
+                                            }}>
+                                            <Text style={styles.text_checkRate}>{checkRate}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={{ width: 150, height: 50, justifyContent: 'center', }}>
+                                        <TouchableOpacity style={styles.view_checkRate}
+                                            onPress={() => {
+                                                onPressUploadMondi()
+                                            }}>
+                                            <Text style={styles.text_checkRate}>{mandiRate}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             </LinearGradient>
-                            <Text style={styles.text_Lot}>{lots}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, width: '100%', height: 220, }}>
-                            {state.listOfLots.length >= 1 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE' }}
-                                    onPress={() =>
-                                        onPressLotDetails(state.listOfLots[0])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center', }}>
-                                            <ResizeImage
-                                                uri={state.listOfLots[0].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfLots[0].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfLots[0].DataCount + ' ' + sellerText}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                            {state.listOfLots.length >= 2 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE' }}
-                                    onPress={() =>
-                                        onPressLotDetails(state.listOfLots[1])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center' }}>
-                                            <ResizeImage
-                                                uri={state.listOfLots[1].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfLots[1].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfLots[1].DataCount + ' ' + sellerText}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, width: '100%', height: 220, }}>
-                            {state.listOfLots.length >= 3 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE' }}
-                                    onPress={() =>
-                                        onPressLotDetails(state.listOfLots[2])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center', }}>
-                                            <ResizeImage
-                                                uri={state.listOfLots[2].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfLots[2].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfLots[2].DataCount + ' ' + sellerText}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                            {state.listOfLots.length >= 4 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE', }}
-                                    onPress={() =>
-                                        onPressLotDetails(state.listOfLots[3])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center' }}>
-                                            <ResizeImage
-                                                uri={state.listOfLots[3].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfLots[3].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfLots[3].DataCount + ' ' + sellerText}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-                        <View style={{ marginTop: 10, marginBottom: 20, width: '100%', height: 65, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity style={{ marginTop: 10, width: '88%', height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 20, borderWidth: 1, borderColor: colors.line_background }}
-                                onPress={onPressViewMoreLots}>
-                                <Text style={styles.text_viewMore}>{viewMore}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.lotBox}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 40, marginTop: 20, }}>
-                            <LinearGradient colors={['#f3e0b9', '#ecaa25']} style={styles.linearGradient}>
-                                <Image style={{ width: 15, height: 24, }}
-                                    source={images.LOTSICON}>
-                                </Image>
-                            </LinearGradient>
-                            <Text style={styles.text_Lot}>{enquiries}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, width: '100%', height: 220, }}>
-                            {state.listOfEnquiry.length >= 1 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE' }}
-                                    onPress={() =>
-                                        onPressEnquiryDetails(state.listOfEnquiry[0])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center', }}>
-                                            <ResizeImage
-                                                uri={state.listOfEnquiry[0].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfEnquiry[0].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfEnquiry[0].DataCount + ' ' + enquiries}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                            {state.listOfEnquiry.length >= 2 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE' }}
-                                    onPress={() =>
-                                        onPressEnquiryDetails(state.listOfEnquiry[1])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center' }}>
-                                            <ResizeImage
-                                                uri={state.listOfEnquiry[1].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfEnquiry[1].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfEnquiry[1].DataCount + ' ' + enquiries}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, width: '100%', height: 220, }}>
-                            {state.listOfEnquiry.length >= 3 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE' }}
-                                    onPress={() =>
-                                        onPressEnquiryDetails(state.listOfEnquiry[2])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center', }}>
-                                            <ResizeImage
-                                                uri={state.listOfEnquiry[2].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfEnquiry[2].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfEnquiry[2].DataCount + ' ' + enquiries}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                            {state.listOfEnquiry.length >= 4 && (
-                                <TouchableOpacity style={{ width: '40%', height: 220, borderRadius: 20, overflow: 'hidden', backgroundColor: '#EEEEEE', }}
-                                    onPress={() =>
-                                        onPressEnquiryDetails(state.listOfEnquiry[3])}>
-                                    <View>
-                                        <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center' }}>
-                                            <ResizeImage
-                                                uri={state.listOfEnquiry[3].ImageURL}
-                                                desiredHeight={70}
-                                            />
-                                        </View>
-                                        <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>
-                                            <Text style={styles.text_LotTitle}>{state.listOfEnquiry[3].Name}</Text>
-                                            <View style={{ marginTop: 5, height: 24, borderRadius: 4, justifyContent: 'center', alignItems: 'center', backgroundColor: '#8E8E8E' }}>
-                                                <Text style={styles.text_seller}>{state.listOfEnquiry[3].DataCount + ' ' + enquiries}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-                        <View style={{ marginTop: 10, marginBottom: 20, width: '100%', height: 65, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity style={{ marginTop: 10, width: '88%', height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 20, borderWidth: 1, borderColor: colors.line_background }}
-                                onPress={onPressViewMoreEnquiries}>
-                                <Text style={styles.text_viewMore}>{viewMore}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    }
                     {(state.listOfAdvertisements.length > 0) && (
 
                         <View style={{ flexDirection: 'row', width: '100%', height: 130, marginTop: 25, overflow: 'hidden', backgroundColor: '#263c85' }}>
@@ -741,15 +507,11 @@ const HomeScreen = ({ navigation, route }) => {
                             )}
                         </View>
                         <View style={{ marginTop: 10, marginBottom: 20, width: '100%', height: 0, justifyContent: 'center', alignItems: 'center' }}>
-                            {/* <TouchableOpacity style={{ marginTop: 10, width: '88%', height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 20, borderWidth: 1, borderColor: colors.line_background }}>
-                                <Text style={styles.text_viewMore}>{viewMore}</Text>
-                            </TouchableOpacity> */}
+
                         </View>
                     </View>
                 </View>
-                {/* <VersionComponent /> */}
             </ScrollView>
-            {/* {loading && <Loading />} */}
         </View>
     );
 };
