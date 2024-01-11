@@ -11,7 +11,7 @@ import SellerInfoCompnents from '../components/SellerInfoCompnents';
 import { colors, fonts, images } from '../core';
 import { handlePhoneCall } from '../helpers/AppManager';
 import { MOBILENUMBERAUDIT_QUERY } from '../helpers/Schema';
-
+import analytics from '@react-native-firebase/analytics';
 
 const SHOWINTERESTENQUIRY_QUERY = gql`
 mutation ($enquiryId: ID!){

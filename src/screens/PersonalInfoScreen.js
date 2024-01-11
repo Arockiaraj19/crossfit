@@ -595,7 +595,7 @@ const PersonalInfoScreen = ({ navigation }) => {
                 },
             },
             ]);
-        }else if (!validateUserName(userName)){
+        }else if (!validateUserName(userName.trim())){
             Alert.alert('', validUserName, [{
                 text: 'OK', onPress: () => {
                     return;
@@ -636,13 +636,13 @@ const PersonalInfoScreen = ({ navigation }) => {
             }
           //  console.log('updateUserProfile', { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) })
             updateUserProfile({
-                variables: { Id: parseInt(userId), name: userName, gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) }
+                variables: { Id: parseInt(userId), name: userName.trim(), gender: parseInt(userGender), dob: dobformat, emailId: userEmail, preferredLanguageId: parseInt(userLanguageId), primaryRoleId: parseInt(userRoleId) }
             })
                 .then(async (res) => {
                     console.log('res ------------------', res);
 
                     setUpdateLoading(false);
-                    await EncryptedStorage.setItem('userName', userName);
+                    await EncryptedStorage.setItem('userName', userName.trim());
 
                     await EncryptedStorage.setItem("languageId", userLanguageId);
                     Alert.alert('Success', profileUpdated, [{

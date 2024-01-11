@@ -442,7 +442,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
             },
             ]);
         }
-        else if (!validateUserName(userName)){
+        else if (!validateUserName(userName.trim())){
             Alert.alert('', validUserName, [{
                 text: 'OK', onPress: () => {
                     return;
@@ -468,7 +468,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
                 .then(res => {
                     setregisterLoading(false);
                     console.log(res.data.generateOTP);
-                    navigation.navigate('OTPVerficationScreen', { mobileNo: userMobileNumber, userName: userName, userId: res.data.generateOTP.userId, profileImage: userProfileImage, referalCode: referalCode })
+                    navigation.navigate('OTPVerficationScreen', { mobileNo: userMobileNumber, userName: userName.trim(), userId: res.data.generateOTP.userId, profileImage: userProfileImage, referalCode: referalCode })
                 })
                 .catch(e => {
                     setregisterLoading(false);

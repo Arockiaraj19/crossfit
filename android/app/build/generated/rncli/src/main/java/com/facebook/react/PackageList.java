@@ -53,6 +53,8 @@ import com.imagepicker.ImagePickerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 // react-native-permissions
 import com.zoontek.rnpermissions.RNPermissionsPackage;
+// react-native-reanimated
+import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-restart
 import com.reactnativerestart.RestartPackage;
 // react-native-safe-area-context
@@ -129,6 +131,7 @@ public class PackageList {
       new ImagePickerPackage(),
       new LinearGradientPackage(),
       new RNPermissionsPackage(),
+      new ReanimatedPackage(),
       new RestartPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

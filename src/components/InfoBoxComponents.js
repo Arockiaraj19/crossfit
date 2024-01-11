@@ -27,7 +27,7 @@ const InfoBoxComponents = ({
                 style={{
                     backgroundColor: 'transparent',
                     height: desiredHeight,
-                    width: 70,
+                    width: 90,
                 }}
             />
         )
@@ -42,7 +42,7 @@ const InfoBoxComponents = ({
                         <View style={{ width: '100%', height: 140, justifyContent: 'center', alignItems: 'center', }}>
                             <ResizeImage
                                 uri={props.ImageURL}
-                                desiredHeight={70}
+                                desiredHeight={90}
                             />
                         </View>
                         <View style={{ width: '100%', height: 80, alignItems: 'center', backgroundColor: '#DDDDDD' }}>

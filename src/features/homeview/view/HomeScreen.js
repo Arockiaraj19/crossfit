@@ -20,6 +20,7 @@ import EnquiryComponent from '../components/enquiry_component';
 import LotComponent from '../components/lot_component';
 import { GET_ENQUIRY_QUERY, HOMEPAGEDETAIL_QUERY } from '../query/home_screen_query';
 import styles from '../style/home_screen_style';
+import VideoSliderComponent from '../components/video_slider_component';
 
 
 const HomeScreen = ({ navigation, route }) => {
@@ -492,18 +493,7 @@ const HomeScreen = ({ navigation, route }) => {
                         </View>
                         <View style={{ alignItems: 'center', marginTop: 10, width: '100%', height: 200, }}>
                             {(state.listOfVideos.length > 0) && (
-                                <ImageBackground style={{ width: '100%', height: 200, borderRadius: 6, backgroundColor: colors.line_background }}
-                                    source={{ uri: state.listOfVideos[0].ImageURL }}>
-                                    <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: 200, }}
-                                        onPress={() => {
-                                            onPressOpenWeb(state.listOfVideos[0].Url)
-                                        }
-                                        }>
-                                        <Image style={{ width: 40, height: 40 }}
-                                            source={images.PLAYICON}>
-                                        </Image>
-                                    </TouchableOpacity>
-                                </ImageBackground>
+                               <VideoSliderComponent videoList={state.listOfVideos}/>
                             )}
                         </View>
                         <View style={{ marginTop: 10, marginBottom: 20, width: '100%', height: 0, justifyContent: 'center', alignItems: 'center' }}>

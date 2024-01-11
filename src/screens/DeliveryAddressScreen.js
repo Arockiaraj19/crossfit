@@ -186,7 +186,7 @@ const DeliveryAddressScreen = ({ navigation, route }) => {
             tempInfo.isSelected = (item.Id == addtessInfo.Id) ? true : false;
             if (item.Id == addtessInfo.Id) {
                 tempAddressId = item.Id;
-                tempAddress = item.AddressLine1 + ', ' + item.Town + ', ' + item.Taluk + ', ' + item.District + ', ' + item.State;
+                tempAddress =item.AddressLine1 + ', ' + item.Village + ', ' + item.Taluk + ', ' + item.District + ', ' + item.State + " - " + item.PostalCode;
             }
             addressTemp.push(tempInfo)
         })
